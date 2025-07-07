@@ -19,7 +19,7 @@ class MaterialFactory extends Factory
     public function definition(): array
     {
         return [
-            'perlajaran_id' => Pelajaran::pluck('id')->random(),
+            'pelajaran_id' => Pelajaran::pluck('id')->random(),
             'title' => fake()->sentence(3),
             'description' => fake()->sentence(10),
             'url' => null,
