@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Mapel;
+use App\Models\Pelajaran;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +19,7 @@ class MaterialFactory extends Factory
     public function definition(): array
     {
         return [
-            'mapel_id' => Mapel::pluck('id')->random(),
+            'perlajaran_id' => Pelajaran::pluck('id')->random(),
             'title' => fake()->sentence(3),
             'description' => fake()->sentence(10),
             'url' => null,
