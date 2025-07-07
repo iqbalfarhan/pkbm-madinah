@@ -103,12 +103,12 @@ const RaporList: FC<RaporListProps> = ({ rapors, query }) => {
                   </RaporPublishToggle>
                 </TableCell>
                 <TableCell>
-                  <Button variant={'ghost'} size={'icon'} disabled={!rapor.data}>
+                  <Button variant={'ghost'} size={'icon'} disabled={!rapor.publish}>
                     <a href={route('rapor.download', rapor.id)}>
                       <Download />
                     </a>
                   </Button>
-                  <Button variant={'ghost'} size={'icon'} disabled={!rapor.data}>
+                  <Button variant={'ghost'} size={'icon'} disabled={!rapor.publish}>
                     <a href={route('rapor.stream', rapor.id)}>
                       <Folder />
                     </a>
