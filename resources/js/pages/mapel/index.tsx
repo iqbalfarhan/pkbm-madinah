@@ -1,4 +1,3 @@
-import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -8,12 +7,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem, Mapel } from '@/types';
 import { Link } from '@inertiajs/react';
-import { Copy, Edit, Filter, Folder, List, Plus, Trash2 } from 'lucide-react';
+import { Copy, Edit, Filter, Folder, Plus, Trash2 } from 'lucide-react';
 import { FC, useState } from 'react';
 import DeleteMapelDialog from './components/delete-mapel-dialog';
 import MapelFilterSheet from './components/mapel-filter-sheet';
 import MapelFormSheet from './components/mapel-form-sheet';
-import MapelGroupSheet from './components/mapel-group-sheet';
 
 type MapelListProps = {
   mapels: Mapel[];
@@ -38,15 +36,9 @@ const MapelList: FC<MapelListProps> = ({ mapels }) => {
           <MapelFormSheet purpose="create">
             <Button>
               <Plus />
-              Tambah
+              Tambah mata pelajaran
             </Button>
           </MapelFormSheet>
-          <MapelGroupSheet data={'data'}>
-            <Button>
-              <List />
-              Group mata pelajaran
-            </Button>
-          </MapelGroupSheet>
         </>
       }
     >
@@ -92,8 +84,7 @@ const MapelList: FC<MapelListProps> = ({ mapels }) => {
             </TableHead>
             <TableHead>Group</TableHead>
             <TableHead>Nama mata pelajaran</TableHead>
-            <TableHead>Tingkat</TableHead>
-            <TableHead>Pengajar</TableHead>
+            <TableHead>Tingkat kelas</TableHead>
             <TableHead>Action</TableHead>
           </TableRow>
         </TableHeader>
@@ -125,14 +116,6 @@ const MapelList: FC<MapelListProps> = ({ mapels }) => {
                 <TableCell>{mapel.mapel_group?.name}</TableCell>
                 <TableCell>{mapel.name}</TableCell>
                 <TableCell>{mapel.tingkat.label}</TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-2">
-                    <Avatar className="size-6">
-                      <AvatarImage src={mapel.guru.avatar} alt={mapel.guru.name} />
-                    </Avatar>
-                    {mapel.guru.name}
-                  </div>
-                </TableCell>
                 <TableCell>
                   <Button variant={'ghost'} size={'icon'} asChild>
                     <Link href={route('mapel.show', mapel.id)}>

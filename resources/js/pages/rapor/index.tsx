@@ -1,4 +1,5 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
@@ -7,7 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import AppLayout from '@/layouts/app-layout';
 import { Rapor } from '@/types';
 import { Link } from '@inertiajs/react';
-import { Download, Edit, Filter, Folder, Plus, Share2, Trash2 } from 'lucide-react';
+import { Download, Edit, Filter, Folder, Plus, Trash2 } from 'lucide-react';
 import { FC, useState } from 'react';
 import RaporCreateDialog from './components/rapor-create-dialog';
 import RaporFilterSheet from './components/rapor-filter-sheet';
@@ -15,15 +16,21 @@ import RaporPublishToggle from './components/rapor-publih-toggle';
 
 type RaporListProps = {
   rapors: Rapor[];
+  query: {
+    tahunajaran_id?: number;
+    jenis?: string;
+  };
 };
 
-const RaporList: FC<RaporListProps> = ({ rapors }) => {
+const RaporList: FC<RaporListProps> = ({ rapors, query }) => {
   const [cari, setCari] = useState<string | undefined>();
+
+  const activeFilters = Object.entries(query).filter(([, v]) => v !== undefined && v !== null && v !== '');
 
   return (
     <AppLayout
-      title="Rapor Perkembangan"
-      description="List rapor perkembangan siswa"
+      title="List rapor siswa"
+      description="List rapor siswa"
       actions={
         <RaporCreateDialog>
           <Button>
@@ -34,11 +41,12 @@ const RaporList: FC<RaporListProps> = ({ rapors }) => {
       }
     >
       <div className="flex items-center gap-4">
-        <Input placeholder="Cari rapor..." type="search" value={cari} onChange={(e) => setCari(e.target.value)} />
+        <Input placeholder="Cari dengan nama atau nisn..." type="search" value={cari} onChange={(e) => setCari(e.target.value)} />
         <RaporFilterSheet>
           <Button>
             <Filter />
             Filter data
+            {activeFilters.length > 0 && <Badge variant={'secondary'}>{activeFilters.length}</Badge>}
           </Button>
         </RaporFilterSheet>
       </div>
@@ -91,21 +99,19 @@ const RaporList: FC<RaporListProps> = ({ rapors }) => {
                 <TableCell>{rapor.siswa.kelas?.name}</TableCell>
                 <TableCell>
                   <RaporPublishToggle rapor={rapor}>
-                    <div className="flex items-center gap-2">
-                      <Checkbox checked={rapor.publish} />
-                      {rapor.publish ? 'Published' : 'Draft'}
-                    </div>
+                    <Badge variant={rapor.publish ? 'default' : 'outline'}>{rapor.publish ? 'Published' : 'Draft'}</Badge>
                   </RaporPublishToggle>
                 </TableCell>
                 <TableCell>
-                  <Button variant={'ghost'} size={'icon'}>
-                    <Download />
+                  <Button variant={'ghost'} size={'icon'} disabled={!rapor.data}>
+                    <a href={route('rapor.download', rapor.id)}>
+                      <Download />
+                    </a>
                   </Button>
-                  <Button variant={'ghost'} size={'icon'}>
-                    <Share2 />
-                  </Button>
-                  <Button variant={'ghost'} size={'icon'}>
-                    <Folder />
+                  <Button variant={'ghost'} size={'icon'} disabled={!rapor.data}>
+                    <a href={route('rapor.stream', rapor.id)}>
+                      <Folder />
+                    </a>
                   </Button>
                   <Button variant={'ghost'} size={'icon'}>
                     <Link href={route('rapor.edit', rapor.id)}>

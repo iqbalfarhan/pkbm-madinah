@@ -57,7 +57,7 @@ const DocumentSiswa: FC<DocumentSiswaProps> = ({ siswa, documents }) => {
                   <Avatar className="size-6">
                     <AvatarImage src={document.preview_url} />
                     <AvatarFallback>
-                      <File />
+                      <File className="size-4" />
                     </AvatarFallback>
                   </Avatar>
 

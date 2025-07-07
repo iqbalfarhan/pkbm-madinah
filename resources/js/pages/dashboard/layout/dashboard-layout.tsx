@@ -7,10 +7,10 @@ type DashboardLayoutProps = PropsWithChildren;
 
 const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
   const { auth } = usePage<SharedData>().props;
-  const { user, role } = auth;
+  const { user, roles } = auth;
 
   return (
-    <AppLayout title={`Selamat datang ${user.name}`} description={`Saat ini anda masuk sebagai ${role}`}>
+    <AppLayout title={`Selamat datang ${user.name}`} description={`Saat ini anda masuk sebagai ${roles.join(', ')}`}>
       {children}
     </AppLayout>
   );

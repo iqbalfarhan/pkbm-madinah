@@ -96,7 +96,7 @@ const RaporCreateDialog: FC<RaporCreateDialogProps> = ({ children, siswa, tahuna
                 <SelectValue placeholder="Pilih jenis rapor" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value={'null'}></SelectItem>
+                <SelectItem value={'null'}>&nbsp;</SelectItem>
                 {tahunajarans?.map((ta) => (
                   <SelectItem key={ta.id} value={ta.id.toString()}>
                     {ta.label}

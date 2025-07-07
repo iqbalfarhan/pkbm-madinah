@@ -6,10 +6,12 @@ use App\Http\Requests\BulkUpdateSiswaRequest;
 use App\Http\Requests\StoreSiswaRequest;
 use App\Http\Requests\UpdateSiswaRequest;
 use App\Http\Requests\UploadDocumentSiswaRequest;
+use App\Http\Resources\SiswaResource;
 use App\Models\Ekskul;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Tahunajaran;
+use App\Models\User;
 use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
@@ -22,6 +24,8 @@ class SiswaController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Siswa::class);
+
         $status = $request->get('status') ?? "aktif";
         $kelas_id = $request->get('kelas_id');
         $gender = $request->get('gender');
@@ -34,7 +38,7 @@ class SiswaController extends Controller
             ->get();
 
         return Inertia::render('siswa/index', [
-            'siswas' => $siswas,
+            'siswas' => SiswaResource::collection($siswas),
             'query' => $request->only(['kelas_id', 'status', 'gender']),
             'kelases' => Kelas::get()
         ]);
@@ -69,6 +73,8 @@ class SiswaController extends Controller
      */
     public function show(Siswa $siswa)
     {
+        $this->authorize('view', $siswa);
+
         return Inertia::render('siswa/tabs/data-diri',[
             'siswa' => $siswa->load('kelas', 'kelas.tingkat', 'ekskuls', 'rapors', 'rapors.tahunajaran'),
             'kelases' => Kelas::get(),
@@ -149,7 +155,8 @@ class SiswaController extends Controller
     public function akunOrangtua(Siswa $siswa)
     {
         return Inertia::render('siswa/tabs/akun-orangtua', [
-            'siswa' => $siswa,
+            'siswa' => $siswa->load('user', 'user.siswas'),
+            'users' => User::Role('orangtua')->get(),
             'kelases' => Kelas::get(),
         ]);
     }

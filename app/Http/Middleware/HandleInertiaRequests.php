@@ -2,10 +2,13 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\UserResource;
+use App\Models\Kelas;
 use App\Models\Tahunajaran;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Spatie\Permission\Models\Permission;
 use Tighten\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
@@ -38,16 +41,27 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
+        $user = $request->user();
+
+        $permissions = collect(); // fallback kosong
+
+        if ($user?->hasRole('superadmin')) {
+            $permissions = Permission::pluck('name');
+        } elseif ($user) {
+            $permissions = $user->getAllPermissions()->unique()->pluck('name')->toArray();
+        }
+
+        // dd($user?->getRoleNames(), $user->guru->id, $user?->hasRole('walikelas') ? Kelas::where('guru_id',$user->guru->id)->first() : null);
 
         return [
             ...parent::share($request),
             'name' => config('app.name'),
-            'quote' => ['message' => trim($message), 'author' => trim($author)],
             'tahun_ajaran' => Tahunajaran::whereActive(true)->first(),
             'auth' => [
-                'user' => $request->user(),
-                'role' => $request->user()?->role,
+                'user' => $user ? new UserResource($request->user()) : null,
+                'roles' => $request->user()?->getRoleNames(),
+                'permissions' => $permissions,
+                'kelas' => $user?->hasRole('walikelas') ? Kelas::where('guru_id',$user->guru->id)->get() : null,
             ],
             'ziggy' => fn (): array => [
                 ...(new Ziggy)->toArray(),

@@ -24,9 +24,9 @@ class GuruFactory extends Factory
             'phone' => fake()->unique()->numerify('+628##########'),
             'email' => fake()->unique()->safeEmail(),
             'photo' => null,
-            'gender' => fake()->randomElement(['laki-laki', 'perempuan']),
+            'gender' => fake()->randomElement(['Laki-laki', 'Perempuan']),
             'active' => fake()->boolean(),
-            'user_id' => fake()->randomElement([User::pluck('id')->random(), null]),
+            // 'user_id' => fake()->randomElement([User::pluck('id')->random(), null]),
         ];
     }
 }

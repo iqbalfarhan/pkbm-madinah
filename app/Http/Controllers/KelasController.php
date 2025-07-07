@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreKelasRequest;
 use App\Http\Requests\UpdateKelasRequest;
+use App\Http\Resources\KelasResource;
 use App\Models\Guru;
 use App\Models\Kelas;
 use App\Models\Tingkat;
@@ -46,7 +47,7 @@ class KelasController extends Controller
     public function show(Kelas $kela)
     {
         return Inertia::render('kelas/show', [
-            'kelas' => $kela->load('tingkat', 'walikelas', 'siswas'),
+            'kelas' => new KelasResource($kela),
             'tingkats' => Tingkat::get(),
             'gurus' => Guru::get(),
         ]);
@@ -74,5 +75,37 @@ class KelasController extends Controller
     public function destroy(Kelas $kela)
     {
         $kela->delete();
+    }
+
+    public function ketidakhadiran(Kelas $kela)
+    {
+        return Inertia::render('kelas/tabs/ketidakhadiran', [
+            'kelas' => new KelasResource($kela),
+            'tingkats' => Tingkat::get(),
+        ]);
+    }
+
+    public function pelajaran(Kelas $kela)
+    {
+        return Inertia::render('kelas/tabs/pelajaran', [
+            'kelas' => new KelasResource($kela),
+            'tingkats' => Tingkat::get(),
+        ]);
+    }
+
+    public function ekskul(Kelas $kela)
+    {
+        return Inertia::render('kelas/tabs/ekskul', [
+            'kelas' => new KelasResource($kela),
+            'tingkats' => Tingkat::get(),
+        ]);
+    }
+
+    public function rapor(Kelas $kela)
+    {
+        return Inertia::render('kelas/tabs/rapor', [
+            'kelas' => new KelasResource($kela),
+            'tingkats' => Tingkat::get(),
+        ]);
     }
 }

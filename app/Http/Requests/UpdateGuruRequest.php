@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\GenderIn;
+use App\Rules\PhoneNumber;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateGuruRequest extends FormRequest
@@ -25,10 +27,14 @@ class UpdateGuruRequest extends FormRequest
             'name' => 'required|string|max:255',
             'nip' => 'nullable|string|max:255|unique:gurus,nip,'.$this->guru->id,
             'address' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|regex:/^\+62\d{8,11}$/',
+            'phone' => [new PhoneNumber],
             'email' => 'nullable|email|unique:gurus,email,'.$this->guru->id,
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'gender' => 'nullable|in:Laki-laki,Perempuan',
+            'gender' => [
+                'nullable',
+                'string',
+                new GenderIn
+            ],
             'active' => 'nullable|boolean',
             'user_id' => 'nullable|integer|exists:users,id',
         ];

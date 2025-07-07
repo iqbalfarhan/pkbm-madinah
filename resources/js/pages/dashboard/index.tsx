@@ -1,42 +1,17 @@
-import { TahunAjaran } from '@/types';
-import { FC } from 'react';
-import WidgetCard from './components/widget-card';
+import { usePageProps } from '@/hooks/use-page-props';
 import DashboardLayout from './layout/dashboard-layout';
 
-type DashboardProps = {
-  siswa_count: number;
-  all_siswa_count: number;
-  ppdb_count: number;
-  guru_count: number;
-  walikelas_count: number;
-  kelas_count: number;
-  tahun_ajaran?: TahunAjaran;
-};
-
-const Dashboard: FC<DashboardProps> = ({ siswa_count, all_siswa_count, guru_count, walikelas_count, kelas_count, tahun_ajaran }) => {
+const DashboardIndex = () => {
+  const { auth } = usePageProps();
+  const { permissions, roles } = auth;
   return (
     <DashboardLayout>
-      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-        <WidgetCard
-          href={route('siswa.index')}
-          value={siswa_count}
-          badge="Siswa aktif"
-          title="Siswa aktif"
-          description={`Siswa dengan status aktif belajar dari ${all_siswa_count} siswa yang terdaftar.`}
-        />
-        <WidgetCard
-          value={guru_count}
-          href={route('guru.index')}
-          title="Guru yang mengajar"
-          description={`Guru yang mengajar di sekolah termasuk ${walikelas_count} yang menjadi walikelas.`}
-        />
-        <WidgetCard value={kelas_count} title="kelas" description={`Kelas yang ada di sekolah. dengan ${siswa_count} siswa yang aktif di kelas.`} />
-        {tahun_ajaran && (
-          <WidgetCard value={tahun_ajaran?.semester} title={tahun_ajaran.name} description="Tahun ajaran dan semester yang berjalan sekarang." />
-        )}
-      </div>
+      <pre>{JSON.stringify(roles, null, 2)}</pre>
+      <pre>{JSON.stringify(permissions, null, 2)}</pre>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, cupiditate quibusdam. Modi quisquam repellendus placeat, nesciunt
+      expedita, corporis ad omnis iure ut mollitia sequi asperiores impedit harum tempore porro voluptate!
     </DashboardLayout>
   );
 };
 
-export default Dashboard;
+export default DashboardIndex;

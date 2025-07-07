@@ -13,7 +13,7 @@ class SiswaPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->can('menampilkan list siswa');
     }
 
     /**
@@ -21,7 +21,7 @@ class SiswaPolicy
      */
     public function view(User $user, Siswa $siswa): bool
     {
-        return false;
+        return $user->can('menampilkan detail siswa');
     }
 
     /**

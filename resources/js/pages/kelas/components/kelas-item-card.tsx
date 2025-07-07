@@ -12,15 +12,16 @@ const KelasItemCard: FC<KelasItemCardProps> = ({ kelas }) => {
     <Card>
       <CardHeader>
         <CardTitle>{kelas.name}</CardTitle>
-        <CardDescription>
-          Kelas tingkat {kelas.tingkat.group} - {kelas.siswas.length} siswa - 10 Matapelajaran
+        <CardDescription className="line-clamp-2">
+          Tingkat {kelas.tingkat?.group} {kelas.siswas?.length} peserta didik {kelas.pelajarans?.length ?? 0} pelajaran walikelas{' '}
+          {kelas.walikelas?.name}
         </CardDescription>
       </CardHeader>
       <CardFooter>
-        <div className="flex items-center gap-2 text-xs">
-          <Avatar className="size-4">
+        <div className="flex items-center gap-2 text-sm">
+          <Avatar className="size-6">
             <AvatarImage src={kelas.walikelas?.avatar} alt={kelas.walikelas?.name} />
-            <AvatarFallback>A</AvatarFallback>
+            <AvatarFallback>0</AvatarFallback>
           </Avatar>
           {kelas.walikelas?.name ?? 'Belum pilih walikelas'}
         </div>

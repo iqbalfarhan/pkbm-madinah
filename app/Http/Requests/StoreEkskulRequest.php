@@ -23,6 +23,17 @@ class StoreEkskulRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'guru_id' => 'nullable|exists:gurus,id',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Nama ekskul harus diisi.',
+            'name.string' => 'Nama ekskul harus berupa teks.',
+            'name.max' => 'Nama ekskul tidak boleh lebih dari 255 karakter.',
+            'guru_id.exists' => 'Guru tidak valid.',
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Guru;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,6 +19,7 @@ class EkskulFactory extends Factory
     {
         return [
             'name' => $this->faker->domainWord(),
+            'guru_id' => fake()->randomElement([Guru::pluck('id')->random(), null]),
         ];
     }
 }

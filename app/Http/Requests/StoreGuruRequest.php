@@ -26,9 +26,9 @@ class StoreGuruRequest extends FormRequest
             'nip' => 'nullable|string|max:255|unique:gurus,nip',
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|regex:/^\+62\d{8,11}$/',
-            'email' => 'nullable|email|unique:gurus,email',
+            'email' => 'required|email|unique:gurus,email',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'gender' => 'nullable|in:laki-laki,perempuan',
+            'gender' => 'nullable|in:Laki-laki,Perempuan',
             'active' => 'nullable|boolean',
             'user_id' => 'nullable|integer|exists:users,id',
         ];

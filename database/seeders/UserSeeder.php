@@ -13,13 +13,17 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
+        $user = User::factory()->create([
             'name' => 'Iqbal Farhan Syuhada',
             'email' => 'iqbalfarhan1996@gmail.com',
-            'password' => bcrypt('adminoke'),
-            'role' => 'admin'
+            'password' => bcrypt('password'),
         ]);
         
-        User::factory(10)->create();
+        $user->assignRole(['superadmin']);
+        
+        // User::factory(10)->create()->each(function ($user) {
+        //     $randomRole = fake()->randomElements(['admin', 'guru', 'orangtua', 'walikelas'], 2);
+        //     $user->syncRoles($randomRole);
+        // });
     }
 }

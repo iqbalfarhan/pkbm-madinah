@@ -1,60 +1,42 @@
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { SharedData, type NavItem } from '@/types';
-import { Link, usePage } from '@inertiajs/react';
-import { Book, BookOpen, Calendar, Home, LayoutGrid, Settings2, Target, UserCheck2, UserCircle2, Users, Users2 } from 'lucide-react';
+import { usePageProps } from '@/hooks/use-page-props';
+import { hasRole } from '@/lib/utils';
+import { Kelas, type NavItem } from '@/types';
+import { Link } from '@inertiajs/react';
+import { Book, BookOpen, Calendar, Folder, Home, LayoutGrid, Target, UserCheck2, UserCircle2, Users, Users2 } from 'lucide-react';
 import AppLogo from './app-logo';
 
 export function AppSidebar() {
-  const { auth } = usePage<SharedData>().props;
-  const user = auth.user;
+  const { auth } = usePageProps();
+
+  const kelas = auth.kelas as Kelas[] | null;
+  const roles = auth.roles as string[];
   const mainNavItems: NavItem[] = [
     {
       title: 'Dashboard',
       href: route('dashboard'),
       icon: LayoutGrid,
+      permission_name: 'dashboard',
     },
     {
       title: 'Buku panduan',
       href: route('dokumentasi'),
       icon: BookOpen,
+      permission_name: 'documentation',
     },
-  ];
-
-  const ppdbNavItems: NavItem[] = [
     {
       title: 'Pengaturan PPDB',
-      href: route('ppdb.setting'),
-      icon: Settings2,
-    },
-    {
-      title: 'Data Calon Pesdik',
       href: route('ppdb.index'),
       icon: UserCheck2,
-    },
-  ];
-
-  const raporNavItems: NavItem[] = [
-    {
-      title: 'Rapor Perkembangan',
-      href: route('rapor.index'),
-      icon: Book,
+      permission_name: 'menampilkan list ppdb',
     },
     {
-      title: 'Rapor Mapel Umum',
+      title: 'Rapor siswa',
       href: route('rapor.index'),
       icon: Book,
-    },
-    {
-      title: 'Rapor Tahfidz',
-      href: route('rapor.index'),
-      icon: Book,
-    },
-    {
-      title: 'Rapor Tahsin',
-      href: route('rapor.index'),
-      icon: Book,
+      permission_name: 'menampilkan list rapor',
     },
   ];
 
@@ -63,45 +45,45 @@ export function AppSidebar() {
       title: 'Tahun Ajaran',
       href: route('tahunajaran.index'),
       icon: Calendar,
+      permission_name: 'menampilkan list tahun ajaran',
     },
     {
       title: 'Data Kelas',
       href: route('kelas.index'),
       icon: Home,
+      permission_name: 'menampilkan list kelas',
     },
     {
       title: 'Mata pelajaran',
       href: route('mapel.index'),
       icon: Book,
+      permission_name: 'menampilkan list mata pelajaran',
     },
     {
       title: 'Ekstrakulikuler',
       href: route('ekskul.index'),
       icon: Target,
+      permission_name: 'menampilkan list ekskul',
     },
     {
       title: 'Data Pengguna',
       href: route('user.index'),
       icon: Users,
+      permission_name: 'menampilkan list user',
     },
     {
       title: 'Tenaga pendidik',
       href: route('guru.index'),
       icon: Users2,
+      permission_name: 'menampilkan list guru',
     },
     {
       title: 'Data Siswa',
       href: route('siswa.index'),
       icon: UserCircle2,
+      permission_name: 'menampilkan list siswa',
     },
   ];
-  // const footerNavItems: NavItem[] = [
-  //   {
-  //     title: 'Documentation',
-  //     href: route('dokumentasi'),
-  //     icon: BookOpen,
-  //   },
-  // ];
 
   return (
     <Sidebar collapsible="icon" variant="sidebar">
@@ -119,13 +101,18 @@ export function AppSidebar() {
 
       <SidebarContent>
         <NavMain items={mainNavItems} label="Dashboard" />
-        {user.role === 'admin' && (
-          <>
-            <NavMain items={raporNavItems} label="E-Rapor" />
-            <NavMain items={ppdbNavItems} label="PPDB" />
-            <NavMain items={masterDataNavItems} label="Master data" />
-          </>
+        {hasRole(roles, ['walikelas']) && (
+          <NavMain
+            items={kelas?.map((kela) => ({
+              title: `Pengaturan ${kela.name}`,
+              href: route('kelas.show', kela.id),
+              icon: Folder,
+              permission_name: 'mengedit data kelas',
+            }))}
+            label={`Menu walikelas`}
+          />
         )}
+        {hasRole(roles, ['admin', 'superadmin']) && <NavMain items={masterDataNavItems} label="Master Data" />}
       </SidebarContent>
 
       <SidebarFooter>

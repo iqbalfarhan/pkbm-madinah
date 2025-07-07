@@ -46,9 +46,6 @@ const GuruDetail: FC<GuruDetailProps> = ({ guru }) => {
               <FormControl label="Nama pendidik">
                 <p className="text-muted-foreground">{guru.name}</p>
               </FormControl>
-              <FormControl label="Nomor induk pendidik">
-                <p className="text-muted-foreground">{guru.nip}</p>
-              </FormControl>
               <FormControl label="Nomor telepon">
                 <p className="text-muted-foreground">{guru.phone}</p>
               </FormControl>
@@ -60,6 +57,9 @@ const GuruDetail: FC<GuruDetailProps> = ({ guru }) => {
               </FormControl>
               <FormControl label="Status aktif">
                 <p className="text-muted-foreground">{guru.active ? 'Aktif' : 'Tidak aktif'}</p>
+              </FormControl>
+              <FormControl label="Walikelas">
+                <p className="text-muted-foreground">{guru.walikelas?.name ?? '-'}</p>
               </FormControl>
               <FormControl label="Alamat tempat tinggal" className="col-span-full">
                 <p className="text-muted-foreground">{guru.address}</p>
@@ -92,35 +92,30 @@ const GuruDetail: FC<GuruDetailProps> = ({ guru }) => {
             </LoginSetting>
           </CardFooter>
         </Card>
-        <Card>
+        <Card className="h-fit">
           <CardHeader>
             <CardTitle>Matapelajaran yang diajar</CardTitle>
-            <CardDescription>Pengaturan akun yang digunakan guru untuk login ke aplikasi</CardDescription>
+            <CardDescription>Mengajar di kelas dan mapel</CardDescription>
           </CardHeader>
           <Separator />
-          <CardFooter>
-            <LoginSetting user={guru.user}>
-              <Button>
-                <LogIn />
-                Pengaturan akun login
-              </Button>
-            </LoginSetting>
-          </CardFooter>
+          {guru.pelajarans.map((pelajaran) => {
+            const mapel = pelajaran?.mapel;
+            const kelas = pelajaran?.kelas;
+            return (
+              <CardHeader key={pelajaran.id}>
+                <CardTitle>{mapel?.name}</CardTitle>
+                <CardDescription>{kelas?.name}</CardDescription>
+              </CardHeader>
+            );
+          })}
         </Card>
-        <Card>
+        <Card className="h-fit">
           <CardHeader>
             <CardTitle>Sebagai wali kelas</CardTitle>
             <CardDescription>Pengaturan akun yang digunakan guru untuk login ke aplikasi</CardDescription>
           </CardHeader>
           <Separator />
-          <CardFooter>
-            <LoginSetting user={guru.user}>
-              <Button>
-                <LogIn />
-                Pengaturan akun login
-              </Button>
-            </LoginSetting>
-          </CardFooter>
+          {guru.walikelas && <CardFooter>{guru.walikelas.name}</CardFooter>}
         </Card>
       </div>
     </AppLayout>

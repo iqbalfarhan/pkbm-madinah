@@ -29,3 +29,5 @@ export function generatePassword(): string {
 
   return part1 + part2;
 }
+
+export const hasRole = (roles: string[], allowed: string[]) => roles.some((role) => allowed.includes(role));

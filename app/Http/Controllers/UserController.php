@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BulkUpdateUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\Guru;
 use App\Models\Siswa;
 use App\Models\User;
@@ -21,12 +22,12 @@ class UserController extends Controller
         $role = $request->get('role');
 
         $user = User::when($role, fn($query) => $query->where('role', $role))
-            ->with('guru', 'siswas')
+            ->with('guru', 'siswas', 'roles')
             ->orderBy('name')
             ->get();
 
         return Inertia::render('user/index', [
-            'users' => $user,
+            'users' => UserResource::collection($user),
         ]);
     }
 

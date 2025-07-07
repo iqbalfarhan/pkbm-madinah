@@ -1,0 +1,20 @@
+import { Kelas } from '@/types';
+import { FC } from 'react';
+import KelasLayout from '../layout/kelas-layout';
+
+type KetidakhadiranProps = {
+  kelas: Kelas;
+};
+
+const Ketidakhadiran: FC<KetidakhadiranProps> = ({ kelas }) => {
+  return (
+    <KelasLayout kelas={kelas}>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae rerum in ducimus sunt, cumque debitis tempore nam commodi, saepe pariatur
+        laborum voluptas recusandae expedita quibusdam repellendus consectetur quae quisquam aliquam.
+      </p>
+    </KelasLayout>
+  );
+};
+
+export default Ketidakhadiran;

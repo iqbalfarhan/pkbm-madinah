@@ -7,11 +7,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem, Siswa } from '@/types';
 import { Link } from '@inertiajs/react';
-import { Edit, Filter, Folder, Plus, Trash2 } from 'lucide-react';
+import { Edit, Filter, Folder, Phone, Plus, Trash2 } from 'lucide-react';
 import { FC, useState } from 'react';
 import SiswaBulkEdit from './components/siswa-bulk-edit';
 import SiswaEditForm from './components/siswa-edit-form';
 import SiswaFilterSheet from './components/siswa-filter-sheet';
+import SiswaKontakDialog from './components/siswa-kontak-dialog';
 import SiswaStatusBadge from './components/siswa-status-badge';
 
 type SiswaListProps = {
@@ -133,6 +134,11 @@ const SiswaList: FC<SiswaListProps> = ({ siswas, query }) => {
                   <SiswaStatusBadge status={siswa.status} />
                 </TableCell>
                 <TableCell>
+                  <SiswaKontakDialog siswa={siswa}>
+                    <Button variant={'ghost'} size={'icon'}>
+                      <Phone />
+                    </Button>
+                  </SiswaKontakDialog>
                   <Button variant={'ghost'} size={'icon'}>
                     <Link href={route('siswa.show', siswa.id)}>
                       <Folder />

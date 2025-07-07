@@ -21,11 +21,11 @@ class OrangtuaFactory extends Factory
             'siswa_id' => Siswa::pluck('id')->random(),
             'father_name' => fake()->name('male'),
             'father_address'=> fake()->address(),
-            'father_phone' => fake()->phoneNumber(),
+            'father_phone' => "+62".fake()->numerify('###########'),
             'father_ocupation' => fake()->jobTitle(),
             'mother_name' => fake()->name('female'),
             'mother_address' => fake()->address(),
-            'mother_phone' => fake()->phoneNumber(),
+            'mother_phone' => "+62".fake()->numerify('###########'),
             'mother_ocupation' => fake()->jobTitle(),
         ];
     }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Asalsekolah;
 use App\Models\Ekskul;
 use App\Models\EkskulSiswa;
 use App\Models\Orangtua;
@@ -25,6 +26,9 @@ class SiswaSeeder extends Seeder
                 'siswa_id' => $siswa->id,
                 'father_address' => $siswa->address,
                 'mother_address' => $siswa->address
+            ]);
+            Asalsekolah::factory()->create([
+                'siswa_id' => $siswa->id,
             ]);
         });
     }

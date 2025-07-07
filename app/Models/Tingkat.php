@@ -33,4 +33,9 @@ class Tingkat extends Model
     {
         return $this->hasMany(Kelas::class, 'tingkat_id');
     }
+
+    public function siswas()
+    {
+        return $this->hasManyThrough(Siswa::class, Kelas::class, 'tingkat_id', 'kelas_id')->aktif();
+    }
 }

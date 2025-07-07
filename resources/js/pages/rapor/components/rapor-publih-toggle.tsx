@@ -45,8 +45,12 @@ const RaporPublishToggle: FC<RaporPublishToggleProps> = ({ children, rapor }) =>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Publish rapor</AlertDialogTitle>
-          <AlertDialogDescription>Rapor akan di publish dan dapat dibaca oleh orang tua siswa</AlertDialogDescription>
+          <AlertDialogTitle>{rapor.publish ? 'Sembunyikan' : 'Publish'} rapor</AlertDialogTitle>
+          <AlertDialogDescription>
+            {rapor.publish
+              ? 'Apakah anda yakin ingin menyembunyikan rapor ini? setelah disembunyikan, orang tua tidak dapat melihat rapor ini lagi sampai rapor dipublish kembali.'
+              : 'Apakah anda yakin ingin mempublish rapor ini? setelah dipublis orang tua akan dapat melihat rapor ini.'}
+          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel asChild>

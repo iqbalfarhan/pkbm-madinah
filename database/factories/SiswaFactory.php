@@ -26,17 +26,17 @@ class SiswaFactory extends Factory
         return [
             'name' => $name,
             'nisn' => $tahunmasuk.fake()->numerify('######'),
-            'user_id' => User::pluck('id')->random(),
+            'user_id' => null,
             'kelas_id' => fake()->randomElement([Kelas::pluck('id')->random(), null]),
             'gender' => $gender,
             'pob' => fake()->city(),
             'dob' => fake()->date(),
             'religion' => fake()->randomElement(['islam', 'kristen', 'katolik', 'hindu', 'budha']),
             'address' => fake()->address(),
-            'phone' => fake()->e164PhoneNumber(),
+            'phone' => "+62".fake()->numerify('###########'),
             'register_year' => $tahunmasuk,
             'email' => fake()->unique()->safeEmail(),
-            'status' => fake()->randomElement(['ppdb', 'aktif', 'lulus', 'pindah', 'dikeluarkan']),
+            'status' => fake()->randomElement(['ppdb', 'aktif']),
             'active' => fake()->boolean(9),
         ];
     }

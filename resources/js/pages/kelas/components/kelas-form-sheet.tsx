@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import useCan from '@/hooks/use-can';
 import { errorMessage } from '@/lib/utils';
 import TingkatListSheet from '@/pages/tingkat/components/tingkat-list-sheet';
 import { Guru, Kelas, SharedData, Tingkat } from '@/types';
@@ -19,6 +20,7 @@ type KelasFormSheetProps = PropsWithChildren & {
 
 const KelasFormSheet: FC<KelasFormSheetProps> = ({ children, kelas, purpose }) => {
   const [open, setOpen] = useState(false);
+
   const { data, setData, put, post, reset } = useForm({
     name: kelas?.name ?? '',
     tingkat_id: kelas?.tingkat?.id ?? '',
@@ -57,6 +59,12 @@ const KelasFormSheet: FC<KelasFormSheetProps> = ({ children, kelas, purpose }) =
 
     setOpen(false);
   };
+
+  const canEdit = useCan('mengedit data kelas');
+  const canCreate = useCan('menambahkan kelas baru');
+
+  if (purpose == 'edit' && !canEdit) return null;
+  if (purpose == 'create' && !canCreate) return null;
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>

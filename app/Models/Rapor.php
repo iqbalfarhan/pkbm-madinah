@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Rapor extends Model
 {
@@ -17,6 +18,10 @@ class Rapor extends Model
         'data',
         'pdf_path',
         'publish'
+    ];
+
+    protected $hidden = [
+        'data'
     ];
 
     protected $casts = [
@@ -54,6 +59,18 @@ class Rapor extends Model
     public function scopeTahsin($query)
     {
         return $query->where('jenis', 'tahsin');
+    }
+
+    public function getDownloadFileNameAttribute()
+    {
+        $downloadfilename = implode(' ', [
+            'Rapor',
+            $this->jenis,
+            $this->siswa->name,
+            $this->tahunajaran->label,
+        ]);
+
+        return Str::slug($downloadfilename).'.pdf';
     }
 
 }

@@ -33,6 +33,8 @@ class EkskulSeeder extends Seeder
             ['name' => 'Fotografi & Videografi'],
         ];
 
-        Ekskul::insert($ekstrakurikuler);
+        foreach ($ekstrakurikuler as $ekskul) {
+            Ekskul::factory()->create($ekskul);
+        }
     }
 }

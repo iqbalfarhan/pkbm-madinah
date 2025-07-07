@@ -24,7 +24,6 @@ class MapelFactory extends Factory
             'description' => fake()->paragraph(3),
             'photo' => null,
             'tingkat_id' => Tingkat::pluck('id')->random(),
-            'guru_id' => Guru::pluck('id')->random(),
             'mapel_group_id' => MapelGroup::pluck('id')->random(),
         ];
     }

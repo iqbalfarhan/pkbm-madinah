@@ -138,4 +138,9 @@ class Siswa extends Model implements HasMedia
     {
         return $this->hasOne(Orangtua::class);
     }
+
+    public function asalsekolah()
+    {
+        return $this->hasOne(Asalsekolah::class);
+    }
 }

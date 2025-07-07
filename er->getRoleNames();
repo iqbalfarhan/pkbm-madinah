@@ -1,0 +1,15 @@
+[90m= [39m[34;4mApp\Models\User[39;24m {#6476
+    [34mid[39m: [35m1[39m,
+    [34mname[39m: "[32mIqbal Farhan Syuhada[39m",
+    [34memail[39m: "[32miqbalfarhan1996@gmail.com[39m",
+    [34memail_verified_at[39m: "[32m2025-07-04 04:13:36[39m",
+    [34mlast_login[39m: "[32m2025-07-04 04:14:16[39m",
+    #[33mpassword[39m: "[32m$2y$12$7JPHEBoHL/U56GFg1trURu2IGfwjaBz.i2dUoeOb3xlqOGUcY8nc6[39m",
+    [34mphoto[39m: [36mnull[39m,
+    #[33mremember_token[39m: "[32mQK2HDPJUbT[39m",
+    [34mcreated_at[39m: "[32m2025-07-04 04:13:36[39m",
+    [34mupdated_at[39m: "[32m2025-07-04 04:14:16[39m",
+    [34mdeleted_at[39m: [36mnull[39m,
+    +[1mavatar[22m: "[32mhttp://127.0.0.1:8000/user_placeholder.jpg[39m",
+  }
+

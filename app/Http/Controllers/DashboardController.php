@@ -6,8 +6,11 @@ use App\Models\Guru;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Tahunajaran;
+use App\Models\Tingkat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Permission;
 
 class DashboardController extends Controller
 {
@@ -15,10 +18,11 @@ class DashboardController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        $role = auth()->user()->role;
+        $user = Auth::user();
+        $roles = auth()->user()->getRoleNames()->toArray();
         
-        if ($role === 'admin') {
-            return Inertia::render('dashboard/index', [
+        if ($user->hasRole('admin') || $user->hasRole('superadmin')) {
+            return Inertia::render('dashboard/admin', [
                 'siswa_count' => Siswa::where('status', 'aktif')->count(),
                 'all_siswa_count' => Siswa::count(),
                 'ppdb_count' => Siswa::where('status', 'ppdb')->count(),
@@ -26,19 +30,19 @@ class DashboardController extends Controller
                 'walikelas_count' => Kelas::whereNotNull('guru_id')->count(),
                 'kelas_count' => Kelas::count(),
                 'tahun_ajaran' => Tahunajaran::whereActive(true)->first(),
-
+                'tingkats' => Tingkat::withCount('siswas')->get()
             ]);
         }
-        elseif ($role === 'guru') {
+        elseif (in_array('guru', $roles)) {
             return Inertia::render('dashboard/guru');
         }
-        elseif ($role === 'orangtua') {
+        elseif (in_array('orangtua', $roles)) {
             return Inertia::render('dashboard/orang-tua', [
                 'siswas' => Siswa::where('user_id', auth()->user()->id)->get(),
             ]);
         }
 
-        return redirect()->route('logout');
+        return Auth::logout();
     }
 
     public function dokumentasi() {

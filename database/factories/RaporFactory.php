@@ -21,7 +21,7 @@ class RaporFactory extends Factory
         return [
             'siswa_id' => Siswa::pluck('id')->random(),
             'tahunajaran_id' => Tahunajaran::pluck('id')->random(),
-            'jenis' => fake()->randomElement(['perkembangan', 'umum', 'tahfidz', 'tahsin']),
+            'jenis' => fake()->randomElement(['perkembangan']),
             'data' => null,
             'pdf_path' => fake()->filePath(),
         ];

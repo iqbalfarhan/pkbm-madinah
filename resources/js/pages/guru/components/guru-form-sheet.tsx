@@ -5,10 +5,11 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Textarea } from '@/components/ui/textarea';
+import { errorMessage } from '@/lib/utils';
 import { Guru } from '@/types';
 import { useForm } from '@inertiajs/react';
 import { Check, X } from 'lucide-react';
-import { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, useState } from 'react';
 import { toast } from 'sonner';
 
 type GuruFormSheetProps = PropsWithChildren & {
@@ -17,6 +18,8 @@ type GuruFormSheetProps = PropsWithChildren & {
 };
 
 const GuruFormSheet: FC<GuruFormSheetProps> = ({ children, guru, purpose }) => {
+  const [open, setOpen] = useState(false);
+
   const { data, setData, put, post } = useForm({
     name: guru?.name ?? '',
     nip: guru?.nip ?? '',
@@ -34,12 +37,7 @@ const GuruFormSheet: FC<GuruFormSheetProps> = ({ children, guru, purpose }) => {
         onSuccess: () => {
           toast.success('Berhasil mengubah data guru');
         },
-        onError: (e) => {
-          const m = Object.entries(e)
-            .map(([, v]) => v)
-            .join(', ');
-          toast.error(m);
-        },
+        onError: (e) => toast.error(errorMessage(e)),
       });
     } else {
       post(route('guru.store'), {
@@ -47,18 +45,13 @@ const GuruFormSheet: FC<GuruFormSheetProps> = ({ children, guru, purpose }) => {
         onSuccess: () => {
           toast.success('Berhasil mengubah data guru');
         },
-        onError: (e) => {
-          const m = Object.entries(e)
-            .map(([, v]) => v)
-            .join(', ');
-          toast.error(m);
-        },
+        onError: (e) => toast.error(errorMessage(e)),
       });
     }
   };
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent>
         <SheetHeader>
@@ -74,13 +67,13 @@ const GuruFormSheet: FC<GuruFormSheetProps> = ({ children, guru, purpose }) => {
             className="space-y-6 px-5"
           >
             <FormControl label="Nama tenaga pendidik" required>
-              <Input value={data.name} onChange={(e) => setData('name', e.target.value)} />
+              <Input placeholder={'Full name'} value={data.name} onChange={(e) => setData('name', e.target.value)} />
             </FormControl>
-            <FormControl label="NIP">
-              <Input value={data.nip} onChange={(e) => setData('nip', e.target.value)} />
-            </FormControl>
+            {/* <FormControl label="NIP">
+              <Input placeholder={""} value={data.nip} onChange={(e) => setData('nip', e.target.value)} />
+            </FormControl> */}
             <FormControl label="Nomor telepon">
-              <Input value={data.phone} onChange={(e) => setData('phone', e.target.value)} />
+              <Input placeholder={'+62xxxxxxxxxxx'} value={data.phone} onChange={(e) => setData('phone', e.target.value)} />
             </FormControl>
             <FormControl label="Jenis kelamin">
               <Select value={data.gender} onValueChange={(e) => setData('gender', e)}>
@@ -105,10 +98,10 @@ const GuruFormSheet: FC<GuruFormSheetProps> = ({ children, guru, purpose }) => {
               </Select>
             </FormControl>
             <FormControl label="Alamat email">
-              <Input value={data.email} onChange={(e) => setData('email', e.target.value)} />
+              <Input type="email" placeholder={'Email address'} value={data.email} onChange={(e) => setData('email', e.target.value)} />
             </FormControl>
             <FormControl label="Alamat tempat tinggal">
-              <Textarea value={data.address} onChange={(e) => setData('address', e.target.value)} />
+              <Textarea placeholder="Address" value={data.address} onChange={(e) => setData('address', e.target.value)} />
             </FormControl>
           </form>
         </ScrollArea>

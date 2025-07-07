@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGuruRequest;
 use App\Http\Requests\UpdateGuruRequest;
+use App\Http\Resources\GuruResource;
 use App\Models\Guru;
+use App\Models\User;
 use Inertia\Inertia;
 
 class GuruController extends Controller
@@ -15,7 +17,7 @@ class GuruController extends Controller
     public function index()
     {   
         return Inertia::render('guru/index', [
-            'gurus' => Guru::with('user', 'walikelas')->get(),
+            'gurus' => Guru::with('user', 'walikelas')->orderBy('name')->get(),
         ]);
     }
 
@@ -46,8 +48,9 @@ class GuruController extends Controller
      */
     public function show(Guru $guru)
     {
+        // return new GuruResource($guru);
         return Inertia::render('guru/show', [
-            'guru' => $guru->load('user'),
+            'guru' => new GuruResource($guru),
         ]);
     }
 
@@ -65,10 +68,11 @@ class GuruController extends Controller
     public function update(UpdateGuruRequest $request, Guru $guru)
     {
         $data = $request->validated();
+        // return $data;
 
-        if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('guru');
-        }
+        // if ($request->hasFile('photo')) {
+        //     $data['photo'] = $request->file('photo')->store('guru');
+        // }
 
         $guru->update($data);
     }

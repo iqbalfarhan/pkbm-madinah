@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEkskulRequest;
 use App\Http\Requests\UpdateEkskulRequest;
 use App\Models\Ekskul;
+use App\Models\Guru;
 use Inertia\Inertia;
 
 class EkskulController extends Controller
@@ -14,8 +15,10 @@ class EkskulController extends Controller
      */
     public function index()
     {
+        // return Ekskul::with('siswas', 'guru')->get();
         return Inertia::render('ekskul/index', [
-            'ekskuls' => Ekskul::with('siswas')->get(),
+            'ekskuls' => Ekskul::with('siswas', 'guru')->get(),
+            'gurus' => Guru::get()
         ]);
     }
 

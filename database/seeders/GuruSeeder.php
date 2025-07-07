@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Guru;
+use App\Models\Pelajaran;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +14,6 @@ class GuruSeeder extends Seeder
      */
     public function run(): void
     {
-        Guru::factory(10)->create();
+        Guru::factory(1)->create();
     }
 }

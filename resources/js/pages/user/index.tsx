@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import AppLayout from '@/layouts/app-layout';
 import { User } from '@/types';
 import { Link } from '@inertiajs/react';
+import dayjs from 'dayjs';
 import { Edit, Ellipsis, Filter, Lock, Plus, Trash2 } from 'lucide-react';
 import { FC, useState } from 'react';
 import { toast } from 'sonner';
@@ -27,6 +28,8 @@ const UserList: FC<UserListProps> = ({ users }) => {
 
   const allUserIds = users.map((user) => user.id);
   const isAllChecked = userIds?.length === users.length;
+
+  // return <pre>{JSON.stringify(users, null, 4)}</pre>;
 
   return (
     <AppLayout
@@ -136,14 +139,9 @@ const UserList: FC<UserListProps> = ({ users }) => {
                     </div>
                   </TableCell>
                   <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.role}</TableCell>
-                  <TableCell>{user.last_login}</TableCell>
-                  <TableCell>
-                    {user.role === 'guru' && user.guru && <Link href={route('guru.show', user.guru?.id)}>{user.guru?.name}</Link>}
-                    {user.role === 'orangtua' && user.siswas && user.siswas.length > 0 && (
-                      <Link href={route('user.show', user.id)}>{user.siswas?.length} siswa</Link>
-                    )}
-                  </TableCell>
+                  <TableCell>{user.roles.join(', ')}</TableCell>
+                  <TableCell>{user.last_login && dayjs(user.last_login).format('DD MMMM YYYY')}</TableCell>
+                  <TableCell>lorem</TableCell>
                   <TableCell>
                     <ResetPassword user={user}>
                       <Button variant={'ghost'} size={'icon'}>

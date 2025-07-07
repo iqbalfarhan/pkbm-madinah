@@ -7,9 +7,7 @@ import { Edit, Plus, Trash2, X } from 'lucide-react';
 import { FC, PropsWithChildren } from 'react';
 import MapelGroupFormDialog from './mapel-group-form-dialog';
 
-type MapelGroupSheetProps = PropsWithChildren & {
-  data: string;
-};
+type MapelGroupSheetProps = PropsWithChildren;
 
 const MapelGroupSheet: FC<MapelGroupSheetProps> = ({ children }) => {
   const props = usePage<SharedData>().props;

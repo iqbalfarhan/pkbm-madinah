@@ -10,6 +10,8 @@ use App\Http\Controllers\OrangtuaController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\PpdbController;
 use App\Http\Controllers\RaporController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TahunajaranController;
 use App\Http\Controllers\TingkatController;
@@ -35,31 +37,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/user/bulk-force-delete', [UserController::class, 'bulkForceDelete'])->name('user.bulk-force-delete');
     Route::resource('user', UserController::class);
 
-    Route::resource('tahunajaran', TahunajaranController::class);
+    Route::middleware("can:tahunajaran.*")->resource('tahunajaran', TahunajaranController::class);
     Route::resource('guru', GuruController::class);
     Route::resource('mapel', MapelController::class);
     Route::resource('tingkat', TingkatController::class);
     Route::resource('mapelgroup', MapelGroupController::class);
     Route::resource('pengumuman', PengumumanController::class);
-    Route::resource('kelas', KelasController::class);
     Route::resource('ekskul', EkskulController::class);
 
-    Route::get('/ppdb/setting', [PpdbController::class, 'setting'])->name('ppdb.setting');
+    Route::post('/ppdb/setting', [PpdbController::class, 'setting'])->name('ppdb.setting');
     Route::resource('ppdb', PpdbController::class);
 
-    Route::get('/siswa/{siswa}/rapor', [SiswaController::class, 'rapor'])->name('siswa.rapor');
-    Route::get('/siswa/{siswa}/ketidakhadiran', [SiswaController::class, 'ketidakhadiran'])->name('siswa.ketidakhadiran');
-    Route::get('/siswa/{siswa}/ekskul', [SiswaController::class, 'ekskul'])->name('siswa.ekskul');
-    Route::get('/siswa/{siswa}/orangtua', [SiswaController::class, 'orangtua'])->name('siswa.orangtua');
-    Route::get('/siswa/{siswa}/documents', [SiswaController::class, 'documents'])->name('siswa.documents');
-    Route::get('/siswa/{siswa}/asal-sekolah', [SiswaController::class, 'asalSekolah'])->name('siswa.asal-sekolah');
-    Route::get('/siswa/{siswa}/akun-orangtua', [SiswaController::class, 'akunOrangtua'])->name('siswa.akun-orangtua');
-    Route::put('/siswa/bulk-update', [SiswaController::class, 'bulkUpdate'])->name('siswa.bulk-update');
-    Route::post('/siswa/{siswa}/storeDocument', [SiswaController::class, 'storeDocument'])->name('siswa.storeDocument');
-    Route::resource('siswa', SiswaController::class);
     Route::resource('orangtua', OrangtuaController::class);
+    Route::resource('role', RoleController::class);
 
-    Route::get('/rapor/{rapor}/pdf', [RaporController::class, 'downloadPdf'])->name('rapor.pdf');
+    Route::get('/rapor/{rapor}/pdf/stream', [RaporController::class, 'streamPdf'])->name('rapor.stream');
+    Route::get('/rapor/{rapor}/pdf/download', [RaporController::class, 'downloadPdf'])->name('rapor.download');
     Route::resource('rapor', RaporController::class);
 
     Route::delete('/media/{media}', function(Media $media){
@@ -68,5 +61,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 });
 
+require __DIR__.'/kelas.php';
+require __DIR__.'/siswa.php';
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('ekskuls', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->foreignId('guru_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }

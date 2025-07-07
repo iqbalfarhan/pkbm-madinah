@@ -18,6 +18,9 @@ return new class extends Migration
             $table->foreignId('tahunajaran_id')->constrained('tahunajarans')->cascadeOnDelete();
             $table->json('data')->nullable();
             $table->string('pdf_path')->nullable();
+            $table->text('teacher_comment')->nullable();
+            $table->text('student_comment')->nullable();
+            $table->text('parent_comment')->nullable();
             $table->boolean('publish')->default(false);
             $table->timestamps();
         });

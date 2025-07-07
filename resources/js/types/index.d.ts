@@ -1,10 +1,13 @@
 import { absensiStatusLists, agamaLists, groupTingkat, jenisRaporsLists } from '@/lib/enums';
+import { Penilaian } from '@/lib/mockup-data';
 import { LucideIcon } from 'lucide-react';
 import type { Config } from 'ziggy-js';
 
 export interface Auth {
   user: User;
-  role: User['role'];
+  roles: string[];
+  permissions: string[];
+  kelas: Kelas | null;
 }
 
 export interface BreadcrumbItem {
@@ -21,6 +24,7 @@ export interface NavItem {
   title: string;
   href: string;
   icon?: LucideIcon | null;
+  permission_name?: string | string[];
   isActive?: boolean;
 }
 
@@ -38,7 +42,7 @@ export interface User {
   id: number;
   name: string;
   email: string;
-  role: UserRole;
+  roles: string[];
   avatar?: string;
   email_verified_at: string | null;
   created_at: string;
@@ -66,6 +70,13 @@ export type SiswaStatus = 'ppdb' | 'aktif' | 'lulus' | 'pindah' | 'dikeluarkan';
 export type AbsensiStatus = typeof absensiStatusLists;
 export type JenisRapor = typeof jenisRaporsLists;
 
+export type Pelajaran = {
+  id: number;
+  guru: Guru;
+  kelas: Kelas;
+  mapel: Mapel;
+};
+
 export type Guru = {
   id: number;
   name: string;
@@ -77,7 +88,9 @@ export type Guru = {
   gender: Gender;
   active: boolean;
   user?: User;
-  walikelas?: Guru;
+  walikelas?: Kelas;
+  pelajarans: Pelajaran[];
+  ekskuls?: Ekskul[];
 };
 
 export type Tingkat = {
@@ -85,6 +98,7 @@ export type Tingkat = {
   group: GroupTingkat;
   name: string;
   label: string;
+  siswas_count?: number;
   kelases: Kelas[];
 };
 
@@ -100,6 +114,7 @@ export type Kelas = {
   walikelas: Guru | null;
   siswas: Siswa[];
   mapels: Mapel[];
+  pelajarans?: Pelajaran[];
 };
 
 export type Mapel = {
@@ -108,7 +123,6 @@ export type Mapel = {
   description: string;
   thumbnail: string;
   tingkat: Tingkat;
-  guru: Guru;
   mapel_group: MapelGroup;
   materials: Material[];
   kelas: Kelas[];
@@ -148,6 +162,7 @@ export type Siswa = {
       kegiatan: string;
     };
   })[];
+  orangtua?: Orangtua;
   rapors?: Rapor[];
 };
 
@@ -166,7 +181,7 @@ export type Rapor = {
   siswa: Siswa;
   tahunajaran: TahunAjaran;
   jenis: string;
-  data: RaporPerkembanganData;
+  data: Penilaian[];
   pdf_path: string;
   publish: boolean;
 };
@@ -176,6 +191,7 @@ export type Ekskul = {
   name: string;
   kegiatan: string;
   siswas: Siswa[];
+  guru?: Guru;
 };
 
 export type Absensi = {
@@ -222,4 +238,16 @@ export type Orangtua = {
   mother_address: string;
   mother_phone: string;
   mother_ocupation: string;
+};
+
+export type Role = {
+  id: number;
+  name: string;
+  permissions?: Permission[];
+};
+
+export type Permission = {
+  id: number;
+  group?: string;
+  name: string;
 };

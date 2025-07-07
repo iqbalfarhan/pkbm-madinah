@@ -19,7 +19,6 @@ return new class extends Migration
             $table->timestamp('last_login')->nullable();
             $table->string('password');
             $table->string('photo')->nullable();
-            $table->enum('role', ['admin', 'guru', 'orangtua'])->default('orangtua');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

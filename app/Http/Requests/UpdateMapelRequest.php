@@ -26,7 +26,6 @@ class UpdateMapelRequest extends FormRequest
             'description' => 'nullable|max:255',
             'photo' => 'nullable|image|max:2048',
             'tingkat_id' => 'nullable|exists:tingkats,id',
-            'guru_id' => 'nullable|exists:gurus,id',
             'mapel_group_id' => 'nullable|exists:mapel_groups,id',
         ];
     }
@@ -43,9 +42,6 @@ class UpdateMapelRequest extends FormRequest
 
             'tingkat_id.required' => 'Tingkat harus diisi',
             'tingkat_id.exists' => 'Tingkat tidak valid',
-
-            'guru_id.required' => 'Guru harus',
-            'guru_id.exists' => 'Guru tidak valid',
             
             'mapel_group_id.required' => 'Grup mapel harus diisi',
             'mapel_group_id.exists' => 'Grup mapel tidak valid',

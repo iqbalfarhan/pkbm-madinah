@@ -17,7 +17,6 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('photo')->nullable();
             $table->foreignId('tingkat_id')->nullable()->constrained('tingkats')->nullOnDelete();
-            $table->foreignId('guru_id')->nullable()->constrained('gurus')->nullOnDelete();
             $table->foreignId('mapel_group_id')->nullable()->constrained('mapel_groups')->nullOnDelete();
             $table->timestamps();
         });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SiswaResource;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -47,7 +48,10 @@ class PpdbController extends Controller
      */
     public function show(Siswa $ppdb)
     {
-        //
+        return new SiswaResource($ppdb);
+        return Inertia::render('ppdb/show', [
+            'siswa' => $ppdb
+        ]);
     }
 
     /**

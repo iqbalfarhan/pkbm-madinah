@@ -10,6 +10,7 @@ import { Link } from '@inertiajs/react';
 import { Edit, Folder, Plus, Trash2 } from 'lucide-react';
 import { FC, useState } from 'react';
 import DeleteGuru from './components/delete-guru';
+import GuruFormSheet from './components/guru-form-sheet';
 
 type GuruListProps = {
   gurus: Guru[];
@@ -25,10 +26,12 @@ const GuruList: FC<GuruListProps> = ({ gurus }) => {
       description="List tenaga pendidik"
       breadcrumbs={breadcrumbs}
       actions={
-        <Button>
-          <Plus />
-          Tambah
-        </Button>
+        <GuruFormSheet purpose="create">
+          <Button>
+            <Plus />
+            Tambah
+          </Button>
+        </GuruFormSheet>
       }
     >
       <Input placeholder="Cari guru..." type="search" value={cari} onChange={(e) => setCari(e.target.value)} />
@@ -42,9 +45,9 @@ const GuruList: FC<GuruListProps> = ({ gurus }) => {
                 </Label>
               </Button>
             </TableHead>
-            <TableHead>No</TableHead>
-            <TableHead>NIP</TableHead>
+            {/* <TableHead>NIP</TableHead> */}
             <TableHead>Nama tenaga pendidik</TableHead>
+            <TableHead>User</TableHead>
             <TableHead>Jenis kelamin</TableHead>
             <TableHead>Nomor telepon</TableHead>
             <TableHead>Login terakhir</TableHead>
@@ -59,7 +62,7 @@ const GuruList: FC<GuruListProps> = ({ gurus }) => {
                 .toLowerCase()
                 .includes(cari?.toLowerCase() || ''),
             )
-            .map((guru, index) => (
+            .map((guru) => (
               <TableRow key={guru.id}>
                 <TableCell>
                   <Button variant={'ghost'} size={'icon'} asChild>
@@ -68,8 +71,7 @@ const GuruList: FC<GuruListProps> = ({ gurus }) => {
                     </Label>
                   </Button>
                 </TableCell>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell className="font-mono">{guru.nip}</TableCell>
+                {/* <TableCell className="font-mono">{guru.nip}</TableCell> */}
                 <TableCell>
                   <div className="flex items-center gap-2">
                     <Avatar className="size-6">
@@ -78,6 +80,7 @@ const GuruList: FC<GuruListProps> = ({ gurus }) => {
                     {guru.name}
                   </div>
                 </TableCell>
+                <TableCell>{guru.user?.email}</TableCell>
                 <TableCell>{guru.gender}</TableCell>
                 <TableCell className="font-mono">{guru.phone}</TableCell>
                 <TableCell>{guru.user?.last_login}</TableCell>

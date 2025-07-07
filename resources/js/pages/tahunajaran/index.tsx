@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem, TahunAjaran } from '@/types';
 import { Link, router } from '@inertiajs/react';
-import { AlertCircleIcon, Copy, Edit, Plus, Trash2 } from 'lucide-react';
+import { AlertCircleIcon, Edit, Plus, Trash2 } from 'lucide-react';
 import { FC, useState } from 'react';
 import { toast } from 'sonner';
 import TahunAjaranFormSheet from './components/tahun-ajaran-form-sheet';
@@ -79,11 +79,6 @@ const TahunAjaranList: FC<TahunAjaranListProps> = ({ tahunajarans, active }) => 
                   <Switch checked={ta.active} onCheckedChange={() => toggleActive(ta)} />
                 </TableCell>
                 <TableCell>
-                  <TahunAjaranFormSheet ta={ta} purpose={'duplicate'}>
-                    <Button variant={'ghost'} size={'icon'}>
-                      <Copy />
-                    </Button>
-                  </TahunAjaranFormSheet>
                   <TahunAjaranFormSheet ta={ta} purpose="edit">
                     <Button variant={'ghost'} size={'icon'}>
                       <Edit />

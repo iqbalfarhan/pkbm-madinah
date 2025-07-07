@@ -1,24 +1,48 @@
 import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
+import { enableToAccess } from '@/hooks/use-can';
+import { usePageProps } from '@/hooks/use-page-props';
 import { cn } from '@/lib/utils';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 
-export function NavMain({ items = [], label, className }: { items: NavItem[]; label?: string; className?: string }) {
-  // const { url } = usePage<SharedData>();
+type NavMainProps = {
+  items?: NavItem[];
+  label?: string;
+  className?: string;
+};
+
+export function NavMain({ items = [], label, className }: NavMainProps) {
+  const { permissions } = usePageProps().auth;
+  const listedPermissions = items.map((item) => item.permission_name).filter((p): p is string => !!p);
+
+  const hasPermission =
+    listedPermissions.length === 0 || // semua item gak ada permission
+    listedPermissions.some((p) => permissions.includes(p));
+  if (!hasPermission) return null;
+
+  // return items.flatMap((item) => item.permission_name).join(', ');
+
+  // return permissions.join(', ');
+
   return (
     <SidebarGroup className={cn(className)}>
       {label && <SidebarGroupLabel>{label}</SidebarGroupLabel>}
       <SidebarMenu>
-        {items.map((item) => (
-          <SidebarMenuItem key={item.title}>
-            <SidebarMenuButton asChild isActive={item.isActive} tooltip={{ children: item.title }}>
-              <Link href={item.href} prefetch>
-                {item.icon && <item.icon />}
-                <span>{item.title}</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        ))}
+        {items.map((item) => {
+          const can = item.permission_name && enableToAccess(permissions, item.permission_name);
+
+          if (!can) return null;
+          return (
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton asChild isActive={item.isActive} tooltip={{ children: item.title }}>
+                <Link href={item.href} preserveScroll={true}>
+                  {item.icon && <item.icon />}
+                  <span>{item.title}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          );
+        })}
       </SidebarMenu>
     </SidebarGroup>
   );
