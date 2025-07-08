@@ -124,11 +124,9 @@ class RoleSeeder extends Seeder
             // ppdb
             "ppdb" => [
                 "menampilkan list ppdb" => ["admin"],
-                "menambahkan ppdb baru" => ["admin"],
-                "menyimpan data ppdb" => ["admin"],
-                "menampilkan detail ppdb" => ["admin"],
-                "mengedit data ppdb" => ["admin"],
-                "memperbarui data ppdb" => ["admin"],
+                "menambahkan ppdb baru" => ["admin", "orangtua"],
+                "menampilkan detail ppdb" => ["admin", "orangtua"],
+                "mengedit data ppdb" => ["admin", "orangtua"],
                 "menghapus ppdb" => ["admin"],
             ],
 

@@ -35,7 +35,7 @@ class SettingSeeder extends Seeder
                 "value" => "false"
             ],
             [
-                "key" => "PPDB_TAHUNAJARAN_id",
+                "key" => "PPDB_TAHUNAJARAN_ID",
                 "value" => null
             ]
         ];

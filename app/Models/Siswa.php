@@ -31,6 +31,7 @@ class Siswa extends Model implements HasMedia
         'register_year',
         'phone',
         'email',
+        'status',
         'active',
         'photo'
     ];
@@ -105,6 +106,11 @@ class Siswa extends Model implements HasMedia
     public function scopeDikeluarkan($query)
     {
         return $query->whereStatus('dikeluarkan');
+    }
+
+    public function ketidakhadirans()
+    {
+        return $this->hasMany(Ketidakhadiran::class);
     }
 
     public function getUmurAttribute(): string

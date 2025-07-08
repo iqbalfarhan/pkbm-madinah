@@ -45,7 +45,7 @@ const DetailKelas: FC<DetailKelasProps> = ({ kelas }) => {
               </TableCell>
               <TableCell>{siswa.ttl}</TableCell>
               <TableCell>{siswa.gender}</TableCell>
-              <TableCell>3 hari</TableCell>
+              <TableCell>{siswa.ketidakhadirans?.length} hari</TableCell>
               <TableCell>{siswa.ekskuls?.map((eks) => eks.name).join(', ')}</TableCell>
               <TableCell>
                 <SiswaKontakDialog siswa={siswa}>

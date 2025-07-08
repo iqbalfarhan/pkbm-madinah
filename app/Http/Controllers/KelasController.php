@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreKelasRequest;
 use App\Http\Requests\UpdateKelasRequest;
 use App\Http\Resources\KelasResource;
+use App\Http\Resources\KetidakhadiranResource;
 use App\Models\Guru;
 use App\Models\Kelas;
+use App\Models\Ketidakhadiran;
+use App\Models\Tahunajaran;
 use App\Models\Tingkat;
 use Inertia\Inertia;
 
@@ -79,8 +82,16 @@ class KelasController extends Controller
 
     public function ketidakhadiran(Kelas $kela)
     {
+        $siswa_ids = $kela->siswas->pluck('id');
+        $ta = Tahunajaran::where('active', true)->first()?->id;
+
+        $ketidakhadirans = Ketidakhadiran::when($ta, function($q) use ($ta) {
+            return $q->where('tahunajaran_id', $ta);
+        })->whereIn('siswa_id', $siswa_ids)->get();
+
         return Inertia::render('kelas/tabs/ketidakhadiran', [
             'kelas' => new KelasResource($kela),
+            'ketidakhadirans' => KetidakhadiranResource::collection($ketidakhadirans),
             'tingkats' => Tingkat::get(),
         ]);
     }

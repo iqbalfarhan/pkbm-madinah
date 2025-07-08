@@ -19,7 +19,6 @@ class RaporResource extends JsonResource
             'siswa' => $this->siswa->load('kelas'),
             'tahunajaran' => $this->tahunajaran,
             'jenis' => $this->jenis,
-            'data' => $this->data,
             'pdf_path' => $this->pdf_path,
             'publish' => $this->publish,
             'created_at' => $this->created_at,

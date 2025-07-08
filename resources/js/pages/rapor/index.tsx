@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
-import { Rapor } from '@/types';
+import { BreadcrumbItem, Rapor } from '@/types';
 import { Link } from '@inertiajs/react';
 import { Download, Edit, Filter, Folder, Plus, Trash2 } from 'lucide-react';
 import { FC, useState } from 'react';
@@ -22,6 +22,13 @@ type RaporListProps = {
   };
 };
 
+const breadcrumbs: BreadcrumbItem[] = [
+  {
+    title: 'Rapor',
+    href: '/rapor',
+  },
+];
+
 const RaporList: FC<RaporListProps> = ({ rapors, query }) => {
   const [cari, setCari] = useState<string | undefined>();
 
@@ -29,6 +36,7 @@ const RaporList: FC<RaporListProps> = ({ rapors, query }) => {
 
   return (
     <AppLayout
+      breadcrumbs={breadcrumbs}
       title="List rapor siswa"
       description="List rapor siswa"
       actions={

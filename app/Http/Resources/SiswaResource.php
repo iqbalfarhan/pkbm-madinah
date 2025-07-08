@@ -29,6 +29,7 @@ class SiswaResource extends JsonResource
             'rapors' => $this->rapors,
             'asalsekolah' => $this->asalsekolah,
             'user' => $this->user,
+            'ketidakhadirans' => KetidakhadiranResource::collection($this->ketidakhadirans),
             'media' => $this->getMedia("*"),
         ];
     }

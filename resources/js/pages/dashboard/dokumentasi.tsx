@@ -1,10 +1,12 @@
 import MarkdownReader from '@/components/MarkdownReader';
+import { usePageProps } from '@/hooks/use-page-props';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 import { useEffect, useState } from 'react';
 
 const Dokumentasi = () => {
   const [markdown, setMarkdown] = useState('');
+  const { settings } = usePageProps();
 
   useEffect(() => {
     fetch('README.md')
@@ -25,6 +27,7 @@ const Dokumentasi = () => {
 
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
+      <pre>{JSON.stringify(settings, null, 4)}</pre>
       <MarkdownReader value={markdown} />
     </AppLayout>
   );

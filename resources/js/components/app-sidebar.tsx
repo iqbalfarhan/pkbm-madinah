@@ -40,6 +40,15 @@ export function AppSidebar() {
     },
   ];
 
+  const ppdbNavItems: NavItem[] = [
+    {
+      title: 'Pendaftaran siswa',
+      href: route('ppdb.create'),
+      icon: Users,
+      permission_name: 'menambahkan ppdb baru',
+    },
+  ];
+
   const masterDataNavItems: NavItem[] = [
     {
       title: 'Tahun Ajaran',
@@ -113,6 +122,7 @@ export function AppSidebar() {
           />
         )}
         {hasRole(roles, ['admin', 'superadmin']) && <NavMain items={masterDataNavItems} label="Master Data" />}
+        {hasRole(roles, ['orangtua']) && <NavMain items={ppdbNavItems} label="PPDB" />}
       </SidebarContent>
 
       <SidebarFooter>

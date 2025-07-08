@@ -1,0 +1,1 @@
+const s=["TK","SD","SMP","SMA","SMK"],a=["admin","guru","orangtua"],n=["Laki-laki","Perempuan"],i=["ppdb","aktif","lulus","pindah","dikeluarkan"],t=["perkembangan","mapel umum","tahfidz","tahsin"];export{t as a,s as g,n as j,i as s,a as u};

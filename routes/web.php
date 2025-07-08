@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EkskulController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\KetidakhadiranController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\MapelGroupController;
 use App\Http\Controllers\OrangtuaController;
@@ -50,6 +51,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('orangtua', OrangtuaController::class);
     Route::resource('role', RoleController::class);
+    Route::resource('ketidakhadiran', KetidakhadiranController::class);
 
     Route::get('/rapor/{rapor}/pdf/stream', [RaporController::class, 'streamPdf'])->name('rapor.stream');
     Route::get('/rapor/{rapor}/pdf/download', [RaporController::class, 'downloadPdf'])->name('rapor.download');

@@ -24,8 +24,8 @@ class StoreSiswaRequest extends FormRequest
         return [
             'name' => 'required',
             'nisn' => 'nullable',
-            'user_id' => 'nullable|exists::users,id',
-            'kelas_id' => 'nullable|exists::kelas,id',
+            'user_id' => 'nullable|exists:users,id',
+            'kelas_id' => 'nullable|exists:kelas,id',
             'gender' => 'nullable|in:Laki-laki,Perempuan',
             'pob' => 'nullable',
             'dob' => 'nullable',
@@ -34,6 +34,7 @@ class StoreSiswaRequest extends FormRequest
             'address' => 'nullable',
             'phone' => 'nullable|string|regex:/^\+62\d{10,14}$/',
             'email' => 'nullable|email',
+            'status' => 'nullable|in:ppdb,aktif,lulus,pindah,dikeluarkan',
             'active' => 'nullable|boolean',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];

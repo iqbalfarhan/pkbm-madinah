@@ -11,52 +11,85 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { usePageProps } from '@/hooks/use-page-props';
+import { errorMessage } from '@/lib/utils';
+import TahunAjaranFormSheet from '@/pages/tahunajaran/components/tahun-ajaran-form-sheet';
+import { TahunAjaran } from '@/types';
 import { useForm } from '@inertiajs/react';
-import { X } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import { FC, PropsWithChildren } from 'react';
+import { toast } from 'sonner';
 
 type PpdbPengaturanDialogProps = PropsWithChildren;
 
 const PpdbPengaturanDialog: FC<PpdbPengaturanDialogProps> = ({ children }) => {
-  const { data, setData } = useForm({
-    buka_sesi_ppdb: '',
-    tahunajaran_id: '',
+  const { settings, tahun_ajaran, tahunajarans } = usePageProps();
+
+  const tas = tahunajarans as TahunAjaran[];
+
+  const { data, setData, post } = useForm({
+    PPDB_OPEN: settings['PPDB_OPEN'] ?? 'false',
+    PPDB_TAHUNAJARAN_ID: tahun_ajaran?.id,
   });
+
+  const handleUpdateSetting = () => {
+    post(route('ppdb.setting'), {
+      preserveScroll: true,
+      onSuccess: () => {
+        toast.success('Pengaturan berhasil diubah');
+      },
+      onError: (e) => toast.error(errorMessage(e)),
+    });
+  };
 
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Dialog title</DialogTitle>
-          <DialogDescription>Dialog description</DialogDescription>
+          <DialogTitle>Pengaturan PPDB</DialogTitle>
+          <DialogDescription>Buka atau tutup sesi pendaftaran</DialogDescription>
         </DialogHeader>
-        <div className="py-6">
+        <form
+          className="space-y-4 py-6"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleUpdateSetting();
+          }}
+        >
           <FormControl label="Buka sesi ppdb">
-            <Select value={data.buka_sesi_ppdb} onValueChange={(value) => setData('buka_sesi_ppdb', value)}>
+            <Select value={data.PPDB_OPEN} onValueChange={(value) => setData('PPDB_OPEN', value)}>
               <SelectTrigger>
                 <SelectValue placeholder="Pilih status pembukaan PPDB" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="open">Buka</SelectItem>
-                <SelectItem value="close">Tutup</SelectItem>
+                <SelectItem value="true">Buka</SelectItem>
+                <SelectItem value="false">Tutup</SelectItem>
               </SelectContent>
             </Select>
           </FormControl>
-          {data.buka_sesi_ppdb === 'open' && (
-            <FormControl label="Tahun ajaran">
-              <Select value={data.tahunajaran_id} onValueChange={(value) => setData('tahunajaran_id', value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Pilih tahun ajaran" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="2023/2024">2023/2024</SelectItem>
-                  <SelectItem value="2024/2025">2024/2025</SelectItem>
-                </SelectContent>
-              </Select>
-            </FormControl>
-          )}
-        </div>
+          <FormControl
+            label="Tahun ajaran"
+            action={
+              <TahunAjaranFormSheet purpose="create">
+                <span className="text-xs underline">Pengaturan TA</span>
+              </TahunAjaranFormSheet>
+            }
+          >
+            <Select value={data.PPDB_TAHUNAJARAN_ID?.toString()} onValueChange={(value) => setData('PPDB_TAHUNAJARAN_ID', parseInt(value))}>
+              <SelectTrigger>
+                <SelectValue placeholder="Pilih tahun ajaran" />
+              </SelectTrigger>
+              <SelectContent>
+                {tas.map((tahunajaran) => (
+                  <SelectItem key={tahunajaran.id} value={tahunajaran.id.toString()}>
+                    {tahunajaran.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </FormControl>
+        </form>
         <DialogFooter>
           <DialogClose asChild>
             <Button variant={'outline'}>
@@ -64,6 +97,10 @@ const PpdbPengaturanDialog: FC<PpdbPengaturanDialogProps> = ({ children }) => {
               Batal
             </Button>
           </DialogClose>
+          <Button onClick={handleUpdateSetting}>
+            <Check />
+            Simpan
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

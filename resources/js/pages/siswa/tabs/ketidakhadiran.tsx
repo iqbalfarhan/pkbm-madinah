@@ -1,18 +1,19 @@
-import { Siswa } from '@/types';
+import KetidakhadiranTable from '@/pages/ketidakhadiran/components/ketidakhadiran-table';
+import { Ketidakhadiran, Siswa } from '@/types';
 import { FC } from 'react';
 import SiswaLayout from '../layout/siswa-layout';
 
-type KetidakhadiranProps = {
+type KetidakhadiranSiswaProps = {
   siswa: Siswa;
+  ketidakhadirans: Ketidakhadiran[];
 };
 
-const Ketidakhadiran: FC<KetidakhadiranProps> = ({ siswa }) => {
+const KetidakhadiranSiswa: FC<KetidakhadiranSiswaProps> = ({ siswa, ketidakhadirans }) => {
   return (
     <SiswaLayout siswa={siswa}>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Labore hic explicabo ipsam maxime. Accusamus, similique recusandae dolorum fugit a
-      saepe ea exercitationem illo sed, sapiente, molestiae debitis deleniti magni commodi.
+      <KetidakhadiranTable ketidakhadirans={ketidakhadirans} />
     </SiswaLayout>
   );
 };
 
-export default Ketidakhadiran;
+export default KetidakhadiranSiswa;

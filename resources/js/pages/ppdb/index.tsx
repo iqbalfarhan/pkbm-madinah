@@ -1,3 +1,4 @@
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -5,10 +6,11 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { usePageProps } from '@/hooks/use-page-props';
 import AppLayout from '@/layouts/app-layout';
 import { Siswa } from '@/types';
 import { Link } from '@inertiajs/react';
-import { Edit, Folder, Settings, Trash2 } from 'lucide-react';
+import { Edit, Folder, Settings, ThumbsUp, Trash2 } from 'lucide-react';
 import { FC, useState } from 'react';
 import SiswaStatusBadge from '../siswa/components/siswa-status-badge';
 import PpdbPengaturanDialog from './components/ppdb-pengaturan-dialog';
@@ -19,6 +21,7 @@ type PpdbListProps = {
 
 const PpdbList: FC<PpdbListProps> = ({ siswas }) => {
   const [cari, setCari] = useState<string | undefined>();
+  const { settings, tahun_ajaran } = usePageProps();
 
   return (
     <AppLayout
@@ -26,9 +29,6 @@ const PpdbList: FC<PpdbListProps> = ({ siswas }) => {
       description="Daftar calon peserta didik baru"
       actions={
         <>
-          <Button variant={'ghost'} className="animate-pulse text-chart-3">
-            Saat ini ppdb sedang dibuka
-          </Button>
           <PpdbPengaturanDialog>
             <Button>
               <Settings />
@@ -38,6 +38,13 @@ const PpdbList: FC<PpdbListProps> = ({ siswas }) => {
         </>
       }
     >
+      {settings['PPDB_OPEN'] === 'true' && (
+        <Alert variant={'success'}>
+          <ThumbsUp />
+          <AlertTitle>Sesi PPDB sedang dibuka</AlertTitle>
+          <AlertDescription>Pendaftaran peserta didik baru untuk TA {tahun_ajaran?.label} sedang dibuka</AlertDescription>
+        </Alert>
+      )}
       <Input placeholder="Cari siswa..." type="search" value={cari} onChange={(e) => setCari(e.target.value)} />
       <Table>
         <TableHeader>
@@ -92,17 +99,17 @@ const PpdbList: FC<PpdbListProps> = ({ siswas }) => {
                   <Badge variant={'success'}>Lunas</Badge>
                 </TableCell>
                 <TableCell>
-                  <Button variant={'ghost'} size={'icon'}>
+                  <Button variant={'ghost'} size={'icon'} asChild>
                     <Link href={route('ppdb.show', siswa.id)}>
                       <Folder />
                     </Link>
                   </Button>
-                  <Button variant={'ghost'} size={'icon'}>
+                  <Button variant={'ghost'} size={'icon'} asChild>
                     <Link href={route('ppdb.edit', siswa.id)}>
                       <Edit />
                     </Link>
                   </Button>
-                  <Button variant={'ghost'} size={'icon'}>
+                  <Button variant={'ghost'} size={'icon'} asChild>
                     <Link href={route('siswa.destroy', siswa.id)} method="delete">
                       <Trash2 />
                     </Link>

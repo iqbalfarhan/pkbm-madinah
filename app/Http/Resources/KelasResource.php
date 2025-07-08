@@ -19,7 +19,9 @@ class KelasResource extends JsonResource
             "name" => $this->name,
             "tingkat" => $this->tingkat,
             "walikelas" => $this->walikelas,
-            "siswas" => $this->siswas->load('ekskuls', 'orangtua'),
+            "description" => $this->description ?? "",
+            "siswas" => $this->siswas->load('ekskuls', 'orangtua', 'ketidakhadirans'),
+            "pelajarans" => $this->pelajarans->load('mapel', 'guru'),
         ];
     }
 }

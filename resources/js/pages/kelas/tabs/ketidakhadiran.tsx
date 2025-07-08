@@ -1,20 +1,32 @@
-import { Kelas } from '@/types';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import KetidakhadiranCreateSheet from '@/pages/ketidakhadiran/components/ketidakhadiran-create-sheet';
+import KetidakhadiranTable from '@/pages/ketidakhadiran/components/ketidakhadiran-table';
+import { Kelas, Ketidakhadiran } from '@/types';
+import { Plus } from 'lucide-react';
 import { FC } from 'react';
 import KelasLayout from '../layout/kelas-layout';
 
-type KetidakhadiranProps = {
+type KetidakhadiranListProps = {
   kelas: Kelas;
+  ketidakhadirans: Ketidakhadiran[];
 };
 
-const Ketidakhadiran: FC<KetidakhadiranProps> = ({ kelas }) => {
+const KetidakhadiranList: FC<KetidakhadiranListProps> = ({ kelas, ketidakhadirans }) => {
   return (
     <KelasLayout kelas={kelas}>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae rerum in ducimus sunt, cumque debitis tempore nam commodi, saepe pariatur
-        laborum voluptas recusandae expedita quibusdam repellendus consectetur quae quisquam aliquam.
-      </p>
+      <div className="flex items-center justify-center gap-4">
+        <Input placeholder="Cari ketidakhadiran" />
+        <KetidakhadiranCreateSheet siswas={kelas.siswas}>
+          <Button>
+            <Plus />
+            Tambah ketidakhadiran
+          </Button>
+        </KetidakhadiranCreateSheet>
+      </div>
+      <KetidakhadiranTable ketidakhadirans={ketidakhadirans} />
     </KelasLayout>
   );
 };
 
-export default Ketidakhadiran;
+export default KetidakhadiranList;

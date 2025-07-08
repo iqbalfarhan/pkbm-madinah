@@ -23,7 +23,7 @@ class StoreTingkatRequest extends FormRequest
     {
         return [
             'group' => 'required|string|in:TK,SD,SMP,SMA,SMK',
-            'name' => 'required|string|unique:tingkats,name'
+            'name' => 'required|string'
         ];
     }
 
@@ -36,7 +36,6 @@ class StoreTingkatRequest extends FormRequest
 
             'name.required' => 'Nama tinggak harus diisi',
             'name.string' => 'Nama tingkat harus berupa text',
-            'name.unique' => 'Nama tingkat sudah ada. gunakan yang lain',
         ];
     }
 }

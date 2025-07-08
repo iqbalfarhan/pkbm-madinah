@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Http\Resources\UserResource;
 use App\Models\Kelas;
+use App\Models\Setting;
 use App\Models\Tahunajaran;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
@@ -63,6 +64,7 @@ class HandleInertiaRequests extends Middleware
                 'permissions' => $permissions,
                 'kelas' => $user?->hasRole('walikelas') ? Kelas::where('guru_id',$user->guru->id)->get() : null,
             ],
+            'settings' => Setting::pluck('value', 'key'),
             'ziggy' => fn (): array => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),

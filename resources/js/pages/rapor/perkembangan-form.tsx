@@ -11,7 +11,7 @@ import { Rapor, Siswa, TahunAjaran } from '@/types';
 import { Penilaian, PointMark } from '@/types/rapor';
 import { useForm } from '@inertiajs/react';
 import { Check, ExternalLink } from 'lucide-react';
-import { FC } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 import { toast } from 'sonner';
 import { useDebouncedCallback } from 'use-debounce';
 
@@ -36,7 +36,7 @@ const RaporPerkembanganForm: FC<RaporPerkembanganFormProps> = ({ rapor }) => {
     setData(updated);
   }, 300);
 
-  const handleUpdate = () => {
+  const handleUpdate = useCallback(() => {
     put(route('rapor.update', rapor.id), {
       preserveScroll: true,
       onSuccess: () => {
@@ -44,7 +44,23 @@ const RaporPerkembanganForm: FC<RaporPerkembanganFormProps> = ({ rapor }) => {
       },
       onError: (e) => toast.error(errorMessage(e)),
     });
-  };
+  }, [put, rapor.id]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault(); // Biar gak nge-save halaman
+        handleUpdate();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    // Cleanup pas komponen unmount
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleUpdate]);
 
   return (
     <AppLayout

@@ -20,10 +20,6 @@ class Rapor extends Model
         'publish'
     ];
 
-    protected $hidden = [
-        'data'
-    ];
-
     protected $casts = [
         'data' => 'array',
         'publish' => 'boolean'

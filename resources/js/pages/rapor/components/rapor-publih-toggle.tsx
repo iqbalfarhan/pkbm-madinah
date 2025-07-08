@@ -32,6 +32,7 @@ const RaporPublishToggle: FC<RaporPublishToggleProps> = ({ children, rapor }) =>
         jenis: rapor.jenis,
       },
       {
+        preserveScroll: true,
         onSuccess: () => {
           toast.success('Rapor berhasil di publish');
         },

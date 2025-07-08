@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRaporRequest;
 use App\Http\Requests\UpdateRaporRequest;
+use App\Http\Resources\RaporDataResource;
 use App\Http\Resources\RaporResource;
 use App\Models\Rapor;
 use App\Models\Siswa;
@@ -61,7 +62,9 @@ class RaporController extends Controller
      */
     public function show(Rapor $rapor)
     {
-        //
+        return Inertia::render('rapor/show', [
+            'rapor' => new RaporDataResource($rapor),
+        ]);
     }
 
     /**
@@ -70,7 +73,7 @@ class RaporController extends Controller
     public function edit(Rapor $rapor)
     {
         return Inertia::render("rapor/perkembangan-form", [
-            'rapor' => new RaporResource($rapor),
+            'rapor' => new RaporDataResource($rapor),
         ]);
     }
 

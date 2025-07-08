@@ -1,3 +1,4 @@
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Kelas } from '@/types';
 import { FC } from 'react';
 import KelasLayout from '../layout/kelas-layout';
@@ -7,12 +8,23 @@ type PelajaranProps = {
 };
 
 const Pelajaran: FC<PelajaranProps> = ({ kelas }) => {
+  const pelajarans = kelas.pelajarans ?? [];
   return (
     <KelasLayout kelas={kelas}>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae rerum in ducimus sunt, cumque debitis tempore nam commodi, saepe pariatur
-        laborum voluptas recusandae expedita quibusdam repellendus consectetur quae quisquam aliquam.
-      </p>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Nama matapelajaran</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {pelajarans.map((pelajaran) => (
+            <TableRow key={pelajaran.id}>
+              <TableCell>{pelajaran.mapel.name}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </KelasLayout>
   );
 };

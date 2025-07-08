@@ -6,9 +6,11 @@ use App\Http\Requests\BulkUpdateSiswaRequest;
 use App\Http\Requests\StoreSiswaRequest;
 use App\Http\Requests\UpdateSiswaRequest;
 use App\Http\Requests\UploadDocumentSiswaRequest;
+use App\Http\Resources\KetidakhadiranResource;
 use App\Http\Resources\SiswaResource;
 use App\Models\Ekskul;
 use App\Models\Kelas;
+use App\Models\Ketidakhadiran;
 use App\Models\Siswa;
 use App\Models\Tahunajaran;
 use App\Models\User;
@@ -75,6 +77,8 @@ class SiswaController extends Controller
     {
         $this->authorize('view', $siswa);
 
+        if ($siswa->status == "ppdb") return redirect()->route('ppdb.show', $siswa->id);
+
         return Inertia::render('siswa/tabs/data-diri',[
             'siswa' => $siswa->load('kelas', 'kelas.tingkat', 'ekskuls', 'rapors', 'rapors.tahunajaran'),
             'kelases' => Kelas::get(),
@@ -128,8 +132,14 @@ class SiswaController extends Controller
     
     public function ketidakhadiran(Siswa $siswa)
     {
+        $ta = Tahunajaran::where('active', true)->first()?->id;
+        $ketidakhadirans = Ketidakhadiran::when($ta, function($q) use ($ta) {
+            return $q->where('tahunajaran_id', $ta);
+        })->where('siswa_id', $siswa->id)->get();
+
         return Inertia::render('siswa/tabs/ketidakhadiran', [
             'siswa' => $siswa,
+            'ketidakhadirans' => KetidakhadiranResource::collection($ketidakhadirans),
             'kelases' => Kelas::get(),
         ]);
     }

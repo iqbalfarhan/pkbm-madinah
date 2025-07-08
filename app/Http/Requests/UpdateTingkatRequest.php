@@ -23,7 +23,7 @@ class UpdateTingkatRequest extends FormRequest
     {
         return [
             'group' => 'nullable|string|in:TK,SD,SMP,SMA,SMK',
-            'name' => 'nullable|string|unique:tingkats,name,'.$this->tingkat->id,
+            'name' => 'nullable|string',
         ];
     }
 
@@ -34,7 +34,6 @@ class UpdateTingkatRequest extends FormRequest
             'group.in' => 'Nama group harus diisi dengan TK/SD/SMP/SMA/SMK',
 
             'name.string' => 'Nama tingkat harus berupa text',
-            'name.unique' => 'Nama tingkat sudah ada. gunakan yang lain',
         ];
     }
 }

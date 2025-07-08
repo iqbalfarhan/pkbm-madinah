@@ -35,6 +35,7 @@ export interface SharedData {
   ziggy: Config & { location: string };
   sidebarOpen: boolean;
   tahun_ajaran: TahunAjaran;
+  settings: { [key: string]: string };
   [key: string]: unknown;
 }
 
@@ -112,6 +113,7 @@ export type Kelas = {
   name: string;
   tingkat: Tingkat;
   walikelas: Guru | null;
+  description: string;
   siswas: Siswa[];
   mapels: Mapel[];
   pelajarans?: Pelajaran[];
@@ -164,6 +166,7 @@ export type Siswa = {
   })[];
   orangtua?: Orangtua;
   rapors?: Rapor[];
+  ketidakhadirans?: Ketidakhadiran[];
 };
 
 type RaporPerkembanganData = {
@@ -250,4 +253,13 @@ export type Permission = {
   id: number;
   group?: string;
   name: string;
+};
+
+export type Ketidakhadiran = {
+  id: number;
+  date: string;
+  siswa: Siswa;
+  tahunajaran: TahunAjaran;
+  reason: string;
+  medias: Media[];
 };

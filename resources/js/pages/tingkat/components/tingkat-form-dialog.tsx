@@ -27,7 +27,7 @@ type TingkatFormDialogProps = PropsWithChildren & {
 const TingkatFormDialog: FC<TingkatFormDialogProps> = ({ children, tingkat, purpose }) => {
   const [open, setOpen] = useState(false);
 
-  const { data, setData, post, put, reset } = useForm({
+  const { data, setData, post, put } = useForm({
     name: tingkat?.name ?? '',
     group: tingkat?.group ?? 'TK',
   });
@@ -38,7 +38,7 @@ const TingkatFormDialog: FC<TingkatFormDialogProps> = ({ children, tingkat, purp
         preserveScroll: true,
         onSuccess: () => {
           toast.success('Tingkat berhasil ditambahkan');
-          reset();
+          setData('name', '');
           setOpen(false);
         },
         onError: (e) => {

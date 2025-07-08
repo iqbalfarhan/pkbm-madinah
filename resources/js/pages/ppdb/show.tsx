@@ -12,7 +12,7 @@ type DetailPPDBProps = {
 
 const DetailPPDB: FC<DetailPPDBProps> = ({ siswa }) => {
   return (
-    <AppLayout title="Detail calok peserta didik baru">
+    <AppLayout title="Detail calon peserta didik baru">
       <div className="grid grid-cols-3 gap-6">
         <SiswaHeadingCard siswa={siswa} className="col-span-full" />
         <Card>

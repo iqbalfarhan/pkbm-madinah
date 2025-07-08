@@ -20,18 +20,20 @@ const TingkatListSheet: FC<TingkatListSheetProps> = ({ children }) => {
       <SheetContent>
         <SheetHeader>
           <SheetTitle>List tingkat kelas</SheetTitle>
-          <SheetDescription>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci, cumque.</SheetDescription>
+          <SheetDescription>Pengaturan list tingkat kelas</SheetDescription>
         </SheetHeader>
         <div className="space-y-6 px-4">
           <Input placeholder="Cari tingkat..." type="search" value={cari} onChange={(e) => setCari(e.target.value)} />
-          <ScrollArea className="max-h-96 overflow-auto">
+        </div>
+        <ScrollArea className="flex-1 overflow-auto">
+          <div className="space-y-6 px-4">
             <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead>Group</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead>Label</TableHead>
-                  <TableHead></TableHead>
+                  <TableHead>Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -62,8 +64,8 @@ const TingkatListSheet: FC<TingkatListSheetProps> = ({ children }) => {
                   ))}
               </TableBody>
             </Table>
-          </ScrollArea>
-        </div>
+          </div>
+        </ScrollArea>
         <SheetFooter>
           <TingkatFormDialog purpose="create">
             <Button>

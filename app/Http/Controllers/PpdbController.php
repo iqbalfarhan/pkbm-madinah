@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PpdbSettingSettingRequest;
+use App\Http\Requests\StoreSiswaRequest;
 use App\Http\Resources\SiswaResource;
+use App\Models\Setting;
 use App\Models\Siswa;
+use App\Models\Tahunajaran;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -15,16 +19,25 @@ class PpdbController extends Controller
     public function index()
     {
         return Inertia::render('ppdb/index', [
-            'siswas' => Siswa::orderBy('created_at')->ppdb()->get()
+            'siswas' => Siswa::orderBy('created_at')->ppdb()->get(),
+            'tahunajarans' => Tahunajaran::orderBy('name')->get(),
         ]);
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function setting()
+    public function setting(PpdbSettingSettingRequest $request)
     {
-        return Inertia::render('ppdb/pengaturan');
+        $data = $request->validated();
+
+        Setting::where('key', 'PPDB_OPEN')->update([
+            'value' => $data['PPDB_OPEN']
+        ]);
+
+        Setting::where('key', 'PPDB_TAHUNAJARAN_ID')->update([
+            'value' => $data['PPDB_TAHUNAJARAN_ID']
+        ]);
     }
 
     /**
@@ -32,15 +45,16 @@ class PpdbController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('ppdb/create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreSiswaRequest $request)
     {
-        //
+        $siswa = Siswa::create($request->validated());
+        return redirect()->route('ppdb.show', $siswa->id);
     }
 
     /**
@@ -48,7 +62,10 @@ class PpdbController extends Controller
      */
     public function show(Siswa $ppdb)
     {
-        return new SiswaResource($ppdb);
+        if ($ppdb->status !== 'ppdb') {
+            abort(404);
+        }
+
         return Inertia::render('ppdb/show', [
             'siswa' => $ppdb
         ]);

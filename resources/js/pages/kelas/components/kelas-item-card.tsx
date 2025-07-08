@@ -12,10 +12,7 @@ const KelasItemCard: FC<KelasItemCardProps> = ({ kelas }) => {
     <Card>
       <CardHeader>
         <CardTitle>{kelas.name}</CardTitle>
-        <CardDescription className="line-clamp-2">
-          Tingkat {kelas.tingkat?.group} {kelas.siswas?.length} peserta didik {kelas.pelajarans?.length ?? 0} pelajaran walikelas{' '}
-          {kelas.walikelas?.name}
-        </CardDescription>
+        <CardDescription className="line-clamp-2">{kelas.description}</CardDescription>
       </CardHeader>
       <CardFooter>
         <div className="flex items-center gap-2 text-sm">
