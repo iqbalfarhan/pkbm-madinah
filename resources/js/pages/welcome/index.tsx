@@ -25,7 +25,7 @@ export default function Welcome() {
         </CardFooter>
       </Card>
 
-      <div className="grid grid-cols-2 gap-12 py-20 text-lg">
+      <div className="grid grid-cols-2 gap-20 space-y-12 py-20 text-lg">
         <div className="flex w-full flex-col items-center justify-center">
           <div className="w-full">
             <Heading title="Informasi PPDB Online" description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, autem." />

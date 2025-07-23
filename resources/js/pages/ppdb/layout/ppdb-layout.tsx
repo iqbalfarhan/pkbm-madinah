@@ -14,6 +14,11 @@ type Props = PropsWithChildren & {
 const PpdbLayout: FC<Props> = ({ children, active = 'datadiri', guide }) => {
   const tabMenuList: NavItem[] = [
     {
+      title: 'Pembuatan akun',
+      href: route('pendaftaran.create'),
+      key: 'akun',
+    },
+    {
       title: 'Datadiri siswa',
       href: route('pendaftaran.create'),
       key: 'datadiri',
@@ -38,19 +43,11 @@ const PpdbLayout: FC<Props> = ({ children, active = 'datadiri', guide }) => {
       href: route('pendaftaran.berkas', 2),
       key: 'berkas',
     },
-    {
-      title: 'Pembuatan akun',
-      href: route('pendaftaran.berkas', 2),
-      key: 'akun',
-    },
   ];
 
   return (
     <WelcomeLayout>
-      <Heading
-        title="Selamat Datang di PPDB Online PKBM AL-MADINAH BALIKPAPAN"
-        description="lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum."
-      />
+      <Heading title="Pendaftaran informasi siswa" description="lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum." />
       <div className="mb-6 flex items-center justify-center gap-12 p-6">
         {tabMenuList.map((item, index) => (
           <WizardTrigger key={item.key} item={item} number={index + 1} active={active === item.key} />
