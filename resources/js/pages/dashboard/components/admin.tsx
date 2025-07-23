@@ -1,7 +1,9 @@
+import { enableToAccess } from '@/hooks/use-can';
+import { usePageProps } from '@/hooks/use-page-props';
 import { TahunAjaran, Tingkat } from '@/types';
 import { FC } from 'react';
 import TingkatChartWidget from '../widget/tingkat-chart-widget';
-import WidgetCard from './widget-card';
+import WidgetCard from '../widget/widget-card';
 
 type DashboardAdminProps = {
   siswa_count: number;
@@ -10,19 +12,17 @@ type DashboardAdminProps = {
   guru_count: number;
   walikelas_count: number;
   kelas_count: number;
-  tahun_ajaran?: TahunAjaran;
+  active_ta?: TahunAjaran;
   tingkats: Tingkat[];
 };
 
-const DashboardAdmin: FC<DashboardAdminProps> = ({
-  siswa_count,
-  all_siswa_count,
-  guru_count,
-  walikelas_count,
-  kelas_count,
-  tahun_ajaran,
-  tingkats,
-}) => {
+const DashboardAdmin: FC<DashboardAdminProps> = ({ siswa_count, all_siswa_count, guru_count, walikelas_count, kelas_count, active_ta, tingkats }) => {
+  const { permissions } = usePageProps().auth;
+
+  if (!enableToAccess(permissions, 'menampilkan widget admin')) {
+    return null;
+  }
+
   return (
     <>
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
@@ -45,12 +45,13 @@ const DashboardAdmin: FC<DashboardAdminProps> = ({
           title="kelas"
           description={`Kelas yang ada di sekolah. dengan ${siswa_count} siswa yang aktif di kelas.`}
         />
-        {tahun_ajaran && (
-          <WidgetCard value={tahun_ajaran?.semester} title={tahun_ajaran.name} description="Tahun ajaran dan semester yang berjalan sekarang." />
+        {active_ta && (
+          <WidgetCard value={active_ta?.semester} title={active_ta.name} description="Tahun ajaran dan semester yang berjalan sekarang." />
         )}
       </div>
 
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <TingkatChartWidget tingkats={tingkats} />
         <TingkatChartWidget tingkats={tingkats} />
       </div>
     </>

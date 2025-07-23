@@ -17,19 +17,21 @@ import TahunAjaranFormSheet from '@/pages/tahunajaran/components/tahun-ajaran-fo
 import { TahunAjaran } from '@/types';
 import { useForm } from '@inertiajs/react';
 import { Check, X } from 'lucide-react';
-import { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, useState } from 'react';
 import { toast } from 'sonner';
 
 type PpdbPengaturanDialogProps = PropsWithChildren;
 
 const PpdbPengaturanDialog: FC<PpdbPengaturanDialogProps> = ({ children }) => {
-  const { settings, tahun_ajaran, tahunajarans } = usePageProps();
+  const [open, setOpen] = useState(false);
+
+  const { settings, active_ta, tahunajarans } = usePageProps();
 
   const tas = tahunajarans as TahunAjaran[];
 
   const { data, setData, post } = useForm({
     PPDB_OPEN: settings['PPDB_OPEN'] ?? 'false',
-    PPDB_TAHUNAJARAN_ID: tahun_ajaran?.id,
+    PPDB_TAHUNAJARAN_ID: active_ta?.id,
   });
 
   const handleUpdateSetting = () => {
@@ -37,13 +39,14 @@ const PpdbPengaturanDialog: FC<PpdbPengaturanDialogProps> = ({ children }) => {
       preserveScroll: true,
       onSuccess: () => {
         toast.success('Pengaturan berhasil diubah');
+        setOpen(false);
       },
       onError: (e) => toast.error(errorMessage(e)),
     });
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>

@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTahunajaranRequest;
 use App\Http\Requests\UpdateTahunajaranRequest;
+use App\Models\Kelas;
 use App\Models\Tahunajaran;
+use App\Models\Guru;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
@@ -25,9 +29,17 @@ class TahunajaranController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $active = Tahunajaran::whereActive(true)->first();
+        $taid = $request->query('taid') ?? $active->id;
+
+        return Inertia::render('tahunajaran/create', [
+            'gurus' => Guru::get(),
+            'tas' => Tahunajaran::get(),
+            'kelas' => Kelas::whereTahunajaranId($taid)->get(),
+            'query' => $request->query(),
+        ]);
     }
 
     /**
@@ -81,6 +93,13 @@ class TahunajaranController extends Controller
      */
     public function destroy(Tahunajaran $tahunajaran)
     {
-        $tahunajaran->delete();
+        $user = Auth::user();
+        if ($user->hasRole('superadmin')) {
+            $tahunajaran->delete();
+        } else {
+            throw ValidationException::withMessages([
+                'error' => 'Anda tidak memiliki hak akses untuk menghapus tahun ajaran ini.'
+            ]);
+        }
     }
 }

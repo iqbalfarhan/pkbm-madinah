@@ -57,14 +57,16 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'name' => config('app.name'),
-            'tahun_ajaran' => Tahunajaran::whereActive(true)->first(),
+            'active_ta' => Tahunajaran::whereActive(true)->first(),
+            'tas' => Tahunajaran::latest()->get(),
             'auth' => [
                 'user' => $user ? new UserResource($request->user()) : null,
-                'roles' => $request->user()?->getRoleNames(),
+                'roles' => $user?->getRoleNames(),
                 'permissions' => $permissions,
                 'kelas' => $user?->hasRole('walikelas') ? Kelas::where('guru_id',$user->guru->id)->get() : null,
             ],
             'settings' => Setting::pluck('value', 'key'),
+            'ppdb_open' => Setting::where('key', 'PPDB_OPEN')->first()->value,
             'ziggy' => fn (): array => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),

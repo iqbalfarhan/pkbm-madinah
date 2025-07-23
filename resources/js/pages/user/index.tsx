@@ -1,4 +1,5 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
@@ -99,8 +100,7 @@ const UserList: FC<UserListProps> = ({ users }) => {
             <TableHead>Nama user</TableHead>
             <TableHead>Alamat email</TableHead>
             <TableHead>Role</TableHead>
-            <TableHead>Login</TableHead>
-            <TableHead>Asosiasi</TableHead>
+            <TableHead>Login terakhir</TableHead>
             <TableHead>Action</TableHead>
           </TableRow>
         </TableHeader>
@@ -139,9 +139,14 @@ const UserList: FC<UserListProps> = ({ users }) => {
                     </div>
                   </TableCell>
                   <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.roles.join(', ')}</TableCell>
-                  <TableCell>{user.last_login && dayjs(user.last_login).format('DD MMMM YYYY')}</TableCell>
-                  <TableCell>lorem</TableCell>
+                  <TableCell>
+                    <div className="space-x-1">
+                      {user.roles.map((role) => (
+                        <Badge>{role}</Badge>
+                      ))}
+                    </div>
+                  </TableCell>
+                  <TableCell>{user.last_login && dayjs(user.last_login).format('DD MMMM YYYY HH:mm')}</TableCell>
                   <TableCell>
                     <ResetPassword user={user}>
                       <Button variant={'ghost'} size={'icon'}>

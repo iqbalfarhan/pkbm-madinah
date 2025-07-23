@@ -11,6 +11,7 @@ use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -28,6 +29,7 @@ class UserController extends Controller
 
         return Inertia::render('user/index', [
             'users' => UserResource::collection($user),
+            'roles' => Role::pluck('name'),
         ]);
     }
 
@@ -45,7 +47,9 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $data = $request->validated();
-        User::create($data);
+        $user = User::create($data);
+
+        $user->syncRoles($data['roles']);
     }
 
     /**
@@ -53,16 +57,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        if ($user->role == "orangtua") {
-            return Inertia::render('dashboard/orang-tua', [
-                'siswas' => Siswa::where('user_id', $user->id)->get(),
-            ]);
-        }
-        elseif ($user->role == "guru") {
-            return Inertia::render('guru/show', [
-                'guru' => Guru::with('user')->find($user->guru->id),
-            ]);
-        }
+        return Inertia::render('guru/show', [
+            'guru' => Guru::with('user')->find($user->guru->id),
+        ]);
     }
 
     /**
@@ -87,6 +84,7 @@ class UserController extends Controller
         }
 
         $user->update($data);
+        $user->syncRoles($data['roles']);
     }
 
     /**

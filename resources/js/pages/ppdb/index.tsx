@@ -10,7 +10,7 @@ import { usePageProps } from '@/hooks/use-page-props';
 import AppLayout from '@/layouts/app-layout';
 import { Siswa } from '@/types';
 import { Link } from '@inertiajs/react';
-import { Edit, Folder, Settings, ThumbsUp, Trash2 } from 'lucide-react';
+import { Edit, Folder, Printer, Settings, ThumbsUp, Trash2 } from 'lucide-react';
 import { FC, useState } from 'react';
 import SiswaStatusBadge from '../siswa/components/siswa-status-badge';
 import PpdbPengaturanDialog from './components/ppdb-pengaturan-dialog';
@@ -21,7 +21,7 @@ type PpdbListProps = {
 
 const PpdbList: FC<PpdbListProps> = ({ siswas }) => {
   const [cari, setCari] = useState<string | undefined>();
-  const { settings, tahun_ajaran } = usePageProps();
+  const { settings, active_ta } = usePageProps();
 
   return (
     <AppLayout
@@ -42,7 +42,7 @@ const PpdbList: FC<PpdbListProps> = ({ siswas }) => {
         <Alert variant={'success'}>
           <ThumbsUp />
           <AlertTitle>Sesi PPDB sedang dibuka</AlertTitle>
-          <AlertDescription>Pendaftaran peserta didik baru untuk TA {tahun_ajaran?.label} sedang dibuka</AlertDescription>
+          <AlertDescription>Pendaftaran peserta didik baru untuk TA {active_ta?.label} sedang dibuka</AlertDescription>
         </Alert>
       )}
       <Input placeholder="Cari siswa..." type="search" value={cari} onChange={(e) => setCari(e.target.value)} />
@@ -99,6 +99,9 @@ const PpdbList: FC<PpdbListProps> = ({ siswas }) => {
                   <Badge variant={'success'}>Lunas</Badge>
                 </TableCell>
                 <TableCell>
+                  <Button variant={'ghost'} size={'icon'}>
+                    <Printer />
+                  </Button>
                   <Button variant={'ghost'} size={'icon'} asChild>
                     <Link href={route('ppdb.show', siswa.id)}>
                       <Folder />

@@ -1,1 +1,0 @@
-import{u as a}from"./use-page-props-DfoSWbNk.js";const t=r=>{const{permissions:e}=a().auth;return Array.isArray(r)?r.some(u=>e.includes(u)):e.includes(r)},c=(r,e)=>Array.isArray(e)?e.some(u=>r.includes(u)):r.includes(e);export{c as e,t as u};

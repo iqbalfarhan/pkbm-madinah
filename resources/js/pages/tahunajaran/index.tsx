@@ -56,7 +56,7 @@ const TahunAjaranList: FC<TahunAjaranListProps> = ({ tahunajarans, active }) => 
           <TableRow>
             <TableHead>No</TableHead>
             <TableHead>Name</TableHead>
-            <TableHead>Semester</TableHead>
+            <TableHead className="w-full">Semester</TableHead>
             <TableHead>Active</TableHead>
             <TableHead>Set active</TableHead>
             <TableHead>Action</TableHead>

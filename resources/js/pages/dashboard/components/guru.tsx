@@ -4,8 +4,8 @@ import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/ca
 const DashboardGuru = () => {
   return (
     <>
-      <HeadingSmall title="Mata pelajarankan" description="List mata pelajaran yang saya ajar" />
-      <div className="grid grid-cols-4 gap-4">
+      <HeadingSmall title="Mata pelajaran yang saya ajar" description="List mata pelajaran yang saya ajar" />
+      <div className="grid gap-4 md:grid-cols-4">
         {Array.from({ length: 4 }).map((_, index) => (
           <Card key={index}>
             <CardHeader>

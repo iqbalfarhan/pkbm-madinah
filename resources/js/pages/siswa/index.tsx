@@ -7,9 +7,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem, Siswa } from '@/types';
 import { Link } from '@inertiajs/react';
-import { Edit, Filter, Folder, Phone, Plus, Trash2 } from 'lucide-react';
+import { Edit, Ellipsis, Filter, Folder, Phone, Plus, Trash2 } from 'lucide-react';
 import { FC, useState } from 'react';
+import MoreActionDropdown from '../user/components/more-action-dropdown';
 import SiswaBulkEdit from './components/siswa-bulk-edit';
+import SiswaDeleteDialog from './components/siswa-delete-dialog';
 import SiswaEditForm from './components/siswa-edit-form';
 import SiswaFilterSheet from './components/siswa-filter-sheet';
 import SiswaKontakDialog from './components/siswa-kontak-dialog';
@@ -41,12 +43,19 @@ const SiswaList: FC<SiswaListProps> = ({ siswas, query }) => {
       description="Data siswa yang ada di sekolah"
       breadcrumbs={breadcrumbs}
       actions={
-        <Button asChild>
-          <Link href={route('siswa.create')}>
-            <Plus />
-            Tambah siswa
-          </Link>
-        </Button>
+        <>
+          <Button asChild>
+            <Link href={route('siswa.create')}>
+              <Plus />
+              Tambah siswa
+            </Link>
+          </Button>
+          <MoreActionDropdown>
+            <Button variant={'secondary'} size={'icon'}>
+              <Ellipsis />
+            </Button>
+          </MoreActionDropdown>
+        </>
       }
     >
       <div className="flex items-center space-x-2">
@@ -149,9 +158,11 @@ const SiswaList: FC<SiswaListProps> = ({ siswas, query }) => {
                       <Edit />
                     </Button>
                   </SiswaEditForm>
-                  <Button variant={'ghost'} size={'icon'}>
-                    <Trash2 />
-                  </Button>
+                  <SiswaDeleteDialog siswa={siswa}>
+                    <Button variant={'ghost'} size={'icon'}>
+                      <Trash2 />
+                    </Button>
+                  </SiswaDeleteDialog>
                 </TableCell>
               </TableRow>
             ))}

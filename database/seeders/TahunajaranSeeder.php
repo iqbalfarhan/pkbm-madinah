@@ -20,6 +20,7 @@ class TahunajaranSeeder extends Seeder
                 Tahunajaran::create([
                     'name' => $tahun . "/" . $tahun + 1,
                     'semester' => $semester,
+                    'active' => $tahun == 2025 && $semester == "ganjil" ? true : false,
                 ]);
             }
         }

@@ -25,7 +25,7 @@ class UpdateUserRequest extends FormRequest
             'name' => 'nullable|string|max:255',
             'email' => 'nullable|string|email|max:255|unique:users,email,' . $this->user->id,
             'password' => 'nullable|string|min:8',
-            'role' => 'nullable|in:admin,guru,orangtua',
+            'roles' => 'nullable|array',
             'photo' => 'nullable|image|max:2048',
         ];
     }
@@ -43,7 +43,7 @@ class UpdateUserRequest extends FormRequest
             'password.min' => 'The password must be at least :min characters.',
             'photo.image' => 'The photo must be an image.',
             'photo.max' => 'The photo may not be greater than :max kilobytes.',
-            'role.in' => 'The selected role is invalid.',
+            'role.array' => 'The selected role is invalid.',
         ];
     }
 }

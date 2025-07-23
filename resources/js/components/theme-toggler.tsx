@@ -23,15 +23,15 @@ const ThemeToggler = () => {
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => updateAppearance('light')}>
           <Sun />
-          <span className="hidden md:block">Terang</span>
+          <span>Terang</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => updateAppearance('dark')}>
           <Moon />
-          <span className="hidden md:block">Gelap</span>
+          <span>Gelap</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => updateAppearance('system')}>
           <Monitor />
-          <span className="hidden md:block">Sistem</span>
+          <span>Sistem</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -8,6 +8,7 @@ use App\Http\Controllers\KetidakhadiranController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\MapelGroupController;
 use App\Http\Controllers\OrangtuaController;
+use App\Http\Controllers\PelajaranController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\PpdbController;
 use App\Http\Controllers\RaporController;
@@ -17,13 +18,15 @@ use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TahunajaranController;
 use App\Http\Controllers\TingkatController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\PpdbMiddleware;
+use App\Models\WelcomeController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-Route::get('/', function () {
-    return Inertia::render('welcome');
-})->name('home');
+Route::get('/', [WelcomeController::class, 'index'])->name('home');
+Route::get('/syarat', [WelcomeController::class, 'syarat'])->name('syarat');
+Route::get('/alur', [WelcomeController::class, 'alur'])->name('alur');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -46,11 +49,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('pengumuman', PengumumanController::class);
     Route::resource('ekskul', EkskulController::class);
 
-    Route::post('/ppdb/setting', [PpdbController::class, 'setting'])->name('ppdb.setting');
-    Route::resource('ppdb', PpdbController::class);
-
     Route::resource('orangtua', OrangtuaController::class);
+
+    Route::put('/role/{role}/toggle-permission', [RoleController::class, 'togglePermission'])->name('role.toggle-permission');
     Route::resource('role', RoleController::class);
+
     Route::resource('ketidakhadiran', KetidakhadiranController::class);
 
     Route::get('/rapor/{rapor}/pdf/stream', [RaporController::class, 'streamPdf'])->name('rapor.stream');
@@ -61,8 +64,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         $media->delete();
     })->name('media.destroy');
 
+    Route::resource('pelajaran', PelajaranController::class);
+
 });
 
+require __DIR__.'/ppdb.php';
 require __DIR__.'/kelas.php';
 require __DIR__.'/siswa.php';
 require __DIR__.'/settings.php';

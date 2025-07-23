@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Kelas;
 use App\Models\Tahunajaran;
 use App\Observers\TahunajaranObserver;
+use App\Policies\KelasPolicy;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -23,6 +25,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Tahunajaran::observe(TahunajaranObserver::class);
+        Gate::policy(Kelas::class, KelasPolicy::class);
     }
 }

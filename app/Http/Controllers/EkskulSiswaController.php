@@ -52,7 +52,10 @@ class EkskulSiswaController extends Controller
      */
     public function update(Request $request, EkskulSiswa $ekskulSiswa)
     {
-        //
+        $data = $request->validate([
+            'kegiatan' => 'nullable|string',
+        ]);
+        $ekskulSiswa->update($data);
     }
 
     /**

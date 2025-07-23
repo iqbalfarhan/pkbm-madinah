@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { jenisKelaminLists, siswaStatusLists } from '@/lib/enums';
 import { Kelas, SharedData } from '@/types';
 import { router, useForm, usePage } from '@inertiajs/react';
@@ -22,6 +23,7 @@ const SiswaFilterSheet: FC<SiswaFilterSheetProps> = ({ children, query }) => {
   const [open, setOpen] = useState(false);
   const { props } = usePage<SharedData>();
   const kelases = props.kelases as Kelas[];
+  const isMobile = useIsMobile();
 
   const { data, setData, get } = useForm({
     status: query.status ?? undefined,
@@ -31,7 +33,12 @@ const SiswaFilterSheet: FC<SiswaFilterSheetProps> = ({ children, query }) => {
   });
 
   const handleSubmit = () => {
-    get(route('siswa.index'), { preserveState: true });
+    get(route('siswa.index'), {
+      preserveState: true,
+      onSuccess: () => {
+        setOpen(false);
+      },
+    });
   };
 
   const handleResetFilter = () => {
@@ -55,7 +62,7 @@ const SiswaFilterSheet: FC<SiswaFilterSheetProps> = ({ children, query }) => {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>{children}</SheetTrigger>
-      <SheetContent>
+      <SheetContent side={isMobile ? 'bottom' : 'right'}>
         <SheetHeader>
           <SheetTitle>Filter data siswa</SheetTitle>
           <SheetDescription>Pencarian berdasarkan pengelompokan data</SheetDescription>

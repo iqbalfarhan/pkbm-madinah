@@ -19,10 +19,10 @@ type KetidakhadiranCreateSheetProps = PropsWithChildren & {
 
 const KetidakhadiranCreateSheet: FC<KetidakhadiranCreateSheetProps> = ({ children, siswas }) => {
   const [open, setOpen] = useState(false);
-  const { tahun_ajaran } = usePageProps();
+  const { active_ta } = usePageProps();
 
   const { data, setData, post, reset } = useForm({
-    tahunajaran_id: tahun_ajaran?.id ?? '',
+    tahunajaran_id: active_ta?.id ?? '',
     siswa_id: '',
     date: dayjs().format('YYYY-MM-DD'),
     reason: '',

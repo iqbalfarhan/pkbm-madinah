@@ -42,7 +42,7 @@ class SiswaController extends Controller
         return Inertia::render('siswa/index', [
             'siswas' => SiswaResource::collection($siswas),
             'query' => $request->only(['kelas_id', 'status', 'gender']),
-            'kelases' => Kelas::get()
+            'kelases' => Kelas::sekarang()->get(),
         ]);
     }
 
@@ -81,7 +81,7 @@ class SiswaController extends Controller
 
         return Inertia::render('siswa/tabs/data-diri',[
             'siswa' => $siswa->load('kelas', 'kelas.tingkat', 'ekskuls', 'rapors', 'rapors.tahunajaran'),
-            'kelases' => Kelas::get(),
+            'kelases' => Kelas::sekarang()->get(),
         ]);
     }
 
@@ -109,6 +109,15 @@ class SiswaController extends Controller
         $siswa->delete();
     }
 
+    public function archive(){
+        $siswas = Siswa::onlyTrashed()->get();
+        return Inertia::render('siswa/index', [
+            'siswas' => SiswaResource::collection($siswas),
+            'query' => [],
+            'kelases' => Kelas::sekarang()->get(),
+        ]);
+    }
+
     public function bulkUpdate(BulkUpdateSiswaRequest $request)
     {
         $data = $request->validated();
@@ -125,7 +134,7 @@ class SiswaController extends Controller
         return Inertia::render('siswa/tabs/rapor', [
             'siswa' => $siswa,
             'rapors' => $rapors->load('tahunajaran'),
-            'kelases' => Kelas::get(),
+            'kelases' => Kelas::sekarang()->get(),
             'tahunajarans' => Tahunajaran::orderByDesc('name')->get(),
         ]);
     }
@@ -140,7 +149,7 @@ class SiswaController extends Controller
         return Inertia::render('siswa/tabs/ketidakhadiran', [
             'siswa' => $siswa,
             'ketidakhadirans' => KetidakhadiranResource::collection($ketidakhadirans),
-            'kelases' => Kelas::get(),
+            'kelases' => Kelas::sekarang()->get(),
         ]);
     }
 
@@ -150,7 +159,7 @@ class SiswaController extends Controller
         return Inertia::render('siswa/tabs/ekskul', [
             'siswa' => $siswa,
             'ekskuls' => $ekskuls,
-            'kelases' => Kelas::get(),
+            'kelases' => Kelas::sekarang()->get(),
         ]);
     }
 
@@ -158,7 +167,7 @@ class SiswaController extends Controller
     {
         return Inertia::render('siswa/tabs/asal-sekolah', [
             'siswa' => $siswa,
-            'kelases' => Kelas::get(),
+            'kelases' => Kelas::sekarang()->get(),
         ]);
     }
 
@@ -167,7 +176,7 @@ class SiswaController extends Controller
         return Inertia::render('siswa/tabs/akun-orangtua', [
             'siswa' => $siswa->load('user', 'user.siswas'),
             'users' => User::Role('orangtua')->get(),
-            'kelases' => Kelas::get(),
+            'kelases' => Kelas::sekarang()->get(),
         ]);
     }
 
@@ -176,7 +185,7 @@ class SiswaController extends Controller
         return Inertia::render('siswa/tabs/documents', [
             'siswa' => $siswa,
             'documents' => $siswa->getMedia('*'),
-            'kelases' => Kelas::get(),
+            'kelases' => Kelas::sekarang()->get(),
         ]);
     }
 
@@ -193,7 +202,7 @@ class SiswaController extends Controller
         return Inertia::render('siswa/tabs/orangtua', [
             'siswa' => $siswa,
             'orangtua' => $siswa->orangtua,
-            'kelases' => Kelas::get(),
+            'kelases' => Kelas::sekarang()->get(),
         ]);
     }
 }

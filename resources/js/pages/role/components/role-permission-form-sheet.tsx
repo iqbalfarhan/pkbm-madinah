@@ -9,11 +9,14 @@ import { Check, X } from 'lucide-react';
 import { FC, PropsWithChildren } from 'react';
 import { toast } from 'sonner';
 
-type RolePermissionFormSheetProps = PropsWithChildren & {};
+type RolePermissionFormSheetProps = PropsWithChildren & {
+  type?: 'role' | 'permission';
+};
 
-const RolePermissionFormSheet: FC<RolePermissionFormSheetProps> = ({ children }) => {
+const RolePermissionFormSheet: FC<RolePermissionFormSheetProps> = ({ children, type }) => {
   const { data, setData, post } = useForm({
-    type: 'permission',
+    type: type,
+    group: type === 'permission' ? '' : undefined,
     name: '',
   });
 
@@ -43,20 +46,22 @@ const RolePermissionFormSheet: FC<RolePermissionFormSheetProps> = ({ children })
             handleSubmit();
           }}
         >
-          <FormControl label="Type">
-            <Select value={data.type} onValueChange={(value) => setData('type', value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Pilih tipe input" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="role">Role</SelectItem>
-                <SelectItem value="permission">Permission</SelectItem>
-              </SelectContent>
-            </Select>
-          </FormControl>
+          {!type && (
+            <FormControl label="Type">
+              <Select value={data.type} onValueChange={(value) => setData('type', value as 'role' | 'permission')}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Pilih tipe input" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="role">Role</SelectItem>
+                  <SelectItem value="permission">Permission</SelectItem>
+                </SelectContent>
+              </Select>
+            </FormControl>
+          )}
           {data.type === 'permission' && (
             <FormControl label="Permission group name">
-              <Input value={data.name} onChange={(e) => setData('name', e.target.value)} placeholder="group" />
+              <Input value={data.group} onChange={(e) => setData('group', e.target.value)} placeholder="group" />
             </FormControl>
           )}
           <FormControl label="Role / Permission name">

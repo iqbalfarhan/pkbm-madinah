@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Kelas;
+use App\Models\Tahunajaran;
 
 class KelasObserver
 {
@@ -11,7 +12,8 @@ class KelasObserver
      */
     public function created(Kelas $kelas): void
     {
-        //
+        $kelas->tahunajaran_id = Tahunajaran::where('active', true)->first()?->id;
+        $kelas->save();
     }
 
     /**

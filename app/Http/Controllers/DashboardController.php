@@ -40,9 +40,8 @@ class DashboardController extends Controller
                 'ppdb_count' => Siswa::where('status', 'ppdb')->count(),
                 'guru_count' => Guru::count(),
                 'walikelas_count' => Kelas::whereNotNull('guru_id')->count(),
-                'kelas_count' => Kelas::count(),
+                'kelas_count' => Kelas::sekarang()->count(),
             ],
-            'tahun_ajaran' => Tahunajaran::whereActive(true)->first(),
             'tingkats' => Tingkat::withCount('siswas')->get(),
             'siswas' => Siswa::where('user_id', auth()->user()->id)->get(),
         ]);

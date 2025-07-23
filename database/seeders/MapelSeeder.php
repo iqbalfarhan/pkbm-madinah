@@ -13,6 +13,24 @@ class MapelSeeder extends Seeder
      */
     public function run(): void
     {
-        Mapel::factory(2)->create();
+        $mapels = [
+            "Matematika",
+            "Bahasa Indonesia",
+            "Bahasa Inggris",
+            "IPA",
+            "IPS",
+            "Seni Budaya",
+            "Pendidikan Jasmani",
+            "Pendidikan Kewarganegaraan",
+            "Pendidikan Agama",
+            "Prakarya",
+            "Pendidikan Pancasila",
+        ];
+
+        foreach ($mapels as $mapel) {
+            Mapel::factory()->create([
+                'name' => $mapel,
+            ]);
+        }
     }
 }

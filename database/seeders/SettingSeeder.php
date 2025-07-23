@@ -16,19 +16,23 @@ class SettingSeeder extends Seeder
         $settings = [
             [
                 "key" => "SEKOLAH_NAME",
-                "value" => "SMK Negeri 10 Semarang"
+                "value" => "PKBM AL-MADINAH BALIKPAPAN"
             ],
             [
                 "key" => "SEKOLAH_ADDRESS",
-                "value" => "Jl. Raya Semarang-Surakarta KM. 7, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50132"
+                "value" => "Jalan Karang Jawa RT. 10 No. 55 Karang Jati (TK) --- Jalan Telindung Gang Melati rt. 88 no. 47 (PKBM)"
             ],
             [
                 "key" => "SEKOLAH_PHONE",
-                "value" => "024-654321"
+                "value" => "085553001020"
+            ],
+            [
+                "key" => "SEKOLAH_WEBSITE",
+                "value" => "sekolahislamalmadinah.sch.id"
             ],
             [
                 "key" => "SEKOLAH_EMAIL",
-                "value" => "smkn10@gmail.com"
+                "value" => "pkbmalmadinah2023@gmail.com"
             ],
             [
                 "key" => "PPDB_OPEN",

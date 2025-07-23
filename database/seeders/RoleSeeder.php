@@ -26,8 +26,10 @@ class RoleSeeder extends Seeder
             "halaman utama" => [
                 "dashboard" => ["*"],
                 "documentation" => ["*"],
-                "profile" => ["*"],
-                "menampilkan list anak saya" => ["orangtua"],
+                "edit profile" => ["*"],
+                "edit password" => ["*"],
+                "edit appearance" => ["*"],
+                "edit sekolah" => ["superadmin", "admin"],
             ],
 
             // user
@@ -50,17 +52,17 @@ class RoleSeeder extends Seeder
                 "menampilkan detail siswa" => ["admin", "orangtua"],
                 "mengedit data siswa" => ["admin"],
                 "menghapus siswa" => ["admin"],
-                "input ketidakhadiran siswa" => ["admin", "walikelas"],
-                "input rapor siswa" => ["admin", "walikelas"],
-                "input data sekolah asal" => ["admin"],
-                "input data orang tua siswa" => ["admin"],
-                "mengatur akun login orang tua siswa" => ["admin"],
+                "mengatur ketidakhadiran siswa" => ["admin", "walikelas"],
+                "mengatur data orangtua siswa" => ["admin"],
+                "mengatur akun login orangtua siswa" => ["admin"],
                 "mengatur dokumen kelengkapan siswa" => ["admin"],
             ],
 
             // kelas
             "kelas" => [
+                "menampilkan kelas walikelas" => ["admin", "walikelas"],
                 "menampilkan list kelas" => ["admin"],
+                "menampilkan detail kelas" => ["admin", "guru", "walikelas"],
                 "menambahkan kelas baru" => ["admin"],
                 "mengedit data kelas" => ["admin", "guru"],
                 "menghapus kelas" => ["admin"],
@@ -89,29 +91,26 @@ class RoleSeeder extends Seeder
 
             // rapor
             "rapor" => [
-                "menampilkan list rapor" => ["admin", "guru"],
-                "menambahkan rapor baru" => ["admin", "guru"],
-                "menyimpan data rapor" => ["admin", "guru"],
-                "menampilkan detail rapor" => ["admin", "guru"],
-                "mengedit data rapor" => ["admin", "guru"],
-                "memperbarui data rapor" => ["admin", "guru"],
-                "menghapus rapor" => ["admin", "guru"],
+                "menampilkan list rapor" => ["admin", "walikelas"],
+                "menambahkan rapor baru" => ["admin", "walikelas"],
+                "menampilkan detail rapor" => ["admin", "walikelas", "orangtua"],
+                "mengedit data rapor" => ["admin", "walikelas"],
+                "menghapus rapor" => ["admin"],
+                "berkomentar di rapor siswa" => ["admin", "walikelas", "orangtua"],
             ],
 
             // ekskul
             "ekskul" => [
                 "menampilkan list ekskul" => ["admin", "guru"],
                 "menambahkan ekskul baru" => ["admin", "guru"],
-                "menyimpan data ekskul" => ["admin", "guru"],
                 "menampilkan detail ekskul" => ["admin", "guru"],
                 "mengedit data ekskul" => ["admin", "guru"],
-                "memperbarui data ekskul" => ["admin", "guru"],
                 "menghapus ekskul" => ["admin", "guru"],
-                "mengatur ekskul siswa" => ["admin", "walikelas"],
             ],
 
             //mapel
             "mapel" => [
+                "menampilkan mata pelajaran yang saya ajar" => ["admin", "guru"],
                 "menampilkan list mata pelajaran" => ["admin", "guru"],
                 "menambahkan mata pelajaran baru" => ["admin", "guru"],
                 "menyimpan data mata pelajaran" => ["admin", "guru"],
@@ -123,18 +122,26 @@ class RoleSeeder extends Seeder
 
             // ppdb
             "ppdb" => [
+                "pengaturan ppdb" => ["admin"],
                 "menampilkan list ppdb" => ["admin"],
                 "menambahkan ppdb baru" => ["admin", "orangtua"],
                 "menampilkan detail ppdb" => ["admin", "orangtua"],
                 "mengedit data ppdb" => ["admin", "orangtua"],
-                "menghapus ppdb" => ["admin"],
+                "menghapus siswa ppdb" => ["admin"],
             ],
 
             //superadmin
             "superadmin" => [
-                "mengatur role" => ["superadmin"],
-                "mengatur permission" => ["superadmin"],
-                "membuka database" => ["superadmin"],
+                "mengatur role permission" => ["*"],
+                "membuka database" => ["*"],
+            ],
+
+            //widgets
+            "widget" => [
+                "menampilkan widget admin" => ["admin"],
+                "menampilkan widget list anak" => ["orangtua"],
+                "menampilkan widget kelas walikelas" => ["walikelas"],
+                "menampilkan widget list pelajaran" => ["guru"],
             ]
         ];
 

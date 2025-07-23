@@ -4,10 +4,11 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Textarea } from '@/components/ui/textarea';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { Mapel, MapelGroup, SharedData, Tingkat } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { Check, X } from 'lucide-react';
-import { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, useState } from 'react';
 import { toast } from 'sonner';
 import MapelGroupSheet from './mapel-group-sheet';
 
@@ -20,6 +21,9 @@ const MapelFormSheet: FC<MapelFormSheetProps> = ({ children, mapel, purpose }) =
   const props = usePage<SharedData>().props;
   const mapelGroups = (props.mapelGroups as MapelGroup[]) ?? [];
   const tingkats = (props.tingkats as Tingkat[]) ?? [];
+  const isMobile = useIsMobile();
+
+  const [open, setOpen] = useState(false);
 
   const { data, setData, put, post, reset } = useForm({
     name: mapel?.name ?? '',
@@ -73,9 +77,9 @@ const MapelFormSheet: FC<MapelFormSheetProps> = ({ children, mapel, purpose }) =
   };
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>{children}</SheetTrigger>
-      <SheetContent>
+      <SheetContent side={isMobile ? 'bottom' : 'right'}>
         <SheetHeader>
           <SheetTitle className="capitalize">{purpose} Sheet title</SheetTitle>
           <SheetDescription>Sheet description</SheetDescription>

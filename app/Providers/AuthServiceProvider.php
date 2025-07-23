@@ -12,6 +12,7 @@ class AuthServiceProvider extends ServiceProvider
 
     protected $policies = [
         Siswa::class => SiswaPolicy::class,
+        Kelas::class => KelasPolicy::class,
     ];
     /**
      * Register services.

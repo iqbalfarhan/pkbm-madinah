@@ -3,11 +3,15 @@ import { Penilaian } from '@/lib/mockup-data';
 import { LucideIcon } from 'lucide-react';
 import type { Config } from 'ziggy-js';
 
+export type SvgComponentProps = {
+  className?: string;
+};
+
 export interface Auth {
   user: User;
   roles: string[];
   permissions: string[];
-  kelas: Kelas | null;
+  kelas: Kelas[] | null;
 }
 
 export interface BreadcrumbItem {
@@ -26,6 +30,7 @@ export interface NavItem {
   icon?: LucideIcon | null;
   permission_name?: string | string[];
   isActive?: boolean;
+  key?: string;
 }
 
 export interface SharedData {
@@ -34,7 +39,9 @@ export interface SharedData {
   auth: Auth;
   ziggy: Config & { location: string };
   sidebarOpen: boolean;
-  tahun_ajaran: TahunAjaran;
+  active_ta: TahunAjaran;
+  tas: TahunAjaran[];
+  ppdb_open: string;
   settings: { [key: string]: string };
   [key: string]: unknown;
 }
@@ -89,7 +96,7 @@ export type Guru = {
   gender: Gender;
   active: boolean;
   user?: User;
-  walikelas?: Kelas;
+  walikelas?: Kelas[];
   pelajarans: Pelajaran[];
   ekskuls?: Ekskul[];
 };
@@ -112,6 +119,7 @@ export type Kelas = {
   id: number;
   name: string;
   tingkat: Tingkat;
+  tahunajaran: TahunAjaran;
   walikelas: Guru | null;
   description: string;
   siswas: Siswa[];
@@ -262,4 +270,10 @@ export type Ketidakhadiran = {
   tahunajaran: TahunAjaran;
   reason: string;
   medias: Media[];
+};
+
+export type Setting = {
+  id: number;
+  key: string;
+  value: string;
 };

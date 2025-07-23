@@ -59,7 +59,7 @@ const GuruDetail: FC<GuruDetailProps> = ({ guru }) => {
                 <p className="text-muted-foreground">{guru.active ? 'Aktif' : 'Tidak aktif'}</p>
               </FormControl>
               <FormControl label="Walikelas">
-                <p className="text-muted-foreground">{guru.walikelas?.name ?? '-'}</p>
+                <p className="text-muted-foreground">{guru.walikelas?.map((kelas) => kelas.name).join(', ') ?? '-'}</p>
               </FormControl>
               <FormControl label="Alamat tempat tinggal" className="col-span-full">
                 <p className="text-muted-foreground">{guru.address}</p>
@@ -94,7 +94,7 @@ const GuruDetail: FC<GuruDetailProps> = ({ guru }) => {
         </Card>
         <Card className="h-fit">
           <CardHeader>
-            <CardTitle>Matapelajaran yang diajar</CardTitle>
+            <CardTitle>Sebagai pengajar di matapelajaran</CardTitle>
             <CardDescription>Mengajar di kelas dan mapel</CardDescription>
           </CardHeader>
           <Separator />
@@ -109,14 +109,14 @@ const GuruDetail: FC<GuruDetailProps> = ({ guru }) => {
             );
           })}
         </Card>
-        <Card className="h-fit">
-          <CardHeader>
-            <CardTitle>Sebagai wali kelas</CardTitle>
-            <CardDescription>Pengaturan akun yang digunakan guru untuk login ke aplikasi</CardDescription>
-          </CardHeader>
-          <Separator />
-          {guru.walikelas && <CardFooter>{guru.walikelas.name}</CardFooter>}
-        </Card>
+        {guru.walikelas && (
+          <Card className="h-fit">
+            <CardHeader>
+              <CardTitle>Sebagai wali kelas</CardTitle>
+              <CardDescription>{guru.walikelas?.map((kelas) => kelas.name).join(', ')}</CardDescription>
+            </CardHeader>
+          </Card>
+        )}
       </div>
     </AppLayout>
   );

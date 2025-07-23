@@ -1,14 +1,16 @@
 import FormControl from '@/components/form-control';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { usePageProps } from '@/hooks/use-page-props';
 import { errorMessage } from '@/lib/utils';
 import { User } from '@/types';
 import { useForm } from '@inertiajs/react';
 import { Check, X } from 'lucide-react';
-import { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, useState } from 'react';
 import { toast } from 'sonner';
 
 type UserFormSheetProps = PropsWithChildren & {
@@ -17,10 +19,13 @@ type UserFormSheetProps = PropsWithChildren & {
 };
 
 const UserFormSheet: FC<UserFormSheetProps> = ({ children, user, purpose }) => {
+  const [open, setOpen] = useState(false);
+
+  const { roles } = usePageProps<{ roles: string[] }>();
   const { data, setData, put, post, reset } = useForm({
     name: user?.name ?? '',
     email: user?.email ?? '',
-    role: user?.role ?? '',
+    roles: user?.roles ?? [],
     password: user ? undefined : 'password',
     photo: undefined as File | undefined,
   });
@@ -51,7 +56,7 @@ const UserFormSheet: FC<UserFormSheetProps> = ({ children, user, purpose }) => {
   };
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent>
         <SheetHeader>
@@ -72,16 +77,16 @@ const UserFormSheet: FC<UserFormSheetProps> = ({ children, user, purpose }) => {
               <Input type="email" placeholder="Nama lengkap user" value={data.email} onChange={(e) => setData('email', e.target.value)} />
             </FormControl>
             <FormControl label="Peran" required>
-              <Select value={data.role} onValueChange={(value) => setData('role', value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Pilih role" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="admin">Admin sekolah</SelectItem>
-                  <SelectItem value="guru">Guru pengajar</SelectItem>
-                  <SelectItem value="orangtua">Orang tua</SelectItem>
-                </SelectContent>
-              </Select>
+              {roles.map((role) => (
+                <Label key={role} className="flex items-center gap-2">
+                  <Checkbox
+                    id={role}
+                    checked={data.roles?.includes(role) ?? false}
+                    onCheckedChange={(checked) => setData('roles', checked ? [...(data.roles ?? []), role] : data.roles?.filter((r) => r !== role))}
+                  />
+                  <label htmlFor={role}>{role}</label>
+                </Label>
+              ))}
             </FormControl>
             <FormControl label="Photo" required>
               <Input type="file" accept="image/*" onChange={(e) => setData('photo', e.target.files?.[0])} />

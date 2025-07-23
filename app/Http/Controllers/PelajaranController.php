@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePelajaranRequest;
 use App\Http\Requests\UpdatePelajaranRequest;
+use App\Http\Resources\PelajaranResource;
+use App\Models\Kelas;
 use App\Models\Pelajaran;
+use App\Models\Tahunajaran;
+use Inertia\Inertia;
 
 class PelajaranController extends Controller
 {
@@ -13,7 +17,10 @@ class PelajaranController extends Controller
      */
     public function index()
     {
-        //
+        $kelas_ids = Kelas::sekarang()->get()->pluck('id');
+        return Inertia::render('pelajaran/index', [
+            'pelajarans' => PelajaranResource::collection(Pelajaran::whereIn('kelas_id', $kelas_ids)->get()),
+        ]);
     }
 
     /**
@@ -29,7 +36,7 @@ class PelajaranController extends Controller
      */
     public function store(StorePelajaranRequest $request)
     {
-        //
+        
     }
 
     /**
@@ -37,7 +44,9 @@ class PelajaranController extends Controller
      */
     public function show(Pelajaran $pelajaran)
     {
-        //
+        return Inertia::render('pelajaran/detail', [
+            'pelajaran' => $pelajaran->load('mapel', 'kelas'),
+        ]);
     }
 
     /**

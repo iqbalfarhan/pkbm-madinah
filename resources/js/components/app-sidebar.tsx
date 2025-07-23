@@ -1,18 +1,31 @@
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { usePageProps } from '@/hooks/use-page-props';
-import { hasRole } from '@/lib/utils';
-import { Kelas, type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
-import { Book, BookOpen, Calendar, Folder, Home, LayoutGrid, Target, UserCheck2, UserCircle2, Users, Users2 } from 'lucide-react';
+import { SharedData, type NavItem } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
+import {
+  Book,
+  BookOpen,
+  Database,
+  Folder,
+  Key,
+  LayoutGrid,
+  List,
+  Settings,
+  Target,
+  UserCircle2,
+  UserCog,
+  UserPlus,
+  Users,
+  Users2,
+} from 'lucide-react';
 import AppLogo from './app-logo';
 
 export function AppSidebar() {
-  const { auth } = usePageProps();
+  const { roles, kelas } = usePage<SharedData>().props.auth;
 
-  const kelas = auth.kelas as Kelas[] | null;
-  const roles = auth.roles as string[];
+  // const kelas = auth.kelas as Kelas[] | null;
+  // const roles = auth.roles as Role[] | [];
   const mainNavItems: NavItem[] = [
     {
       title: 'Dashboard',
@@ -27,12 +40,6 @@ export function AppSidebar() {
       permission_name: 'documentation',
     },
     {
-      title: 'Pengaturan PPDB',
-      href: route('ppdb.index'),
-      icon: UserCheck2,
-      permission_name: 'menampilkan list ppdb',
-    },
-    {
       title: 'Rapor siswa',
       href: route('rapor.index'),
       icon: Book,
@@ -44,22 +51,22 @@ export function AppSidebar() {
     {
       title: 'Pendaftaran siswa',
       href: route('ppdb.create'),
-      icon: Users,
+      icon: UserPlus,
       permission_name: 'menambahkan ppdb baru',
+    },
+    {
+      title: 'Pengaturan PPDB',
+      href: route('ppdb.index'),
+      icon: UserCog,
+      permission_name: 'menampilkan list ppdb',
     },
   ];
 
   const masterDataNavItems: NavItem[] = [
     {
-      title: 'Tahun Ajaran',
-      href: route('tahunajaran.index'),
-      icon: Calendar,
-      permission_name: 'menampilkan list tahun ajaran',
-    },
-    {
-      title: 'Data Kelas',
+      title: 'Pengaturan kelas',
       href: route('kelas.index'),
-      icon: Home,
+      icon: List,
       permission_name: 'menampilkan list kelas',
     },
     {
@@ -94,6 +101,27 @@ export function AppSidebar() {
     },
   ];
 
+  const superadminNavItems: NavItem[] = [
+    {
+      title: 'Role & permissions',
+      href: route('role.index'),
+      icon: Key,
+      permission_name: 'mengatur role permission',
+    },
+    {
+      title: 'Adminer database',
+      href: route('role.index'),
+      icon: Database,
+      permission_name: 'membuka database',
+    },
+    {
+      title: 'Pengaturan',
+      href: route('settings.index'),
+      icon: Settings,
+      permission_name: 'edit sekolah',
+    },
+  ];
+
   return (
     <Sidebar collapsible="icon" variant="sidebar">
       <SidebarHeader>
@@ -110,19 +138,19 @@ export function AppSidebar() {
 
       <SidebarContent>
         <NavMain items={mainNavItems} label="Dashboard" />
-        {hasRole(roles, ['walikelas']) && (
-          <NavMain
-            items={kelas?.map((kela) => ({
-              title: `Pengaturan ${kela.name}`,
-              href: route('kelas.show', kela.id),
-              icon: Folder,
-              permission_name: 'mengedit data kelas',
-            }))}
-            label={`Menu walikelas`}
-          />
-        )}
-        {hasRole(roles, ['admin', 'superadmin']) && <NavMain items={masterDataNavItems} label="Master Data" />}
-        {hasRole(roles, ['orangtua']) && <NavMain items={ppdbNavItems} label="PPDB" />}
+        <NavMain
+          items={kelas?.map((kela) => ({
+            title: `Peng. ${kela.name}`,
+            href: route('kelas.show', kela.id),
+            icon: Folder,
+            permission_name: 'menampilkan detail kelas',
+          }))}
+          label={`Menu walikelas`}
+          showIf={roles.includes('walikelas')}
+        />
+        <NavMain items={masterDataNavItems} label="Master Data" />
+        <NavMain items={ppdbNavItems} label="PPDB" />
+        <NavMain items={superadminNavItems} label="Menu Superadmin" />
       </SidebarContent>
 
       <SidebarFooter>

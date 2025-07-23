@@ -2,9 +2,8 @@ import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem, NavItem, SharedData, Siswa } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { Book, Building2, Edit, File, ListX, Target, User } from 'lucide-react';
+import { Book, Building2, File, ListX, Target, User } from 'lucide-react';
 import { FC, PropsWithChildren } from 'react';
-import SiswaEditForm from '../components/siswa-edit-form';
 import SiswaHeadingCard from '../components/siswa-heading-card';
 
 type SiswaLayoutProps = PropsWithChildren & {
@@ -69,18 +68,7 @@ const SiswaLayout: FC<SiswaLayoutProps> = ({ children, siswa }) => {
     },
   ];
   return (
-    <AppLayout
-      breadcrumbs={breadcrumbs}
-      title={siswa.name}
-      description={siswa.nisn}
-      actions={
-        <SiswaEditForm siswa={siswa}>
-          <Button>
-            <Edit /> Edit siswa
-          </Button>
-        </SiswaEditForm>
-      }
-    >
+    <AppLayout breadcrumbs={breadcrumbs} title={siswa.name} description={siswa.nisn}>
       <SiswaHeadingCard siswa={siswa} />
 
       <div className="flex flex-col gap-6 md:flex-row">

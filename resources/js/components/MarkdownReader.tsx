@@ -13,7 +13,7 @@ const MarkdownReader: FC<MarkdownReaderProps> = ({ value, className }) => {
   const { appearance } = useAppearance();
 
   return (
-    <article className={cn('prose max-w-full', appearance != 'light' && 'prose-invert', className)}>
+    <article className={cn('mx-auto prose w-full', appearance != 'light' && 'prose-invert', className)}>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{value}</ReactMarkdown>
     </article>
   );

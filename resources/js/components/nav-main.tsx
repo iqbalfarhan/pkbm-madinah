@@ -9,20 +9,20 @@ type NavMainProps = {
   items?: NavItem[];
   label?: string;
   className?: string;
+  showIf?: boolean;
 };
 
-export function NavMain({ items = [], label, className }: NavMainProps) {
+export function NavMain({ items = [], label, className, showIf }: NavMainProps) {
   const { permissions } = usePageProps().auth;
+
+  if (showIf && showIf !== true) return null;
+
   const listedPermissions = items.map((item) => item.permission_name).filter((p): p is string => !!p);
 
   const hasPermission =
     listedPermissions.length === 0 || // semua item gak ada permission
     listedPermissions.some((p) => permissions.includes(p));
   if (!hasPermission) return null;
-
-  // return items.flatMap((item) => item.permission_name).join(', ');
-
-  // return permissions.join(', ');
 
   return (
     <SidebarGroup className={cn(className)}>

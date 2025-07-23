@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('nisn')->nullable();
+            $table->string('nis')->nullable();
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('kelas_id')->nullable()->constrained('kelas')->nullOnDelete();
             $table->boolean('gender')->default(true);

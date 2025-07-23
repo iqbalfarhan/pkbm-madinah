@@ -40,7 +40,7 @@ class Guru extends Model
     }
 
     public function walikelas(){
-        return $this->hasOne(Kelas::class, 'guru_id');
+        return $this->hasMany(Kelas::class, 'guru_id');
     }
 
     public function getAvatarAttribute()

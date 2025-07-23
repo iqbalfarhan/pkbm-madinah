@@ -53,6 +53,7 @@ class StoreGuruRequest extends FormRequest
             'phone.max' => 'Nomor telepon maksimal 255 karakter',
             'phone.unique' => 'Nomor telepon sudah terdaftar',
 
+            'email.required' => 'Email harus diisi',
             'email.email' => 'Email harus berupa email',
             'email.unique' => 'Email sudah terdaftar',
             'email.string' => 'Email harus berupa string',

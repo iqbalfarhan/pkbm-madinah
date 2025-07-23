@@ -32,7 +32,7 @@ const RaporCreateDialog: FC<RaporCreateDialogProps> = ({ children, siswa, tahuna
 
   const siswas = (props.siswas as Siswa[]) ?? [];
   const tahunajarans = props.tahunajarans as TahunAjaran[];
-  const ta = props.tahun_ajaran as TahunAjaran;
+  const ta = props.active_ta as TahunAjaran;
 
   const { data, setData, post, reset } = useForm({
     siswa_id: siswa?.id ?? '',

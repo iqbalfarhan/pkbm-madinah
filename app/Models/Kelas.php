@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Policies\KelasPolicy;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use App\Observers\KelasObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
+#[UsePolicy(KelasPolicy::class)]
 #[ObservedBy(KelasObserver::class)]
 class Kelas extends Model
 {
@@ -17,6 +20,7 @@ class Kelas extends Model
     protected $fillable = [
         'name',
         'tingkat_id',
+        'tahunajaran_id',
         'guru_id',
     ];
 
@@ -27,6 +31,11 @@ class Kelas extends Model
     public function tingkat()
     {
         return $this->belongsTo(Tingkat::class);
+    }
+
+    public function tahunajaran()
+    {
+        return $this->belongsTo(Tahunajaran::class);
     }
 
     public function walikelas()
@@ -65,5 +74,11 @@ class Kelas extends Model
             $siswaDesc,
             $walikelasDesc
         ]);
+    }
+
+    public function scopeSekarang($q)
+    {
+        $tahunajaranId = Tahunajaran::where('active', true)->first()?->id;
+        return $q->where('tahunajaran_id', $tahunajaranId);
     }
 }

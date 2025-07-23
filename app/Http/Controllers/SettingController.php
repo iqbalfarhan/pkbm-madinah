@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSettingRequest;
 use App\Http\Requests\UpdateSettingRequest;
 use App\Models\Setting;
+use Inertia\Inertia;
 
 class SettingController extends Controller
 {
@@ -13,7 +14,9 @@ class SettingController extends Controller
      */
     public function index()
     {
-        return redirect()->route('profile.edit');
+        return Inertia::render('settings/index', [
+            'settings' => Setting::all(),
+        ]);
     }
 
     /**

@@ -20,9 +20,20 @@ class KelasController extends Controller
      */
     public function index()
     {
-        // dd(Kelas::with('tingkat', 'walikelas', 'siswas')->get()->toArray());
         return Inertia::render('kelas/index', [
-            'kelass' => Kelas::with('tingkat', 'walikelas', 'siswas')->get(),
+            'kelass' => Kelas::with('tingkat', 'walikelas', 'siswas')->sekarang()->get(),
+            'tingkats' => Tingkat::get(),
+            'gurus' => Guru::get(),
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function all()
+    {
+        return Inertia::render('kelas/all', [
+            'kelases' => Kelas::with('tingkat', 'walikelas', 'tahunajaran')->get(),
             'tingkats' => Tingkat::get(),
             'gurus' => Guru::get(),
         ]);
@@ -33,7 +44,7 @@ class KelasController extends Controller
      */
     public function create()
     {
-        //
+        abort(404);
     }
 
     /**

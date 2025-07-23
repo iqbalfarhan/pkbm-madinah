@@ -27,6 +27,14 @@ class PpdbController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function create()
+    {
+        return redirect()->route('pendaftaran.create');
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
     public function setting(PpdbSettingSettingRequest $request)
     {
         $data = $request->validated();
@@ -38,23 +46,6 @@ class PpdbController extends Controller
         Setting::where('key', 'PPDB_TAHUNAJARAN_ID')->update([
             'value' => $data['PPDB_TAHUNAJARAN_ID']
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return Inertia::render('ppdb/create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreSiswaRequest $request)
-    {
-        $siswa = Siswa::create($request->validated());
-        return redirect()->route('ppdb.show', $siswa->id);
     }
 
     /**

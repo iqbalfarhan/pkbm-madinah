@@ -3,24 +3,20 @@ import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import { BreadcrumbItem, type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
+import { Key, User } from 'lucide-react';
 import { type PropsWithChildren } from 'react';
 import AppLayout from '../app-layout';
 
 const sidebarNavItems: NavItem[] = [
   {
     title: 'Profile',
-    href: '/settings/profile',
-    icon: null,
+    href: route('profile.edit'),
+    icon: User,
   },
   {
     title: 'Password',
-    href: '/settings/password',
-    icon: null,
-  },
-  {
-    title: 'Appearance',
-    href: '/settings/appearance',
-    icon: null,
+    href: route('password.edit'),
+    icon: Key,
   },
 ];
 
@@ -60,6 +56,7 @@ export default function SettingsLayout({
                 })}
               >
                 <Link href={item.href} prefetch>
+                  {item.icon && <item.icon className="mr-2 h-4 w-4" />}
                   {item.title}
                 </Link>
               </Button>

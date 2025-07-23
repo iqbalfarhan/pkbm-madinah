@@ -25,7 +25,7 @@ const SiswaItemCard: FC<SiswaItemCardProps> = ({ asLink, siswa, className }) => 
         </Avatar>
         <div className="flex flex-col">
           <CardTitle className="line-clamp-1">{siswa.name}</CardTitle>
-          <CardDescription>{siswa.nisn}</CardDescription>
+          <CardDescription>{siswa.nisn ?? 'Belum ada NISN'}</CardDescription>
         </div>
       </CardHeader>
     </Card>

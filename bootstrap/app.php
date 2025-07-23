@@ -23,5 +23,10 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(function(ErrorPageException $e, Request $request) {
+            return Inertia::render('errors/error-page', [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage()
+            ]);
+        });
     })->create();

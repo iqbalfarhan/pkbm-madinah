@@ -45,9 +45,9 @@ const SiswaHeadingCard: FC<SiswaHeadingCardProps> = ({ siswa, className }) => {
             <FormControl label="Kelas">
               <p className="text-muted-foreground">{siswa.kelas_label ?? ''}</p>
             </FormControl>
-            {/* <FormControl label="Alamat tempat tinggal" className="sm:col-span-2">
-                <p className="text-muted-foreground">{siswa.address}</p>
-              </FormControl> */}
+            <FormControl label="Alamat tempat tinggal" className="sm:col-span-full">
+              <p className="text-muted-foreground">{siswa.address}</p>
+            </FormControl>
           </div>
         </div>
       </CardContent>

@@ -31,3 +31,17 @@ export function generatePassword(): string {
 }
 
 export const hasRole = (roles: string[], allowed: string[]) => roles.some((role) => allowed.includes(role));
+
+export function groupBy<T, K extends keyof T>(array: T[], key: K): Record<string, T[]> {
+  return array.reduce(
+    (acc, item) => {
+      const groupKey = String(item[key]);
+      if (!acc[groupKey]) {
+        acc[groupKey] = [];
+      }
+      acc[groupKey].push(item);
+      return acc;
+    },
+    {} as Record<string, T[]>,
+  );
+}
