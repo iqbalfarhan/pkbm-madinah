@@ -1,0 +1,7 @@
+import{x as u,r as p,j as e}from"./app-CrwnOKEw.js";import{A as h,a as j,b as m,c as x,d as g,e as f,f as A,g as D,h as b}from"./alert-dialog-DQ540OxW.js";import{B as _}from"./button-eylfCJsl.js";import{t as o}from"./index-B42ZEnsY.js";import{X as k}from"./index-Dre6VcxI.js";import{c as B}from"./createLucideIcon-CfTYINkG.js";/**
+ * @license lucide-react v0.475.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const C=[["path",{d:"M9 14 4 9l5-5",key:"102s5s"}],["path",{d:"M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11",key:"f3b9sd"}]],y=B("Undo2",C),E=({children:a,userIds:r,onSuccess:t})=>{const{setData:s,put:l}=u({user_ids:r});p.useEffect(()=>{s("user_ids",r??[])},[r,s]);const i=()=>{l(route("user.bulk-restore"),{preserveScroll:!0,onSuccess:()=>{o.success("Berhasil mengubah peran user"),t==null||t()},onError:n=>{const c=Object.entries(n).map(([,d])=>d).join(`
+`);o.error(c)}})};return e.jsxs(h,{children:[e.jsx(j,{asChild:!0,children:a}),e.jsxs(m,{children:[e.jsxs(x,{children:[e.jsx(g,{children:"AlertDialog title"}),e.jsx(f,{children:"AlertDialog description"})]}),e.jsxs(A,{children:[e.jsx(D,{asChild:!0,children:e.jsxs(_,{variant:"outline",children:[e.jsx(k,{}),"Batal"]})}),e.jsxs(b,{onClick:i,children:[e.jsx(y,{}),"Restore"]})]})]})]})},H=Object.freeze(Object.defineProperty({__proto__:null,default:E},Symbol.toStringTag,{value:"Module"}));export{E as U,y as a,H as u};
