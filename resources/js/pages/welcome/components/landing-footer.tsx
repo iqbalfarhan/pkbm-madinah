@@ -7,8 +7,8 @@ const LandingFooter = () => {
 
   const { SEKOLAH_NAME, SEKOLAH_ADDRESS, SEKOLAH_PHONE, SEKOLAH_WEBSITE, SEKOLAH_EMAIL } = settings;
   return (
-    <Card className="rounded-none">
-      <CardFooter className="text-center">
+    <Card className="rounded-none border-0 bg-transparent">
+      <CardFooter className="py-6 text-center">
         <div className="mx-auto max-w-lg space-y-4 text-sm">
           <div>
             <p className="font-bold">{SEKOLAH_NAME}</p>

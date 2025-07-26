@@ -1,1 +1,0 @@
-import{j as e}from"./app-CrwnOKEw.js";/* empty css            */const r=()=>e.jsx("div",{children:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi eaque magni impedit voluptatem maiores beatae commodi ipsum? Quam ut quia saepe praesentium, perferendis veritatis temporibus officia tenetur, rem, id expedita?"});export{r as default};

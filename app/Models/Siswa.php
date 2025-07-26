@@ -21,6 +21,7 @@ class Siswa extends Model implements HasMedia
     protected $fillable = [
         'name',
         'nisn',
+        'nis',
         'user_id',
         'kelas_id',
         'gender',

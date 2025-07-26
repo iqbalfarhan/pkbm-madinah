@@ -24,6 +24,7 @@ class StoreSiswaRequest extends FormRequest
         return [
             'name' => 'required',
             'nisn' => 'nullable',
+            'nis' => 'nullable',
             'user_id' => 'nullable|exists:users,id',
             'kelas_id' => 'nullable|exists:kelas,id',
             'gender' => 'nullable|in:Laki-laki,Perempuan',

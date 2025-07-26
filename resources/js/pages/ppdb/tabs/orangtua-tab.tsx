@@ -1,30 +1,48 @@
 import FormControl from '@/components/form-control';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
+import { errorMessage } from '@/lib/utils';
+import { Siswa } from '@/types';
 import { useForm } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
-import { useState } from 'react';
+import { FC, useState } from 'react';
+import { toast } from 'sonner';
 import PpdbLayout from '../layout/ppdb-layout';
 
-const OrangTuaTab = () => {
+type Props = {
+  siswa: Siswa;
+};
+
+const OrangTuaTab: FC<Props> = ({ siswa }) => {
   const [fsaac, setFsaac] = useState(true);
   const [msaac, setMsaac] = useState(true);
 
-  const { data, setData } = useForm({
+  const { data, setData, post } = useForm({
+    siswa_id: siswa.id,
     father_name: '',
-    father_address: '',
+    father_address: siswa.address ?? '',
     father_phone: '',
     father_ocupation: '',
     mother_name: '',
-    mother_address: '',
+    mother_address: siswa.address ?? '',
     mother_phone: '',
     mother_ocupation: '',
   });
+
+  const handleSubmit = () => {
+    post(route('pendaftaran.store-orangtua', siswa.id), {
+      onSuccess: () => {
+        toast.success('Data orang tua berhasil disimpan!');
+      },
+      onError: (error) => {
+        toast.error(errorMessage(error));
+      },
+    });
+  };
 
   return (
     <PpdbLayout
@@ -33,12 +51,18 @@ const OrangTuaTab = () => {
     >
       <Card>
         <CardHeader>
-          <CardTitle>Data Orang Tua Siswa</CardTitle>
-          <CardDescription>Mohon isi data ayah dan ibu secara lengkap.</CardDescription>
+          <CardTitle>Data Ayah</CardTitle>
+          <CardDescription>Mohon isi data ayah secara lengkap.</CardDescription>
         </CardHeader>
-        <Separator />
-        <form action="">
-          <CardContent className="grid grid-cols-2 gap-6">
+
+        <CardContent>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+            className="grid gap-6 md:grid-cols-2"
+          >
             {/* Ayah */}
             <FormControl label="Nama Ayah">
               <Input type="text" placeholder="Nama ayah" value={data.father_name} onChange={(e) => setData('father_name', e.target.value)} />
@@ -56,7 +80,17 @@ const OrangTuaTab = () => {
             </FormControl>
             <FormControl label="Alamat Sama Dengan Anak">
               <Label className="flex items-center gap-2 py-2">
-                <Checkbox checked={fsaac} onCheckedChange={(checked) => setFsaac(!!checked)} />
+                <Checkbox
+                  checked={fsaac}
+                  onCheckedChange={(checked) => {
+                    setFsaac(!!checked);
+                    if (checked) {
+                      setData('father_address', siswa.address ?? '');
+                    } else {
+                      setData('father_address', '');
+                    }
+                  }}
+                />
                 <span>Alamat sama dengan anak</span>
               </Label>
             </FormControl>
@@ -65,11 +99,23 @@ const OrangTuaTab = () => {
                 <Textarea placeholder="Alamat ayah" value={data.father_address} onChange={(e) => setData('father_address', e.target.value)} />
               </FormControl>
             )}
+          </form>
+        </CardContent>
+      </Card>
 
-            <div className="col-span-full py-4">
-              <Separator />
-            </div>
-
+      <Card>
+        <CardHeader>
+          <CardTitle>Data Ibu Siswa</CardTitle>
+          <CardDescription>Mohon isi data ibu secara lengkap.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+            className="grid gap-6 md:grid-cols-2"
+          >
             {/* Ibu */}
             <FormControl label="Nama Ibu">
               <Input type="text" placeholder="Nama ibu" value={data.mother_name} onChange={(e) => setData('mother_name', e.target.value)} />
@@ -87,7 +133,17 @@ const OrangTuaTab = () => {
             </FormControl>
             <FormControl label="Alamat Sama Dengan Anak">
               <Label className="flex items-center gap-2 py-2">
-                <Checkbox checked={msaac} onCheckedChange={(checked) => setMsaac(!!checked)} />
+                <Checkbox
+                  checked={msaac}
+                  onCheckedChange={(checked) => {
+                    setMsaac(!!checked);
+                    if (checked) {
+                      setData('mother_address', siswa.address ?? '');
+                    } else {
+                      setData('mother_address', '');
+                    }
+                  }}
+                />
                 <span>Alamat sama dengan anak</span>
               </Label>
             </FormControl>
@@ -96,15 +152,14 @@ const OrangTuaTab = () => {
                 <Textarea placeholder="Alamat ibu" value={data.mother_address} onChange={(e) => setData('mother_address', e.target.value)} />
               </FormControl>
             )}
-          </CardContent>
-        </form>
-        <Separator />
-        <CardFooter className="flex justify-end">
-          <Button type="submit">
-            Selanjutnya <ArrowRight className="ml-2" />
-          </Button>
-        </CardFooter>
+          </form>
+        </CardContent>
       </Card>
+      <div className="flex justify-end">
+        <Button type="submit" onClick={handleSubmit}>
+          Selanjutnya <ArrowRight className="ml-2" />
+        </Button>
+      </div>
     </PpdbLayout>
   );
 };

@@ -12,7 +12,7 @@ type Props = {
 
 const WizardTrigger: FC<Props> = ({ item, number, active }) => {
   return (
-    <Link href={item.href}>
+    <Link href={item.href} preserveScroll={true}>
       <div className="flex h-18 w-20 flex-col items-center justify-start space-y-4">
         <Avatar className={cn('aspect-square h-12 w-12 ring-4 ring-transparent', active && 'ring-4 ring-primary')}>
           <AvatarFallback>{number}</AvatarFallback>

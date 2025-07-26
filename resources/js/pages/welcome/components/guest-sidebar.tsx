@@ -1,4 +1,5 @@
 import AppLogo from '@/components/app-logo';
+import ThemeToggler from '@/components/theme-toggler';
 import {
   Sidebar,
   SidebarContent,
@@ -13,6 +14,7 @@ import {
   SidebarRail,
 } from '@/components/ui/sidebar';
 import { Link } from '@inertiajs/react';
+import { LogIn, UserPlus } from 'lucide-react';
 import { guestMenuList } from './menu-list';
 
 const GuestSidebar = () => {
@@ -47,8 +49,33 @@ const GuestSidebar = () => {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Autentikasi</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href={route('login')}>
+                    <LogIn />
+                    Masuk aplikasi
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href={route('login')}>
+                    <UserPlus />
+                    Daftar akun orangtua
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter></SidebarFooter>
+      <SidebarFooter>
+        <ThemeToggler width="full" />
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );

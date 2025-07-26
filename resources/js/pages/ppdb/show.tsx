@@ -2,7 +2,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import AppLayout from '@/layouts/app-layout';
 import { Siswa } from '@/types';
-import { Upload } from 'lucide-react';
+import { Link } from '@inertiajs/react';
+import { Pencil, Upload } from 'lucide-react';
 import { FC } from 'react';
 import SiswaHeadingCard from '../siswa/components/siswa-heading-card';
 
@@ -12,7 +13,17 @@ type DetailPPDBProps = {
 
 const DetailPPDB: FC<DetailPPDBProps> = ({ siswa }) => {
   return (
-    <AppLayout title="Detail calon peserta didik baru">
+    <AppLayout
+      title="Detail calon peserta didik baru"
+      actions={
+        <Button asChild>
+          <Link href={route('pendaftaran.edit', siswa.id)} className="flex items-center gap-2">
+            <Pencil />
+            Edit data pendaftaran
+          </Link>
+        </Button>
+      }
+    >
       <div className="grid grid-cols-3 gap-6">
         <SiswaHeadingCard siswa={siswa} className="col-span-full" />
         <Card>

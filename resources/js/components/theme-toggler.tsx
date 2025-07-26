@@ -1,14 +1,19 @@
 import { useAppearance } from '@/hooks/use-appearance';
 import { Monitor, Moon, Sun } from 'lucide-react';
+import { FC } from 'react';
 import { Button } from './ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu';
 
-const ThemeToggler = () => {
+type Props = {
+  width?: 'fit' | 'full';
+};
+
+const ThemeToggler: FC<Props> = ({ width = 'fit' }) => {
   const { appearance, updateAppearance } = useAppearance();
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="w-fit" asChild>
+      <DropdownMenuTrigger className={`w-${width}`} asChild>
         <Button variant={'outline'}>
           {appearance === 'light' && <Sun />}
           {appearance === 'dark' && <Moon />}

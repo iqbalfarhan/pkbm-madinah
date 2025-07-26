@@ -150,6 +150,7 @@ export type Siswa = {
   id: number;
   name: string;
   nisn: string;
+  nis: string;
   user: User;
   kelas: Kelas;
   kelas_label: string;
