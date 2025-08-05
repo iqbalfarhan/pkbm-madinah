@@ -47,11 +47,19 @@ const BerkasTab: FC<Props> = ({ siswa }) => {
           >
             <FormControl label="Kartu keluarga" required>
               <Input type="file" onChange={(e) => setData('kk', e.target.files?.[0])} />
-              {data.kk && <img src={URL.createObjectURL(data.kk)} alt="Preview" />}
+              {data.kk && <img src={URL.createObjectURL(data.kk)} alt="Preview" className="w-28" />}
             </FormControl>
             <FormControl label="Akta kelahiran" required>
               <Input type="file" onChange={(e) => setData('akte', e.target.files?.[0])} />
-              {data.akte && <img src={URL.createObjectURL(data.akte)} alt="Preview" />}
+              {data.akte && <img src={URL.createObjectURL(data.akte)} alt="Preview" className="w-28" />}
+            </FormControl>
+            <FormControl label="Pas photo" required>
+              <Input type="file" onChange={(e) => setData('pasfoto', e.target.files?.[0])} accept="image/*" />
+              <img src={data.pasfoto ? URL.createObjectURL(data.pasfoto) : siswa.avatar} alt="Preview" className="w-28" />
+            </FormControl>
+            <FormControl label="Ijazah">
+              <Input type="file" onChange={(e) => setData('ijazah', e.target.files?.[0])} />
+              {data.ijazah && <img src={URL.createObjectURL(data.ijazah)} alt="Preview" className="w-28" />}
             </FormControl>
           </form>
         </CardContent>

@@ -176,6 +176,7 @@ export type Siswa = {
   orangtua?: Orangtua;
   rapors?: Rapor[];
   ketidakhadirans?: Ketidakhadiran[];
+  media?: Media[];
 };
 
 type RaporPerkembanganData = {

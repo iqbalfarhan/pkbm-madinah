@@ -21,4 +21,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/siswa/{siswa}/edit', [SiswaController::class, 'edit'])->name('siswa.edit');
     Route::put('/siswa/{siswa}', [SiswaController::class, 'update'])->name('siswa.update');
     Route::delete('/siswa/{siswa}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
+    Route::post('/siswa/{siswa}/move-to-trash', [SiswaController::class, 'moveToTrash'])->name('siswa.move-to-trash');
+    Route::post('/siswa/{siswa}/restore', [SiswaController::class, 'restore'])->name('siswa.restore');
+    Route::delete('/siswa/{siswa}/force-delete', [SiswaController::class, 'forceDelete'])->name('siswa.force-delete');
 });

@@ -11,9 +11,9 @@ const MoreActionDropdown: FC<MoreActionDropdownProps> = ({ children }) => {
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem variant="destructive" asChild>
-          <Link href={route('user.trashed')}>
+          <Link href={route('siswa.archive')}>
             <Trash2 />
-            Tempat sampah
+            Arsip siswa
           </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>

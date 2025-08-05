@@ -19,7 +19,7 @@ type SiswaEditFormProps = PropsWithChildren & {
 const SiswaEditForm: FC<SiswaEditFormProps> = ({ children, siswa }) => {
   const props = usePage<SharedData>().props;
   const [open, setOpen] = useState(false);
-  const kelases = props.kelases as Kelas[];
+  const kelases = (props.kelases as Kelas[]) ?? [];
 
   const { data, setData, put } = useForm({
     name: siswa.name,

@@ -5,6 +5,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function strLimit(text: string = '', limit: number = 50, end: string = '...'): string {
+  if (text.length <= limit) return text;
+  return text.slice(0, limit - end.length) + end;
+}
+
 export function errorMessage(err: { [key: string]: string }) {
   return Object.entries(err)
     .map(([, v]) => v)
@@ -44,4 +49,19 @@ export function groupBy<T, K extends keyof T>(array: T[], key: K): Record<string
     },
     {} as Record<string, T[]>,
   );
+}
+
+export function maskName(input: string): string {
+  return input
+    .split(' ')
+    .map((word) => {
+      if (word.length <= 2) return word; // kalo cuma 1-2 huruf, gak usah masking
+
+      const first = word[0];
+      const last = word[word.length - 1];
+      const middle = '•'.repeat(word.length - 2);
+
+      return `${first}${middle}${last}`;
+    })
+    .join(' ');
 }

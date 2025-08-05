@@ -3,30 +3,25 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EkskulController;
 use App\Http\Controllers\GuruController;
-use App\Http\Controllers\KelasController;
 use App\Http\Controllers\KetidakhadiranController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\MapelGroupController;
 use App\Http\Controllers\OrangtuaController;
 use App\Http\Controllers\PelajaranController;
 use App\Http\Controllers\PengumumanController;
-use App\Http\Controllers\PpdbController;
 use App\Http\Controllers\RaporController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\SettingController;
-use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TahunajaranController;
 use App\Http\Controllers\TingkatController;
 use App\Http\Controllers\UserController;
-use App\Http\Middleware\PpdbMiddleware;
-use App\Models\WelcomeController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
 Route::get('/syarat', [WelcomeController::class, 'syarat'])->name('syarat');
 Route::get('/alur', [WelcomeController::class, 'alur'])->name('alur');
+Route::post('/search-ppdb', [WelcomeController::class, 'searchPpdb'])->name('search-ppdb');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');

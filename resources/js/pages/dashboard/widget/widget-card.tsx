@@ -16,6 +16,7 @@ const WidgetCard: FC<WidgetCardProps> = ({ value, title = 'title', description =
       router.visit(href);
     }
   };
+
   return (
     <Card onClick={handleClick} className="cursor-pointer">
       <CardHeader className="flex flex-row items-start">

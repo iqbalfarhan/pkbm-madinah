@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('rapors', function (Blueprint $table) {
             $table->id();
             $table->foreignId('siswa_id')->constrained('siswas')->cascadeOnDelete();
+            $table->foreignId('kelas_id')->constrained('kelas')->cascadeOnDelete();
             $table->string('jenis');
             $table->foreignId('tahunajaran_id')->constrained('tahunajarans')->cascadeOnDelete();
             $table->json('data')->nullable();

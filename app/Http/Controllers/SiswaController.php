@@ -106,16 +106,40 @@ class SiswaController extends Controller
      */
     public function destroy(Siswa $siswa)
     {
+        if ($siswa->status == "ppdb") {
+            $siswa->forceDelete();
+        }
+
+        $siswa->delete();
+    }
+
+    public function moveToTrash(Request $request, Siswa $siswa)
+    {
+        $data = $request->validate([
+            'status' => 'required|in:lulus,pindah,dikeluarkan',
+        ]);
+
+        $siswa->update($data);
         $siswa->delete();
     }
 
     public function archive(){
         $siswas = Siswa::onlyTrashed()->get();
-        return Inertia::render('siswa/index', [
+        return Inertia::render('siswa/trashed', [
             'siswas' => SiswaResource::collection($siswas),
             'query' => [],
             'kelases' => Kelas::sekarang()->get(),
         ]);
+    }
+
+    public function restore($siswa)
+    {
+        Siswa::onlyTrashed()->find($siswa)->restore();
+    }
+
+    public function forceDelete($siswa)
+    {
+        Siswa::onlyTrashed()->find($siswa)->forceDelete();
     }
 
     public function bulkUpdate(BulkUpdateSiswaRequest $request)

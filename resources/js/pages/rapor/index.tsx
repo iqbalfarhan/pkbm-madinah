@@ -93,18 +93,18 @@ const RaporList: FC<RaporListProps> = ({ rapors, query }) => {
                     </Label>
                   </Button>
                 </TableCell>
-                <TableCell>{rapor.tahunajaran.label}</TableCell>
+                <TableCell>{rapor.tahunajaran?.label}</TableCell>
                 <TableCell>{rapor.jenis}</TableCell>
-                <TableCell>{rapor.siswa.nisn}</TableCell>
+                <TableCell>{rapor.siswa?.nisn}</TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
                     <Avatar className="size-6">
-                      <AvatarImage src={rapor.siswa.avatar} />
+                      <AvatarImage src={rapor.siswa?.avatar} />
                     </Avatar>
-                    {rapor.siswa.name}
+                    {rapor.siswa?.name}
                   </div>
                 </TableCell>
-                <TableCell>{rapor.siswa.kelas?.name}</TableCell>
+                <TableCell>{rapor.siswa?.kelas?.name}</TableCell>
                 <TableCell>
                   <RaporPublishToggle rapor={rapor}>
                     <Badge variant={rapor.publish ? 'default' : 'outline'}>{rapor.publish ? 'Published' : 'Draft'}</Badge>
@@ -116,17 +116,17 @@ const RaporList: FC<RaporListProps> = ({ rapors, query }) => {
                       <Download />
                     </a>
                   </Button>
-                  <Button variant={'ghost'} size={'icon'} disabled={!rapor.publish}>
+                  <Button variant={'ghost'} size={'icon'} disabled={!rapor.publish} asChild>
                     <a href={route('rapor.stream', rapor.id)}>
                       <Folder />
                     </a>
                   </Button>
-                  <Button variant={'ghost'} size={'icon'}>
+                  <Button variant={'ghost'} size={'icon'} asChild>
                     <Link href={route('rapor.edit', rapor.id)}>
                       <Edit />
                     </Link>
                   </Button>
-                  <Button variant={'ghost'} size={'icon'}>
+                  <Button variant={'ghost'} size={'icon'} asChild>
                     <Link href={route('rapor.destroy', rapor.id)} method="delete">
                       <Trash2 />
                     </Link>

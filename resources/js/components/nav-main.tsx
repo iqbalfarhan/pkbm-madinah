@@ -15,7 +15,7 @@ type NavMainProps = {
 export function NavMain({ items = [], label, className, showIf }: NavMainProps) {
   const { permissions } = usePageProps().auth;
 
-  if (showIf && showIf !== true) return null;
+  if (showIf === false) return null;
 
   const listedPermissions = items.map((item) => item.permission_name).filter((p): p is string => !!p);
 

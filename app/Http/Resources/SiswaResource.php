@@ -23,6 +23,10 @@ class SiswaResource extends JsonResource
             'kelas' => $this->kelas,
             'umur' => $this->umur,
             'status' => $this->status,
+            'photo' => $this->photo,
+            'phone' => $this->phone,
+            'address' => $this->address,
+            'email' => $this->email,
             'avatar' => $this->avatar,
             'orangtua' => $this->orangtua,
             'ekskuls' => $this->ekskuls,
@@ -30,7 +34,7 @@ class SiswaResource extends JsonResource
             'asalsekolah' => $this->asalsekolah,
             'user' => $this->user,
             'ketidakhadirans' => KetidakhadiranResource::collection($this->ketidakhadirans),
-            'media' => $this->getMedia("*"),
+            'media' => $this->getMedia("*")->toArray(),
         ];
     }
 }

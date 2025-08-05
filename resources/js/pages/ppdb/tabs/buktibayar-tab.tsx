@@ -5,8 +5,8 @@ import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { errorMessage } from '@/lib/utils';
 import { Siswa } from '@/types';
-import { useForm } from '@inertiajs/react';
-import { Check } from 'lucide-react';
+import { Link, useForm } from '@inertiajs/react';
+import { Check, Info } from 'lucide-react';
 import { FC } from 'react';
 import { toast } from 'sonner';
 import PpdbLayout from '../layout/ppdb-layout';
@@ -21,7 +21,7 @@ const BuktibayarTab: FC<Props> = ({ siswa }) => {
   });
 
   const handleSubmit = () => {
-    post(route('pendaftaran.storeBuktiBayar', siswa.id), {
+    post(route('pendaftaran.store-buktibayar', siswa.id), {
       preserveScroll: true,
       onSuccess: () => {
         toast.success('Bukti pembayaran berhasil diupload');
@@ -48,15 +48,21 @@ const BuktibayarTab: FC<Props> = ({ siswa }) => {
             }}
           >
             <FormControl label="Pilih file bukti pembayaran" required>
-              <Input type="file" onChange={(e) => setData('bukti_bayar', e.target.files?.[0])} />
-              {data.bukti_bayar && <img src={URL.createObjectURL(data.bukti_bayar)} alt="Preview" className="mt-2" />}
+              <Input type="file" onChange={(e) => setData('bukti_bayar', e.target.files?.[0])} accept="image/*" />
+              {data.bukti_bayar && <img src={URL.createObjectURL(data.bukti_bayar)} alt="Preview" className="size-28" />}
             </FormControl>
           </form>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="flex justify-between">
           <Button type="submit" onClick={handleSubmit}>
             <Check />
             Selanjutnya
+          </Button>
+          <Button asChild>
+            <Link href={route('ppdb.show', siswa.id)}>
+              <Info />
+              Upload bukti bayar nanti
+            </Link>
           </Button>
         </CardFooter>
       </Card>

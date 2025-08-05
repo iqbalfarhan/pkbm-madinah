@@ -18,8 +18,10 @@ class PpdbController extends Controller
      */
     public function index()
     {
+        $data = Siswa::orderBy('created_at')->ppdb()->get();
+
         return Inertia::render('ppdb/index', [
-            'siswas' => Siswa::orderBy('created_at')->ppdb()->get(),
+            'siswas' => SiswaResource::collection($data),
             'tahunajarans' => Tahunajaran::orderBy('name')->get(),
         ]);
     }
@@ -58,7 +60,8 @@ class PpdbController extends Controller
         }
 
         return Inertia::render('ppdb/show', [
-            'siswa' => $ppdb
+            'siswa' => new SiswaResource($ppdb),
+            "medias" => $ppdb->getMedia('*'),
         ]);
     }
 
@@ -86,5 +89,12 @@ class PpdbController extends Controller
     public function destroy(Siswa $ppdb)
     {
         //
+    }
+
+    public function accept(Siswa $ppdb)
+    {
+        $ppdb->update([
+            'status' => 'aktif'
+        ]);
     }
 }

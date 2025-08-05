@@ -11,7 +11,7 @@ const WelcomeNavMenu = () => {
   const { auth, ppdb_open } = usePage<SharedData>().props;
   return (
     <>
-      <Card className="rounded-none border-0">
+      <Card className="sticky top-0 z-10 rounded-none border-0">
         <CardFooter>
           <div className="flex w-full items-center justify-between">
             <div className="flex gap-5">
@@ -28,9 +28,7 @@ const WelcomeNavMenu = () => {
                 </Button>
               ))}
 
-              <Button variant={'ghost'} disabled>
-                |
-              </Button>
+              <Button variant={'ghost'} disabled children="|" />
 
               {auth.user ? (
                 <Button variant={'ghost'} asChild>
@@ -39,11 +37,11 @@ const WelcomeNavMenu = () => {
               ) : (
                 <>
                   <Button variant={'ghost'} asChild>
-                    <Link href={route('login')}>Login</Link>
+                    <Link href={route('login')}>Masuk</Link>
                   </Button>
                   {ppdb_open == 'true' && (
                     <Button variant={'ghost'} asChild>
-                      <Link href={route('register')}>Register</Link>
+                      <Link href={route('register')}>Daftar</Link>
                     </Button>
                   )}
                 </>

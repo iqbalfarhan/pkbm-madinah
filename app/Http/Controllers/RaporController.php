@@ -23,13 +23,14 @@ class RaporController extends Controller
         $tahunajaran_id = $request->get('tahunajaran_id');
         $jenis = $request->get('jenis');
 
-        $rapors = Rapor::with(['siswa', 'tahunajaran', 'siswa.kelas'])
-            ->when($jenis, function($q) use ($jenis){
-                $q->where('jenis', $jenis);
-            })
-            ->when($tahunajaran_id, function($q) use ($tahunajaran_id){
-                $q->where('tahunajaran_id', $tahunajaran_id);
-            })->get();
+        $rapors = Rapor::with([
+            'siswa' => fn ($q) => $q->withTrashed(),
+            'siswa.kelas',
+            'tahunajaran',
+        ])
+        ->when($jenis, fn ($q) => $q->where('jenis', $jenis))
+        ->when($tahunajaran_id, fn ($q) => $q->where('tahunajaran_id', $tahunajaran_id))
+        ->get();
 
         return Inertia::render('rapor/index', [
             'rapors' => $rapors,

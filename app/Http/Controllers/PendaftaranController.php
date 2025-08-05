@@ -6,6 +6,7 @@ use App\Http\Requests\LoginAkunOrangTuaRequest;
 use App\Http\Requests\RegisterAkunOrangTuaRequest;
 use App\Http\Requests\StoreAlamatRequest;
 use App\Http\Requests\StoreAsalsekolahRequest;
+use App\Http\Requests\StoreBuktiBayarRequest;
 use App\Http\Requests\StoreDatadiriRequest;
 use App\Http\Requests\StoreOrangtuaRequest;
 use App\Http\Requests\StoreSiswaRequest;
@@ -143,25 +144,26 @@ class PendaftaranController extends Controller
 
     public function storeBerkas(UploadBerkasPendaftaranRequest $request, Siswa $siswa)
     {
-        // Handle the storage of the berkas information
-        // This could include saving the data to the database, etc.
-        // For now, we will just redirect to the next step in the registration process.
+        $request->validated();
 
-        $data = $request->validated();
+        $collection = [
+            'kk' => 'kartu keluarga',
+            'akte' => 'akte kelahiran',
+            'ijazah' => 'ijazah',
+            'pasfoto' => 'pas foto',
+        ];
 
-        foreach ($data as $key => $value) {
-            $collection = [
-                'kk' => 'kartu keluarga',
-                'akte' => 'akte kelahiran',
-                'ijazah' => 'ijazah',
-                'pasfoto' => 'pas foto',
-            ];
+        foreach ($collection as $key => $collectionName) {
+            if ($request->hasFile($key)) {
+                $media = $siswa->addMedia($request->file($key))->toMediaCollection($collectionName);
 
-            if (is_null($value)) {
-                continue; // Skip if the file is not provided
+                // Kalau yang di-upload itu pasfoto, update ke kolom photo
+                if ($key === 'pasfoto') {
+                    $siswa->update([
+                        'photo' => $media->getUrl(),
+                    ]);
+                }
             }
-
-            $siswa->addMedia($value)->toMediaCollection($collection[$key] ?? 'default');
         }
 
         return redirect()->route('pendaftaran.buktibayar', $siswa);
@@ -172,6 +174,14 @@ class PendaftaranController extends Controller
         return Inertia::render('ppdb/tabs/buktibayar-tab', [
             'siswa' => $siswa
         ]);
+    }
+
+    public function storeBuktibayar(StoreBuktiBayarRequest $request, Siswa $siswa)
+    {
+        $data = $request->validated();
+        $siswa->addMedia($data['bukti_bayar'])->toMediaCollection('bukti bayar');
+
+        return redirect()->route('ppdb.show', $siswa);
     }
 
     public function register(RegisterAkunOrangTuaRequest $request)

@@ -52,7 +52,6 @@ const DashboardAdmin: FC<DashboardAdminProps> = ({ siswa_count, all_siswa_count,
 
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         <TingkatChartWidget tingkats={tingkats} />
-        <TingkatChartWidget tingkats={tingkats} />
       </div>
     </>
   );

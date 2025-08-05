@@ -32,7 +32,7 @@ const SiswaBulkEdit: FC<SiswaBulkEditProps> = ({ children, siswaIds, onSuccess }
     put(route('siswa.bulk-update'), {
       preserveScroll: true,
       onSuccess: () => {
-        toast.success('Berhasil mengubah peran siswa');
+        toast.success('Berhasil memperbarui data siswa');
         onSuccess?.();
       },
       onError: (errors) => {

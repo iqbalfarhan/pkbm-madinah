@@ -30,6 +30,7 @@ Route::middleware(PpdbMiddleware::class)->group(function(){
     Route::post('/pendaftaran/{siswa}/berkas', [PendaftaranController::class, 'storeBerkas'])->name('pendaftaran.store-berkas');
 
     Route::get('/pendaftaran/{siswa}/buktibayar', [PendaftaranController::class, 'buktibayar'])->name('pendaftaran.buktibayar');
+    Route::post('/pendaftaran/{siswa}/buktibayar', [PendaftaranController::class, 'storeBuktibayar'])->name('pendaftaran.store-buktibayar');
 });
 
 Route::middleware(['auth', 'verified', PpdbMiddleware::class])->group(function () {
@@ -42,4 +43,5 @@ Route::middleware(['auth', 'verified', PpdbMiddleware::class])->group(function (
     Route::get('/ppdb/{ppdb}/edit', [PpdbController::class, 'edit'])->name('ppdb.edit');
     Route::put('/ppdb/{ppdb}', [PpdbController::class, 'update'])->name('ppdb.update');
     Route::delete('/ppdb/{ppdb}', [PpdbController::class, 'destroy'])->name('ppdb.destroy');
+    Route::delete('/ppdb/{ppdb}/accept', [PpdbController::class, 'accept'])->name('ppdb.accept');
 });

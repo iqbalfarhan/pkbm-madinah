@@ -11,44 +11,64 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { errorMessage } from '@/lib/utils';
 import { Siswa } from '@/types';
-import { router } from '@inertiajs/react';
+import { router, useForm } from '@inertiajs/react';
 import { Trash2, X } from 'lucide-react';
-import { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, useState } from 'react';
+import { toast } from 'sonner';
 
 type SiswaDeleteDialogProps = PropsWithChildren & {
   siswa: Siswa;
 };
 
 const SiswaDeleteDialog: FC<SiswaDeleteDialogProps> = ({ children, siswa }) => {
+  const [open, setOpen] = useState(false);
+  const { data, setData, post } = useForm({
+    status: 'lulus',
+  });
+
   const handleDelete = () => {
-    router.delete(route('siswa.destroy', siswa.id), {
-      onSuccess: () => {
-        router.visit(route('siswa.index'));
-      },
+    post(route('siswa.move-to-trash', siswa.id), {
+      onSuccess: () =>
+        toast.success('Berhasil memindahkan data siswa', {
+          action: {
+            label: 'Lihat arsip',
+            onClick: () => router.visit(route('siswa.archive')),
+          },
+        }),
+      onError: (e) => toast.error(errorMessage(e)),
     });
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Hapus siswa</DialogTitle>
           <DialogDescription>Isi alasan penghapusan data siswa</DialogDescription>
         </DialogHeader>
-        <FormControl className="py-4">
-          <Select>
-            <SelectTrigger>
-              <SelectValue placeholder="Pilih status siswa" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="lulus">Lulus</SelectItem>
-              <SelectItem value="pindah">Pindah</SelectItem>
-              <SelectItem value="dikeluarkan">Dikeluarkan</SelectItem>
-            </SelectContent>
-          </Select>
-        </FormControl>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleDelete();
+          }}
+          className="py-4"
+        >
+          <FormControl>
+            <Select value={data.status} onValueChange={(e) => setData('status', e)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Pilih status siswa" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="lulus">Lulus</SelectItem>
+                <SelectItem value="pindah">Pindah</SelectItem>
+                <SelectItem value="dikeluarkan">Dikeluarkan</SelectItem>
+              </SelectContent>
+            </Select>
+          </FormControl>
+        </form>
         <DialogFooter>
           <DialogClose asChild>
             <Button variant={'outline'}>
