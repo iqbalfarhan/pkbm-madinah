@@ -16,9 +16,12 @@ class PelajaranResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'mapel' => $this->mapel,
-            'kelas' => $this->kelas,
+            'guru_id' => $this->guru_id,
+            'mapel_id' => $this->mapel_id,
+            'kelas_id' => $this->kelas_id,
             'guru' => $this->guru,
+            'mapel' => $this->mapel->load('mapelGroup', 'tingkat'),
+            'kelas' => $this->kelas,
         ];
     }
 }

@@ -11,7 +11,7 @@ class UpdatePelajaranRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,18 @@ class UpdatePelajaranRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'mapel_id' => 'nullable|exists:mapels,id',
+            'guru_id' => 'nullable|exists:gurus,id',
+            'kelas_id' => 'nullable|exists:kelas,id',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'mapel_id.exists' => 'Nama pelajaran tidak ditemukan',
+            'guru_id.exists' => 'Guru tidak ditemukan',
+            'kelas_id.exists' => 'Kelas tidak ditemukan',
         ];
     }
 }

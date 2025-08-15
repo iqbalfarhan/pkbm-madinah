@@ -15,7 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { jenisRaporsLists } from '@/lib/enums';
 import { errorMessage } from '@/lib/utils';
 import SiswaItemCard from '@/pages/siswa/components/siswa-item-card';
-import { SharedData, Siswa, TahunAjaran } from '@/types';
+import { Kelas, SharedData, Siswa, TahunAjaran } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { ArrowRight, X } from 'lucide-react';
 import { FC, PropsWithChildren } from 'react';
@@ -33,11 +33,13 @@ const RaporCreateDialog: FC<RaporCreateDialogProps> = ({ children, siswa, tahuna
   const siswas = (props.siswas as Siswa[]) ?? [];
   const tahunajarans = props.tahunajarans as TahunAjaran[];
   const ta = props.active_ta as TahunAjaran;
+  const kelas = props.kelas as Kelas;
 
   const { data, setData, post, reset } = useForm({
     siswa_id: siswa?.id ?? '',
     tahunajaran_id: tahunajaran?.id ?? ta?.id,
     jenis: jenisrapor ?? '',
+    kelas_id: kelas?.id ?? '',
   });
 
   const handleCreateRapor = () => {
@@ -77,13 +79,11 @@ const RaporCreateDialog: FC<RaporCreateDialogProps> = ({ children, siswa, tahuna
                 <SelectContent>
                   {siswas?.map((siswa) => (
                     <SelectItem key={siswa.id} value={siswa.id.toString()} className="flex items-start gap-2 py-2">
-                      <Avatar className="size-6">
+                      <Avatar className="size-5">
                         <AvatarImage src={siswa.avatar} />
                       </Avatar>
-                      <div className="flex flex-col items-start">
-                        <p>{siswa.name}</p>
-                        <p className="text-xs text-muted-foreground">{siswa.nisn}</p>
-                      </div>
+                      <p>{siswa.name}</p>
+                      <p className="text-xs text-muted-foreground">{siswa.nisn}</p>
                     </SelectItem>
                   ))}
                 </SelectContent>

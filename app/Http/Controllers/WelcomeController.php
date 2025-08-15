@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Berita;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -49,5 +50,20 @@ class WelcomeController extends Controller
             ->first() ?? null;
 
         return $siswa;
+    }
+
+    public function artikel()
+    {
+        return Inertia::render('welcome/berita', [
+            'beritas' => Berita::get(),
+        ]);
+    }
+
+    public function baca($slug)
+    {
+        $berita = Berita::where('slug', $slug)->first();
+        return Inertia::render('welcome/baca', [
+            'berita' => $berita,
+        ]);
     }
 }

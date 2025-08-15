@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from 'clsx';
+import dayjs from 'dayjs';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -63,5 +64,16 @@ export function maskName(input: string): string {
 
       return `${first}${middle}${last}`;
     })
+    .join(' ');
+}
+
+export function dateDFY(date: string | Date) {
+  return dayjs(date).format('DD MMMM YYYY');
+}
+
+export function capitalizeWords(str: string): string {
+  return str
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(' ');
 }

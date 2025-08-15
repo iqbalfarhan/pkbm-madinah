@@ -16,6 +16,7 @@ class Rapor extends Model
         'tahunajaran_id',
         'jenis',
         'data',
+        'kelas_id',
         'pdf_path',
         'publish'
     ];
@@ -27,8 +28,8 @@ class Rapor extends Model
 
     public static $jenis = [
         'perkembangan',
-        'mapel umum',
-        'tahsin',
+        'nilai',
+        'doa',
         'tahfidz'
     ];
 

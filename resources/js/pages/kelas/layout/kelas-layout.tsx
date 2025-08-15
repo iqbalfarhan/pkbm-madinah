@@ -1,12 +1,12 @@
 import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem, Kelas, NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { Book, Edit, ListX, Target, User } from 'lucide-react';
 import { FC, PropsWithChildren } from 'react';
 import KelasFormSheet from '../components/kelas-form-sheet';
-import KelasItemCard from '../components/kelas-item-card';
 
 type KelasLayoutProps = PropsWithChildren & {
   kelas: Kelas;
@@ -68,10 +68,13 @@ const KelasLayout: FC<KelasLayoutProps> = ({ kelas, children }) => {
         </>
       }
     >
-      <KelasItemCard kelas={kelas} />
-
-      <ScrollArea className="flex-1 overflow-x-auto">
-        <div className="flex">
+      <Card>
+        <CardHeader>
+          <CardTitle>{kelas.name}</CardTitle>
+          <CardDescription className="line-clamp-2">{kelas.description}</CardDescription>
+        </CardHeader>
+        <Separator />
+        <CardFooter>
           {tabLists.map((item) => (
             <Button variant={item.isActive ? 'default' : 'ghost'} key={item.title} asChild>
               <Link href={item.href}>
@@ -80,8 +83,8 @@ const KelasLayout: FC<KelasLayoutProps> = ({ kelas, children }) => {
               </Link>
             </Button>
           ))}
-        </div>
-      </ScrollArea>
+        </CardFooter>
+      </Card>
 
       {children}
     </AppLayout>

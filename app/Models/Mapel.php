@@ -46,7 +46,7 @@ class Mapel extends Model
 
     public function getThumbnailAttribute()
     {
-        return $this->photo ? Storage::url($this->photo) : asset('user_placeholder.jpg');
+        return $this->photo ? Storage::url($this->photo) : asset('image_placeholder.png');
     }
 
     public function kelas()

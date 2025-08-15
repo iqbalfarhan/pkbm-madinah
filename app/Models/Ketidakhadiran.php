@@ -17,6 +17,7 @@ class Ketidakhadiran extends Model implements HasMedia
         'siswa_id',
         'date',
         'reason',
+        'description',
     ];
 
     protected $casts = [

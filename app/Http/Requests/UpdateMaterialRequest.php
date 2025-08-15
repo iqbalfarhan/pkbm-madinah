@@ -23,13 +23,16 @@ class UpdatematerialRequest extends FormRequest
     {
         return [
             'title' => 'required',
+            'description' => 'required',
+            'url' => 'nullable|url',
         ];
     }
 
     public function messages()
     {
         return [
-            'title.required' => 'Judul harus diisi',
+            'required' => ':attribute harus diisi',
+            'url' => 'format :attribute salah',
         ];
     }
 }

@@ -14,9 +14,8 @@ class MapelGroupSeeder extends Seeder
     public function run(): void
     {
         $groups = [
-            'Mapel Umum',
-            'Tahsin',
-            'Hafidz',
+            'Matapelajaran umum',
+            'Muatan lokal',
         ];
 
         foreach ($groups as $group) {

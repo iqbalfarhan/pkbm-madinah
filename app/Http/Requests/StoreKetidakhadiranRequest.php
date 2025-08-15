@@ -25,7 +25,8 @@ class StoreKetidakhadiranRequest extends FormRequest
             'tahunajaran_id' => "required|exists:tahunajarans,id",
             'siswa_id' => "required|exists:siswas,id",
             'date' => "required",
-            'reason' => "required",
+            'reason' => "required|max:255",
+            'description' => "nullable",
         ];
     }
 
@@ -38,6 +39,7 @@ class StoreKetidakhadiranRequest extends FormRequest
             'siswa_id.exists' => 'Siswa tidak valid',
             'date.required' => 'Tanggal harus diisi',
             'reason.required' => 'Alasan harus diisi',
+            'reason.max' => 'Alasan tidak boleh lebih dari 255 karakter',
         ];
     }
 }

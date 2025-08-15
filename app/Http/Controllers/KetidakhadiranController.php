@@ -53,7 +53,8 @@ class KetidakhadiranController extends Controller
      */
     public function update(UpdateKetidakhadiranRequest $request, Ketidakhadiran $ketidakhadiran)
     {
-        $ketidakhadiran->update($request->validated());
+        $data= $request->validated();
+        $ketidakhadiran->update($data);
     }
 
     /**

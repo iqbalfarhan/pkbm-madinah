@@ -23,6 +23,7 @@ class StoreRaporRequest extends FormRequest
     {
         return [
             'siswa_id' => 'required|exists:siswas,id',
+            'kelas_id' => 'required|exists:kelas,id',
             'tahunajaran_id' => 'required|exists:tahunajarans,id',
             'jenis' => 'required',
             'data' => 'nullable',
@@ -35,6 +36,8 @@ class StoreRaporRequest extends FormRequest
         return [
             'siswa_id.required' => 'Siswa harus diisi',
             'siswa_id.exists' => 'Siswa tidak ditemukan',
+            'kelas_id.required' => 'Kelas harus diisi',
+            'kelas_id.exists' => 'Kelas tidak ditemukan',
             'tahunajaran_id.required' => 'Tahun Ajaran harus diisi',
             'tahunajaran_id.exists' => 'Tahun Ajaran tidak ditemukan',
             'jenis.required' => 'Jenis harus diisi',

@@ -1,4 +1,4 @@
-import { Penilaian } from '@/types/rapor';
+import { Penilaian, RaporNilaiData, RaporTahfidzData } from '@/types/rapor';
 
 export const penilaianPerkembangan: Penilaian[] = [
   {
@@ -173,3 +173,19 @@ export const penilaianPerkembangan: Penilaian[] = [
     ],
   },
 ];
+
+export const penilaianTahfidz: RaporTahfidzData = {
+  catatan: "Semoga ananda (nama anak) tetap rajin muroja'ah di rumah agar hafalan Surah Al Qur'an-nya tetap terjaga",
+  penilaian: [],
+  tanggal: '',
+  pembimbing: '',
+};
+
+export const penilaianPelajaran: RaporNilaiData = {
+  naik_kelas: false,
+  ke_kelas: '',
+  keputusan: '',
+  penilaian: [],
+  tanggal: '',
+  guru_kelas: '',
+};

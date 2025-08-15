@@ -30,4 +30,9 @@ class Pelajaran extends Model
     {
         return $this->belongsTo(Mapel::class);
     }
+
+    public function materials()
+    {
+        return $this->hasMany(Material::class);
+    }
 }

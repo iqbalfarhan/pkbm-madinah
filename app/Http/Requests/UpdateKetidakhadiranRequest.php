@@ -25,7 +25,8 @@ class UpdateKetidakhadiranRequest extends FormRequest
             'tahunajaran_id' => "nullable|exists:tahunajarans,id",
             'siswa_id' => "nullable|exists:siswas,id",
             'date' => "nullable",
-            'reason' => "nullable",
+            'reason' => "nullable|max:255",
+            'description' => "nullable",
         ];
     }
 
@@ -34,6 +35,7 @@ class UpdateKetidakhadiranRequest extends FormRequest
         return [
             'tahunajaran_id.exists' => 'Tahun Ajaran tidak valid',
             'siswa_id.exists' => 'Siswa tidak valid',
+            'reason.max' => 'Alasan tidak boleh lebih dari 255 karakter',
         ];
     }
 }

@@ -7,6 +7,16 @@ export type SvgComponentProps = {
   className?: string;
 };
 
+export type Snippet = {
+  id: number;
+  name: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type FormPurpose = 'create' | 'edit' | 'duplicate';
+
 export interface Auth {
   user: User;
   roles: string[];
@@ -80,6 +90,9 @@ export type JenisRapor = typeof jenisRaporsLists;
 
 export type Pelajaran = {
   id: number;
+  guru_id: Guru['id'];
+  mapel_id: Mapel['id'];
+  kelas_id: Kelas['id'];
   guru: Guru;
   kelas: Kelas;
   mapel: Mapel;
@@ -140,6 +153,7 @@ export type Mapel = {
 
 export type Material = {
   id: number;
+  pelajaran_id: Pelajaran['id'];
   mapel: Mapel;
   title: string;
   description: string;
@@ -194,8 +208,9 @@ export type Rapor = {
   siswa: Siswa;
   tahunajaran: TahunAjaran;
   jenis: string;
-  data: Penilaian[];
+  data: Penilaian[] | RaporTahfidzData;
   pdf_path: string;
+  created_at: string;
   publish: boolean;
 };
 
@@ -271,6 +286,7 @@ export type Ketidakhadiran = {
   siswa: Siswa;
   tahunajaran: TahunAjaran;
   reason: string;
+  description: string;
   medias: Media[];
 };
 
@@ -278,4 +294,34 @@ export type Setting = {
   id: number;
   key: string;
   value: string;
+};
+
+export type Surah = {
+  id: number;
+  surah: string;
+  ayat: number;
+  jenis: string;
+  juz: number;
+};
+
+export type Nilai = {
+  id: number;
+  pelajaran_id: Pelajaran['id'];
+  siswa_id: Siswa['id'];
+  pelajaran: Pelajaran;
+  siswa: Siswa;
+  nilai_tugas: number;
+  nilai_evaluasi: number;
+};
+
+export type Berita = {
+  id: number;
+  judul: string;
+  content: string;
+  thumbnail: string;
+  created_at: string;
+  updated_at: string;
+  user_id: User['id'];
+  user: User;
+  medias: Media[];
 };

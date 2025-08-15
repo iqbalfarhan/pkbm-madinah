@@ -120,7 +120,7 @@ const SiswaForm: FC<SiswaFormProps> = () => {
                 <Input type="file" accept="image/*" onChange={(e) => setData('photo', e.target.files?.[0])} />
               </FormControl>
               <Avatar className="size-32 place-self-center rounded">
-                <AvatarImage src={data.photo ? URL.createObjectURL(data.photo) : '/user_placeholder.jpg'} />
+                <AvatarImage src={data.photo ? URL.createObjectURL(data.photo) : '/user_placeholder.png'} />
               </Avatar>
             </CardContent>
             <CardFooter>

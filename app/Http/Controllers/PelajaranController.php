@@ -6,6 +6,8 @@ use App\Http\Requests\StorePelajaranRequest;
 use App\Http\Requests\UpdatePelajaranRequest;
 use App\Http\Resources\PelajaranResource;
 use App\Models\Kelas;
+use App\Models\Material;
+use App\Models\Nilai;
 use App\Models\Pelajaran;
 use App\Models\Tahunajaran;
 use Inertia\Inertia;
@@ -36,7 +38,14 @@ class PelajaranController extends Controller
      */
     public function store(StorePelajaranRequest $request)
     {
-        
+        $data = $request->validated();
+
+        Pelajaran::updateOrCreate([
+            'mapel_id' => $data['mapel_id'],
+            'kelas_id' => $data['kelas_id'],
+        ], [
+            'guru_id' => $data['guru_id'],
+        ]);
     }
 
     /**
@@ -45,7 +54,8 @@ class PelajaranController extends Controller
     public function show(Pelajaran $pelajaran)
     {
         return Inertia::render('pelajaran/detail', [
-            'pelajaran' => $pelajaran->load('mapel', 'kelas'),
+            'pelajaran' => new PelajaranResource($pelajaran),
+            'materials' => $pelajaran->materials
         ]);
     }
 
@@ -62,7 +72,8 @@ class PelajaranController extends Controller
      */
     public function update(UpdatePelajaranRequest $request, Pelajaran $pelajaran)
     {
-        //
+        $data = $request->validated();
+        $pelajaran->update($data);
     }
 
     /**
@@ -71,5 +82,16 @@ class PelajaranController extends Controller
     public function destroy(Pelajaran $pelajaran)
     {
         //
+    }
+
+    public function nilai(Pelajaran $pelajaran)
+    {
+        $kelasmember = $pelajaran->kelas->siswas;
+        return Inertia::render('pelajaran/tabs/nilai', [
+            'pelajaran' => new PelajaranResource($pelajaran),
+            'siswas' => $kelasmember,
+            'nilais' => Nilai::where('pelajaran_id', $pelajaran->id)->get(),
+            "active" => 'nilai'
+        ]);
     }
 }

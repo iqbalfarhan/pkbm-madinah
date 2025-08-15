@@ -1,4 +1,3 @@
-import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -8,6 +7,7 @@ import { BreadcrumbItem, Rapor } from '@/types';
 import { Penilaian } from '@/types/rapor';
 import { Link } from '@inertiajs/react';
 import { Check, Download, Edit } from 'lucide-react';
+import SiswaItemCard from '../siswa/components/siswa-item-card';
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
@@ -42,17 +42,7 @@ const RaporDetail = ({ rapor }: { rapor: Rapor }) => {
     >
       <div className="grid gap-6 md:grid-cols-4">
         <div className="space-y-6">
-          <Card>
-            <CardContent className="flex flex-col items-center justify-center gap-4">
-              <Avatar className="size-32">
-                <AvatarImage src={siswa.avatar} />
-              </Avatar>
-            </CardContent>
-            <CardHeader className="text-center">
-              <CardTitle>{siswa.name}</CardTitle>
-              <CardDescription>{siswa.nisn}</CardDescription>
-            </CardHeader>
-          </Card>
+          <SiswaItemCard siswa={siswa} />
 
           <Button className="w-full" asChild>
             <a href={route('rapor.download', rapor.id)}>

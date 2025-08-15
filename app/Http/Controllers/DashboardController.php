@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Guru;
 use App\Models\Kelas;
+use App\Models\Pelajaran;
 use App\Models\Siswa;
 use App\Models\Tahunajaran;
 use App\Models\Tingkat;
@@ -44,7 +45,12 @@ class DashboardController extends Controller
             ],
             'tingkats' => Tingkat::withCount('siswas')->get(),
             'siswas' => Siswa::where('user_id', auth()->user()->id)->get(),
-        ]);
+            'pelajarans' => Pelajaran::with('mapel', 'kelas', 'guru')
+                            ->whereHas('guru', function ($query) {
+                                $query->where('user_id', auth()->user()->id);
+                            })
+                            ->get()
+            ]);
     }
 
     public function dokumentasi() {

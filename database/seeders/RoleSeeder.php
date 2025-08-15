@@ -130,6 +130,15 @@ class RoleSeeder extends Seeder
                 "menghapus siswa ppdb" => ["admin"],
             ],
 
+            // berita
+            "berita" => [
+                'menampilkan list berita' => ['admin'],
+                'menambahkan berita baru' => ['admin'],
+                'menampilkan detail berita' => ['admin'],
+                'mengedit data berita' => ['admin'],
+                'menghapus berita' => ['admin'],
+            ],
+
             //superadmin
             "superadmin" => [
                 "mengatur role permission" => ["*"],

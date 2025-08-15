@@ -23,7 +23,7 @@ const TingkatChartWidget: FC<TingkatChartWidgetProps> = ({ tingkats }) => {
             <CartesianGrid vertical={false} />
             <XAxis dataKey="label" tickLine={false} tickMargin={0} axisLine={false} />
             <ChartTooltip cursor={true} content={<ChartTooltipContent />} />
-            <Bar dataKey="siswas_count" label={'jumlah siswa'} fill="var(--chart-3)" radius={8} />
+            <Bar dataKey="siswas_count" label={'jumlah siswa'} fill="var(--primary)" radius={8} />
           </BarChart>
         </ChartContainer>
       </CardContent>

@@ -81,8 +81,7 @@ class Siswa extends Model implements HasMedia
 
     public function getAvatarAttribute()
     {
-        // return $this->photo ? Storage::url($this->photo) : asset('user_placeholder.jpg');
-        return $this->photo ?: asset('user_placeholder.jpg');
+        return $this->photo ?: asset('user_placeholder.png');
     }
 
     public function scopeAktif($query)
@@ -150,5 +149,10 @@ class Siswa extends Model implements HasMedia
     public function asalsekolah()
     {
         return $this->hasOne(Asalsekolah::class);
+    }
+
+    public function nilais()
+    {
+        return $this->hasMany(Nilai::class);
     }
 }

@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('tahunajaran_id')->nullable()->constrained('tahunajarans')->nullOnDelete();
             $table->foreignId('siswa_id')->constrained('siswas')->onDelete('cascade');
             $table->date('date');
-            $table->text('reason');
+            $table->string('reason');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

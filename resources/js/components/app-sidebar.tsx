@@ -11,6 +11,7 @@ import {
   Key,
   LayoutGrid,
   List,
+  Newspaper,
   Settings,
   Target,
   UserCircle2,
@@ -44,6 +45,12 @@ export function AppSidebar() {
       href: route('rapor.index'),
       icon: Book,
       permission_name: 'menampilkan list rapor',
+    },
+    {
+      title: 'Article berita',
+      href: route('berita.index'),
+      icon: Newspaper,
+      permission_name: 'menampilkan list berita',
     },
   ];
 

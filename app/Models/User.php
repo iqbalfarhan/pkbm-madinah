@@ -59,7 +59,7 @@ class User extends Authenticatable
 
     public function getAvatarAttribute()
     {
-        return $this->photo ? Storage::url($this->photo) : asset('user_placeholder.jpg');
+        return $this->photo ? Storage::url($this->photo) : asset('user_placeholder.png');
     }
 
     public function siswas()

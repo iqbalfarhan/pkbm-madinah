@@ -26,6 +26,7 @@ const KetidakhadiranCreateSheet: FC<KetidakhadiranCreateSheetProps> = ({ childre
     siswa_id: '',
     date: dayjs().format('YYYY-MM-DD'),
     reason: '',
+    description: '',
   });
 
   const handleUpdate = () => {
@@ -49,7 +50,7 @@ const KetidakhadiranCreateSheet: FC<KetidakhadiranCreateSheetProps> = ({ childre
           <SheetDescription>Sheet description</SheetDescription>
         </SheetHeader>
         <form
-          className="space-y-6 px-4"
+          className="space-y-4 px-4"
           onSubmit={(e) => {
             e.preventDefault();
             handleUpdate();
@@ -73,7 +74,19 @@ const KetidakhadiranCreateSheet: FC<KetidakhadiranCreateSheetProps> = ({ childre
             </Select>
           </FormControl>
           <FormControl label="Alasan">
-            <Textarea placeholder="Alasan ketidakhadiran" value={data.reason} onChange={(e) => setData('reason', e.target.value)} />
+            <Select value={data.reason} onValueChange={(value) => setData('reason', value)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Pilih alasan" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="sakit">Sakit</SelectItem>
+                <SelectItem value="ijin">Ijin</SelectItem>
+                <SelectItem value="alpa">Tanpa keterangan</SelectItem>
+              </SelectContent>
+            </Select>
+          </FormControl>
+          <FormControl label="Keterangan">
+            <Textarea placeholder="Alasan ketidakhadiran" value={data.description} onChange={(e) => setData('description', e.target.value)} />
           </FormControl>
         </form>
         <SheetFooter>

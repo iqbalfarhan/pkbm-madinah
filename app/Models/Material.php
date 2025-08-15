@@ -11,14 +11,14 @@ class Material extends Model
     use HasFactory;
 
     protected $fillable = [
-        'mapel_id',
+        'pelajaran_id',
         'title',
         'description',
         'url',
     ];
 
-    public function mapel()
+    public function pelajaran()
     {
-        return $this->belongsTo(mapel::class);
+        return $this->belongsTo(Pelajaran::class);
     }
 }

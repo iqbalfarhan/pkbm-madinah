@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EkskulController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\KetidakhadiranController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\MapelGroupController;
+use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\OrangtuaController;
 use App\Http\Controllers\PelajaranController;
 use App\Http\Controllers\PengumumanController;
@@ -21,6 +24,8 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
 Route::get('/syarat', [WelcomeController::class, 'syarat'])->name('syarat');
 Route::get('/alur', [WelcomeController::class, 'alur'])->name('alur');
+Route::get('/artikel', [WelcomeController::class, 'artikel'])->name('artikel');
+Route::get('/artikel/{slug}', [WelcomeController::class, 'baca'])->name('baca');
 Route::post('/search-ppdb', [WelcomeController::class, 'searchPpdb'])->name('search-ppdb');
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -43,6 +48,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('mapelgroup', MapelGroupController::class);
     Route::resource('pengumuman', PengumumanController::class);
     Route::resource('ekskul', EkskulController::class);
+    Route::resource('berita', BeritaController::class);
+    Route::apiResource('material', MaterialController::class);
 
     Route::resource('orangtua', OrangtuaController::class);
 
@@ -51,18 +58,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('ketidakhadiran', KetidakhadiranController::class);
 
-    Route::get('/rapor/{rapor}/pdf/stream', [RaporController::class, 'streamPdf'])->name('rapor.stream');
-    Route::get('/rapor/{rapor}/pdf/download', [RaporController::class, 'downloadPdf'])->name('rapor.download');
-    Route::resource('rapor', RaporController::class);
-
     Route::delete('/media/{media}', function(Media $media){
         $media->delete();
     })->name('media.destroy');
 
-    Route::resource('pelajaran', PelajaranController::class);
+    Route::get('pelajaran/{pelajaran}/nilai', [PelajaranController::class, 'nilai'])->name('pelajaran.nilai');
+    Route::apiResource('pelajaran', PelajaranController::class);
+
+    Route::apiResource('nilai', NilaiController::class);
 
 });
 
+require __DIR__.'/rapor.php';
 require __DIR__.'/ppdb.php';
 require __DIR__.'/kelas.php';
 require __DIR__.'/siswa.php';

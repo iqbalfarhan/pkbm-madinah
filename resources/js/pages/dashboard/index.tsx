@@ -1,6 +1,6 @@
 import { enableToAccess } from '@/hooks/use-can';
 import { usePageProps } from '@/hooks/use-page-props';
-import { Siswa, TahunAjaran, Tingkat } from '@/types';
+import { Pelajaran, Siswa, TahunAjaran, Tingkat } from '@/types';
 import { FC } from 'react';
 import DashboardAdmin from './components/admin';
 import DashboardGuru from './components/guru';
@@ -20,15 +20,16 @@ type DasshboardIndexProps = {
     kelas_count: number;
   };
   siswas: Siswa[];
+  pelajarans: Pelajaran[];
 };
 
-const DashboardIndex: FC<DasshboardIndexProps> = ({ counts, tingkats, active_ta, siswas }) => {
+const DashboardIndex: FC<DasshboardIndexProps> = ({ counts, tingkats, active_ta, siswas, pelajarans = [] }) => {
   const { permissions } = usePageProps().auth;
 
   return (
     <DashboardLayout>
       {enableToAccess(permissions, 'menampilkan widget admin') && <DashboardAdmin tingkats={tingkats} active_ta={active_ta} {...counts} />}
-      {enableToAccess(permissions, 'menampilkan widget list pelajaran') && <DashboardGuru />}
+      {enableToAccess(permissions, 'menampilkan widget list pelajaran') && <DashboardGuru pelajarans={pelajarans} />}
       {enableToAccess(permissions, 'menampilkan widget list anak') && <DashboardOrangtua siswas={siswas} />}
       {enableToAccess(permissions, 'menampilkan widget kelas walikelas') && <DashboardWalikelas />}
     </DashboardLayout>

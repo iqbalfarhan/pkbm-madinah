@@ -45,8 +45,7 @@ class Guru extends Model
 
     public function getAvatarAttribute()
     {
-        // return $this->photo ? Storage::url( $this->photo) : asset('user_placeholder.jpg');
-        return $this->photo ? Storage::url( $this->photo) : "https://api.dicebear.com/9.x/dylan/png?seed={$this->name}";
+        return $this->photo ? Storage::url( $this->photo) : asset('user_placeholder.png');
     }
 
     public function ekskuls()

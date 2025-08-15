@@ -9,6 +9,9 @@ use App\Http\Resources\KetidakhadiranResource;
 use App\Models\Guru;
 use App\Models\Kelas;
 use App\Models\Ketidakhadiran;
+use App\Models\Mapel;
+use App\Models\Nilai;
+use App\Models\Rapor;
 use App\Models\Tahunajaran;
 use App\Models\Tingkat;
 use Inertia\Inertia;
@@ -112,6 +115,8 @@ class KelasController extends Controller
         return Inertia::render('kelas/tabs/pelajaran', [
             'kelas' => new KelasResource($kela),
             'tingkats' => Tingkat::get(),
+            'mapels' => Mapel::get(),
+            'gurus' => Guru::get(),
         ]);
     }
 
@@ -128,6 +133,9 @@ class KelasController extends Controller
         return Inertia::render('kelas/tabs/rapor', [
             'kelas' => new KelasResource($kela),
             'tingkats' => Tingkat::get(),
+            'rapors' => Rapor::with('siswa', 'tahunajaran')->where('kelas_id', $kela->id)->get(),
+            'siswas' => $kela->siswas,
+            'tahunajarans' => Tahunajaran::orderByDesc('name')->get(),
         ]);
     }
 }

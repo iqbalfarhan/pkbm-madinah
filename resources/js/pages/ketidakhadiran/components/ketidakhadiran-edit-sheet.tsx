@@ -1,6 +1,7 @@
 import DatePicker from '@/components/date-picker';
 import FormControl from '@/components/form-control';
 import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Textarea } from '@/components/ui/textarea';
 import { errorMessage } from '@/lib/utils';
@@ -20,6 +21,7 @@ const KetidakhadiranEditSheet: FC<KetidakhadiranEditSheetProps> = ({ children, k
   const { data, setData, put } = useForm({
     date: dayjs(ketidakhadiran.date).format('YYYY-MM-DD'),
     reason: ketidakhadiran.reason,
+    description: ketidakhadiran.description,
   });
 
   const handleUpdate = () => {
@@ -42,7 +44,7 @@ const KetidakhadiranEditSheet: FC<KetidakhadiranEditSheetProps> = ({ children, k
           <SheetDescription>Sheet description</SheetDescription>
         </SheetHeader>
         <form
-          className="space-y-6 px-4"
+          className="space-y-4 px-4"
           onSubmit={(e) => {
             e.preventDefault();
             handleUpdate();
@@ -52,7 +54,19 @@ const KetidakhadiranEditSheet: FC<KetidakhadiranEditSheetProps> = ({ children, k
             <DatePicker value={dayjs(data.date).toDate()} onValueChange={(date) => setData('date', dayjs(date).format('YYYY-MM-DD'))} />
           </FormControl>
           <FormControl label="Alasan">
-            <Textarea value={data.reason} onChange={(e) => setData('reason', e.target.value)} />
+            <Select value={data.reason} onValueChange={(value) => setData('reason', value)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Pilih alasan" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="sakit">Sakit</SelectItem>
+                <SelectItem value="ijin">Ijin</SelectItem>
+                <SelectItem value="alpa">Tanpa keterangan</SelectItem>
+              </SelectContent>
+            </Select>
+          </FormControl>
+          <FormControl label="Keterangan">
+            <Textarea placeholder="Alasan ketidakhadiran" value={data.description} onChange={(e) => setData('description', e.target.value)} />
           </FormControl>
         </form>
         <SheetFooter>

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Tahunajaran;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,6 +22,7 @@ class RaporFactory extends Factory
         return [
             'siswa_id' => Siswa::pluck('id')->random(),
             'tahunajaran_id' => Tahunajaran::pluck('id')->random(),
+            'kelas_id' => Kelas::pluck('id')->random(),
             'jenis' => fake()->randomElement(['perkembangan']),
             'data' => null,
             'pdf_path' => fake()->filePath(),

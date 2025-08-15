@@ -14,6 +14,11 @@ class MapelGroup extends Model
         'name'
     ];
 
+    public static $defaultMapelGroup = [
+        'Matapelajaran umum',
+        'Muatan lokal',
+    ];
+
     public function mapels()
     {
         return $this->hasMany(Mapel::class);

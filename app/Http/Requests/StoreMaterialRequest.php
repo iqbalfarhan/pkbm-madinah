@@ -22,7 +22,7 @@ class StoreMaterialRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'mapel_id' => 'required|exists:mapels,id',
+            'pelajaran_id' => 'required|exists:pelajarans,id',
             'title' => 'required',
             'description' => 'nullable',
             'url' => 'nullable',
@@ -32,8 +32,8 @@ class StoreMaterialRequest extends FormRequest
     public function messages()
     {
         return [
-            'mapel_id.required' => 'Mapel harus dipilih',
-            'mapel_id.exists' => 'Mapel tidak ditemukan',
+            'pelajaran_id.required' => 'Mapel harus dipilih',
+            'pelajaran_id.exists' => 'Mapel tidak ditemukan',
             'title.required' => 'Judul harus diisi',
             'url.required' => 'URL harus diisi',
         ];

@@ -55,7 +55,7 @@ class RaporController extends Controller
     public function store(StoreRaporRequest $request)
     {
         $rapor = Rapor::create($request->validated());
-        return redirect()->route('rapor.edit', $rapor->id);
+        // return redirect()->route('rapor.edit', $rapor->id);
     }
 
     /**
@@ -73,8 +73,12 @@ class RaporController extends Controller
      */
     public function edit(Rapor $rapor)
     {
-        return Inertia::render("rapor/perkembangan-form", [
+        $viewfilename = "rapor/forms/" . $rapor->jenis . "-form";
+
+        return Inertia::render($viewfilename, [
             'rapor' => new RaporDataResource($rapor),
+            'siswa' => $rapor->siswa,
+            'tahunajaran' => $rapor->tahunajaran,
         ]);
     }
 
@@ -108,5 +112,29 @@ class RaporController extends Controller
         return Pdf::loadView('template.rapor-perkembangan', [
             'rapor' => $rapor->load('siswa', 'tahunajaran', 'siswa.kelas', 'siswa.ekskuls'),
         ])->stream($rapor->download_file_name);
+    }
+
+    public function syncNilai(Rapor $rapor)
+    {
+        $siswa = $rapor->siswa;
+        $newData = [];
+        $nilais = $siswa->nilais->where('pelajaran.kelas_id', $siswa->kelas_id);
+
+        foreach ($nilais as $nilai) {
+            $newData[] = [
+                'name' => $nilai->pelajaran->mapel->name,
+                'type' => $nilai->pelajaran->mapel->mapelGroup->name ?? "",
+                'nilai_tugas' => $nilai->nilai_tugas,
+                'evaluasi' => $nilai->nilai_evaluasi,
+                'rata_rata' => round(($nilai->nilai_tugas + $nilai->nilai_evaluasi)/2, 2, PHP_ROUND_HALF_UP),
+            ];
+        }
+
+        $data = $rapor->data;
+        $data['penilaian'] = $newData;
+
+        $rapor->update([
+            'data' => $data
+        ]);
     }
 }
