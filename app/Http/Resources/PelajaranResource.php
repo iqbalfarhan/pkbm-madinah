@@ -22,6 +22,7 @@ class PelajaranResource extends JsonResource
             'guru' => $this->guru,
             'mapel' => $this->mapel->load('mapelGroup', 'tingkat'),
             'kelas' => $this->kelas,
+            'tahunajaran' => $this->tahunajaran,
         ];
     }
 }

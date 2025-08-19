@@ -1,14 +1,14 @@
-import Heading from '@/components/heading';
+import { useAppearance } from '@/hooks/use-appearance';
+import { cn } from '@/lib/utils';
 import SectionContainer from './components/section-container';
 import WelcomeLayout from './layouts/welcome-layout';
 
 const SyaratPendaftaran = () => {
+  const { appearance } = useAppearance();
   return (
     <WelcomeLayout>
-      <SectionContainer className="py-16 md:py-24">
-        <Heading title="Syarat Pendaftaran" description="Syarat Pendaftaran Peserta Didik Baru" />
-
-        <article className="prose min-w-full">
+      <SectionContainer className="py-10" title="Syarat Pendaftaran" description="Syarat Pendaftaran Peserta Didik Baru">
+        <article className={cn('prose min-w-full', appearance != 'light' && 'prose-invert')}>
           <p>
             Untuk mengikuti proses Penerimaan Peserta Didik Baru (PPDB) secara online, calon peserta didik diwajibkan mengunggah dokumen-dokumen
             berikut melalui sistem PPDB:
@@ -16,9 +16,7 @@ const SyaratPendaftaran = () => {
           <ol>
             <li>Photocopy Kartu Keluarga</li>
             <li>Photocopy Akta Kelahiran</li>
-            <li>Photocopy Raport Terakhir</li>
-            <li>Photocopy KIP,PKH (Jika ada)</li>
-            <li>Photocopy Surat Keterangan Lulus atau Ijazah (Jika sudah ada)</li>
+            <li>Photocopy Raport Terakhir (Jika ada)</li>
           </ol>
 
           <h3>Ketentuan Tambahan: </h3>
@@ -28,7 +26,9 @@ const SyaratPendaftaran = () => {
             seluruh informasi akan dikirimkan via online. Batas akhir unggah dokumen akan diinformasikan lewat sistem dan media sosial sekolah.
           </p>
 
-          <p>Kalau ada kendala waktu upload, kamu bisa hubungi admin PPDB lewat kontak yang tersedia di sistem atau WA resmi sekolah.</p>
+          <p>
+            Jika ada kendala saat melakukan upload dokumen, anda bisa hubungi admin PPDB lewat kontak yang tersedia di sistem atau WA resmi sekolah.
+          </p>
         </article>
       </SectionContainer>
     </WelcomeLayout>

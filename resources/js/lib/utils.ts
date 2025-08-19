@@ -71,6 +71,18 @@ export function dateDFY(date: string | Date) {
   return dayjs(date).format('DD MMMM YYYY');
 }
 
+export function dateDFYHis(date: string | Date) {
+  return dayjs(date).format('DD MMMM YYYY HH:mm:ss');
+}
+
+export function formatRupiah(angka: number): string {
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: 0,
+  }).format(angka);
+}
+
 export function capitalizeWords(str: string): string {
   return str
     .split(' ')

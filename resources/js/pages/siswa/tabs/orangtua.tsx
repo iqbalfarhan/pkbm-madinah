@@ -3,8 +3,10 @@ import HeadingSmall from '@/components/heading-small';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
+import { salaries } from '@/lib/enums';
 import { errorMessage } from '@/lib/utils';
 import { Orangtua, Siswa } from '@/types';
 import { useForm } from '@inertiajs/react';
@@ -24,10 +26,12 @@ const DataOrangtua: FC<DataOrangtuaProps> = ({ siswa, orangtua }) => {
     father_address: orangtua?.father_address ?? '',
     father_phone: orangtua?.father_phone ?? '',
     father_ocupation: orangtua?.father_ocupation ?? '',
+    father_salary: orangtua?.father_salary ?? '',
     mother_name: orangtua?.mother_name ?? '',
     mother_address: orangtua?.mother_address ?? '',
     mother_phone: orangtua?.mother_phone ?? '',
     mother_ocupation: orangtua?.mother_ocupation ?? '',
+    mother_salary: orangtua?.mother_salary ?? '',
   });
 
   const handleSubmit = () => {
@@ -78,6 +82,20 @@ const DataOrangtua: FC<DataOrangtuaProps> = ({ siswa, orangtua }) => {
             <FormControl label="Pekerjaan">
               <Input value={data.father_ocupation} onChange={(e) => setData('father_ocupation', e.target.value)} />
             </FormControl>
+            <FormControl label="Pendapatan">
+              <Select value={data.father_salary} onValueChange={(e) => setData('father_salary', e)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Pilih pendapatan ayah" />
+                </SelectTrigger>
+                <SelectContent>
+                  {salaries.map((salary) => (
+                    <SelectItem key={salary} value={salary}>
+                      {salary}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </FormControl>
             <FormControl label="Alamat">
               <Textarea value={data.father_address} onChange={(e) => setData('father_address', e.target.value)} />
             </FormControl>
@@ -102,6 +120,20 @@ const DataOrangtua: FC<DataOrangtuaProps> = ({ siswa, orangtua }) => {
             </FormControl>
             <FormControl label="Pekerjaan">
               <Input value={data.mother_ocupation} onChange={(e) => setData('mother_ocupation', e.target.value)} />
+            </FormControl>
+            <FormControl label="Pendapatan">
+              <Select value={data.mother_salary} onValueChange={(e) => setData('mother_salary', e)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Pilih pendapatan ibu" />
+                </SelectTrigger>
+                <SelectContent>
+                  {salaries.map((salary) => (
+                    <SelectItem key={salary} value={salary}>
+                      {salary}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </FormControl>
             <FormControl label="Alamat">
               <Textarea value={data.mother_address} onChange={(e) => setData('mother_address', e.target.value)} />

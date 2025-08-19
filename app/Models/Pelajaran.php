@@ -26,6 +26,18 @@ class Pelajaran extends Model
         return $this->belongsTo(Guru::class);
     }
 
+    public function tahunajaran()
+    {
+        return $this->hasOneThrough(
+            Tahunajaran::class, // model tujuan
+            Kelas::class,       // model perantara
+            'id',               // FK di tabel kelas → ke siswa (kelas.id)
+            'id',               // FK di tabel tahunajaran → ke kelas (tahunajaran.id)
+            'kelas_id',         // FK di tabel siswa
+            'tahunajaran_id'    // FK di tabel kelas
+        );
+    }
+
     public function mapel()
     {
         return $this->belongsTo(Mapel::class);

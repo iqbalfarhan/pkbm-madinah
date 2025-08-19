@@ -6,8 +6,8 @@ import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHe
 import { Textarea } from '@/components/ui/textarea';
 import { capitalizeWords, errorMessage } from '@/lib/utils';
 import { Berita, FormPurpose } from '@/types';
-import { useForm } from '@inertiajs/react';
-import { Check, X } from 'lucide-react';
+import { Link, useForm } from '@inertiajs/react';
+import { Check, X, ZoomOut } from 'lucide-react';
 import { FC, PropsWithChildren, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -65,12 +65,19 @@ const BeritaFormSheet: FC<Props> = ({ children, berita, purpose }) => {
             <FormControl label="Nama berita">
               <Input type="text" placeholder="Name" value={data.judul} onChange={(e) => setData('judul', e.target.value)} />
             </FormControl>
-            <FormControl label="Nama berita">
+            <FormControl label="Konten berita" hint="Kontent berita bisa diedit nanti">
               <Textarea placeholder="Content berita" value={data.content} onChange={(e) => setData('content', e.target.value)} />
             </FormControl>
           </form>
         </ScrollArea>
         <SheetFooter>
+          {berita && (
+            <Button asChild variant={'secondary'}>
+              <Link href={route('berita.edit', berita.id)}>
+                <ZoomOut /> Buka halaman edit berita
+              </Link>
+            </Button>
+          )}
           <Button type="submit" onClick={handleSubmit}>
             <Check /> Simpan berita
           </Button>

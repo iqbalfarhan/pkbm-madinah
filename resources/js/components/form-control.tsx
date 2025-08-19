@@ -22,7 +22,7 @@ const FormControl: FC<FormControlProps> = ({ children, label, required = false, 
         </div>
       )}
       {children}
-      {hint && <p className="text-sm text-muted-foreground">{hint}</p>}
+      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
     </div>
   );
 };

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -154,5 +155,10 @@ class Siswa extends Model implements HasMedia
     public function nilais()
     {
         return $this->hasMany(Nilai::class);
+    }
+
+    public function pembayarans()
+    {
+        return $this->hasMany(Pembayaran::class);
     }
 }

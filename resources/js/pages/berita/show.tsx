@@ -1,53 +1,52 @@
-import FormControl from '@/components/form-control';
 import MarkdownReader from '@/components/MarkdownReader';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import AppLayout from '@/layouts/app-layout';
 import { Berita } from '@/types';
-import { Upload } from 'lucide-react';
-import { FC, useState } from 'react';
+import { Link } from '@inertiajs/react';
+import { Edit } from 'lucide-react';
+import { FC } from 'react';
 
 type Props = {
   berita: Berita;
 };
 
 const ShowBerita: FC<Props> = ({ berita }) => {
-  const [gambar, setGambar] = useState<File | undefined>(undefined);
-
   return (
-    <AppLayout title="Detail Berita" description="Detail berita">
-      <div className="flex gap-6">
-        <div className="flex-1">
-          <Card>
-            <CardHeader>
-              <CardTitle>{berita.judul}</CardTitle>
-              <CardDescription>
-                <MarkdownReader value={berita.content} />
-              </CardDescription>
-            </CardHeader>
-          </Card>
+    <AppLayout
+      title="Detail Berita"
+      description="Detail berita"
+      actions={
+        <>
+          <Button asChild>
+            <Link href={route('berita.edit', berita.id)}>
+              <Edit />
+              Edit berita
+            </Link>
+          </Button>
+        </>
+      }
+    >
+      <div className="mx-auto w-full max-w-3xl space-y-6">
+        <div className="flex flex-col gap-1.5">
+          <h1 className="text-3xl font-semibold">{berita.judul}</h1>
+          <p className="text-muted-foreground">{berita.meta}</p>
         </div>
-        <div className="w-full max-w-sm">
-          <Card className="h-fit">
-            <CardHeader>
-              <CardTitle>Upload thumbnail</CardTitle>
-              <CardDescription>Pilih file gambar berita, maksimal 2MB dengan format .jpg, .jpeg, .png</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <FormControl label="Pilih file">
-                <Input type="file" accept="image/*" onChange={(e) => setGambar(e.target.files?.[0])} />
-                {gambar && <img src={URL.createObjectURL(gambar)} alt="thumbnail" className="h-full w-full object-cover" />}
-              </FormControl>
-            </CardContent>
-            <CardFooter>
-              <Button>
-                <Upload />
-                Upload file
-              </Button>
-            </CardFooter>
-          </Card>
-        </div>
+
+        {berita.media?.length > 0 && (
+          <Carousel>
+            <CarouselContent>
+              {berita.media?.map((m, index) => (
+                <CarouselItem key={index}>
+                  <img src={m.original_url} className="aspect-video w-full object-cover" />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        )}
+        <MarkdownReader value={berita.content} className="max-w-full" />
       </div>
     </AppLayout>
   );

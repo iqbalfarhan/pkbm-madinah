@@ -17,7 +17,7 @@ class SiswaSeeder extends Seeder
      */
     public function run(): void
     {
-        Siswa::factory(50)->create()->each(function ($siswa) {
+        Siswa::factory(10)->create()->each(function ($siswa) {
             EkskulSiswa::factory(rand(1, 3))->create([
                 'siswa_id' => $siswa->id,
                 'kegiatan' => fake()->sentence(3),

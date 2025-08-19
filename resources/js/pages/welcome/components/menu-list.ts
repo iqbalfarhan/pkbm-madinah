@@ -1,11 +1,16 @@
 import { NavItem } from '@/types';
-import { CheckSquare, Home, Route } from 'lucide-react';
+import { CheckSquare, Home, Newspaper, Route } from 'lucide-react';
 
 export const guestMenuList: NavItem[] = [
   {
     title: 'Beranda',
     href: route('home'),
     icon: Home,
+  },
+  {
+    title: 'Kegiatan',
+    href: route('artikel'),
+    icon: Newspaper,
   },
   {
     title: 'Syarat pendaftaran',

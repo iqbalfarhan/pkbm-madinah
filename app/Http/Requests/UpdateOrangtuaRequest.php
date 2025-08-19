@@ -27,10 +27,12 @@ class UpdateOrangtuaRequest extends FormRequest
             'father_address' => 'nullable',
             'father_phone' => 'nullable',
             'father_ocupation' => 'nullable',
+            'father_salary' => 'nullable',
             'mother_name' => 'nullable',
             'mother_address' => 'nullable',
             'mother_phone' => 'nullable',
             'mother_ocupation' => 'nullable',
+            'mother_salary' => 'nullable',
         ];
     }
 

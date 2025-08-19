@@ -1,1 +1,0 @@
-import{j as r,t as s}from"./app-DpfdW_r7.js";import{C as e,a as i,b as a,c as d}from"./card-CHA020O5.js";/* empty css            */import"./utils-CuXvM_eT.js";const p=({material:t})=>r.jsx(s,{href:route("material.show",t.id),children:r.jsx(e,{children:r.jsxs(i,{children:[r.jsx(a,{children:t.title}),r.jsx(d,{children:t.description})]})})});export{p as default};

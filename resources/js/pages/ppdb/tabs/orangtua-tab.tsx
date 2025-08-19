@@ -4,7 +4,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { salaries } from '@/lib/enums';
 import { errorMessage } from '@/lib/utils';
 import { Siswa } from '@/types';
 import { useForm } from '@inertiajs/react';
@@ -27,10 +29,12 @@ const OrangTuaTab: FC<Props> = ({ siswa }) => {
     father_address: siswa.address ?? '',
     father_phone: '',
     father_ocupation: '',
+    father_salary: '',
     mother_name: '',
     mother_address: siswa.address ?? '',
     mother_phone: '',
     mother_ocupation: '',
+    mother_salary: '',
   });
 
   const handleSubmit = () => {
@@ -78,7 +82,21 @@ const OrangTuaTab: FC<Props> = ({ siswa }) => {
             <FormControl label="Nomor Telepon Ayah">
               <Input type="text" placeholder="Nomor telepon" value={data.father_phone} onChange={(e) => setData('father_phone', e.target.value)} />
             </FormControl>
-            <FormControl label="Alamat Sama Dengan Anak">
+            <FormControl label="Pendapatan">
+              <Select value={data.father_salary} onValueChange={(e) => setData('father_salary', e)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Pilih pendapatan ayah" />
+                </SelectTrigger>
+                <SelectContent>
+                  {salaries.map((salary) => (
+                    <SelectItem key={salary} value={salary}>
+                      {salary}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </FormControl>
+            <FormControl label="Alamat Ayah">
               <Label className="flex items-center gap-2 py-2">
                 <Checkbox
                   checked={fsaac}
@@ -130,6 +148,20 @@ const OrangTuaTab: FC<Props> = ({ siswa }) => {
             </FormControl>
             <FormControl label="Nomor Telepon Ibu">
               <Input type="text" placeholder="Nomor telepon" value={data.mother_phone} onChange={(e) => setData('mother_phone', e.target.value)} />
+            </FormControl>
+            <FormControl label="Pendapatan">
+              <Select value={data.mother_salary} onValueChange={(e) => setData('mother_salary', e)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Pilih pendapatan ibu" />
+                </SelectTrigger>
+                <SelectContent>
+                  {salaries.map((salary) => (
+                    <SelectItem key={salary} value={salary}>
+                      {salary}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </FormControl>
             <FormControl label="Alamat Sama Dengan Anak">
               <Label className="flex items-center gap-2 py-2">

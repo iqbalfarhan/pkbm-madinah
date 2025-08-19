@@ -1,4 +1,3 @@
-import Heading from '@/components/heading';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { dataAlurPendaftaran } from '@/lib/enums';
 import SectionContainer from './components/section-container';
@@ -7,9 +6,7 @@ import WelcomeLayout from './layouts/welcome-layout';
 const AlurPendaftaran = () => {
   return (
     <WelcomeLayout>
-      <SectionContainer className="py-16 md:py-24">
-        <Heading title="Alur pendaftaran" description="4 langkah pendaftaran peserta didik baru" />
-
+      <SectionContainer className="py-10" title="Alur pendaftaran" description="4 langkah pendaftaran peserta didik baru">
         <Accordion type="single" collapsible className="w-full" defaultValue="item-1">
           {dataAlurPendaftaran.map((alur) => (
             <AccordionItem value={`item-${alur.index}`} key={alur.index}>

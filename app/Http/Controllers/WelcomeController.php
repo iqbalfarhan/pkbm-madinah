@@ -11,7 +11,9 @@ class WelcomeController extends Controller
 {
     public function index ()
     {
-        return Inertia::render('welcome/index' );
+        return Inertia::render('welcome/index', [
+            "beritas" => Berita::with('media')->latest()->limit(3)->get()
+        ]);
     }
 
     public function syarat()
@@ -55,7 +57,7 @@ class WelcomeController extends Controller
     public function artikel()
     {
         return Inertia::render('welcome/berita', [
-            'beritas' => Berita::get(),
+            "beritas" => Berita::with('media')->latest()->get()
         ]);
     }
 
@@ -63,7 +65,7 @@ class WelcomeController extends Controller
     {
         $berita = Berita::where('slug', $slug)->first();
         return Inertia::render('welcome/baca', [
-            'berita' => $berita,
+            'berita' => $berita->load('media', 'user'),
         ]);
     }
 }

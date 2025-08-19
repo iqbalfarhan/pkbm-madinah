@@ -96,6 +96,15 @@ export const dataAlurPendaftaran: {
   },
 ];
 
+export const salaries = [
+  'tidak ada ~ 1.000.000',
+  '1.000.000 ~ 5.000.000',
+  '5.000.000 ~ 10.000.000',
+  '10.000.000 ~ 20.000.000',
+  '20.000.000 ~ 30.000.000',
+  'diatas 30.000.000',
+];
+
 export const surahList: Surah[] = [
   { id: 1, surah: 'al-fatihah', ayat: 7, jenis: 'makiyah', juz: 1 },
   { id: 2, surah: 'al-baqarah', ayat: 286, jenis: 'madaniyah', juz: 1 },

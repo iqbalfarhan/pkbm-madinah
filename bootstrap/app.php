@@ -21,12 +21,14 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
         ]);
+
+        $middleware->group('adminer', [
+            \Illuminate\Cookie\Middleware\EncryptCookies::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\Auth\Middleware\Authenticate::class,
+        ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->render(function(ErrorPageException $e, Request $request) {
-            return Inertia::render('errors/error-page', [
-                'code' => $e->getCode(),
-                'message' => $e->getMessage()
-            ]);
-        });
+        //
     })->create();

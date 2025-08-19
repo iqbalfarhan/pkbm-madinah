@@ -18,10 +18,12 @@ return new class extends Migration
             $table->string('father_address')->nullable();
             $table->string('father_phone')->nullable();
             $table->string('father_ocupation')->nullable();
+            $table->string('father_salary')->nullable();
             $table->string('mother_name')->nullable();
             $table->string('mother_address')->nullable();
             $table->string('mother_phone')->nullable();
             $table->string('mother_ocupation')->nullable();
+            $table->string('mother_salary')->nullable();
             $table->timestamps();
         });
     }

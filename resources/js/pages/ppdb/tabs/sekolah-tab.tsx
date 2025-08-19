@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { errorMessage } from '@/lib/utils';
 import { Siswa } from '@/types';
-import { useForm } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { FC } from 'react';
 import { toast } from 'sonner';
@@ -54,9 +54,17 @@ const SekolahTab: FC<Props> = ({ siswa }) => {
         </CardContent>
       </Card>
       <div className="flex justify-end">
-        <Button type="submit" onClick={handleSubmit}>
-          Selanjutnya <ArrowRight className="ml-2" />
-        </Button>
+        {data.name ? (
+          <Button type="submit" onClick={handleSubmit}>
+            Simpan data sekolah <ArrowRight />
+          </Button>
+        ) : (
+          <Button asChild>
+            <Link href={route('pendaftaran.berkas', siswa.id)}>
+              Selanjutnya <ArrowRight />
+            </Link>
+          </Button>
+        )}
       </div>
     </PpdbLayout>
   );

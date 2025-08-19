@@ -36,7 +36,7 @@ class SiswaFactory extends Factory
             'phone' => "+62".fake()->numerify('###########'),
             'register_year' => $tahunmasuk,
             'email' => fake()->unique()->safeEmail(),
-            'status' => fake()->randomElement(['ppdb', 'aktif']),
+            'status' => fake()->randomElement(['aktif']),
             'active' => fake()->boolean(9),
         ];
     }

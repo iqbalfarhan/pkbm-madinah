@@ -2,7 +2,6 @@ import HeadingSmall from '@/components/heading-small';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import UserFormSheet from '@/pages/user/components/user-form-sheet';
 import { Siswa } from '@/types';
 import { Link } from '@inertiajs/react';
 import { AlertCircle, GitFork, Plus } from 'lucide-react';
@@ -31,11 +30,9 @@ const AkunOrangtua: FC<Props> = ({ siswa }) => {
           </CardContent>
 
           <CardFooter className="flex gap-2">
-            <UserFormSheet purpose="create">
-              <Button>
-                <Plus /> Buat akun baru
-              </Button>
-            </UserFormSheet>
+            <Button>
+              <Plus /> Buat akun baru
+            </Button>
             <SiswaJoinAccount siswa={siswa}>
               <Button>
                 <GitFork /> Sambungkan dengan akun yang sudah ada

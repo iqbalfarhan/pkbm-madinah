@@ -6,7 +6,8 @@ import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
 import { Pelajaran } from '@/types';
-import { Edit, Plus, Trash2 } from 'lucide-react';
+import { Link } from '@inertiajs/react';
+import { Edit, Folder, Plus, Trash2 } from 'lucide-react';
 import { FC, useState } from 'react';
 
 type PelajaranListProps = {
@@ -18,7 +19,7 @@ const PelajaranList: FC<PelajaranListProps> = ({ pelajarans }) => {
 
   return (
     <AppLayout
-      title="Copy Me"
+      title="Pelajaran"
       description="Copy Me"
       actions={
         <Button>
@@ -40,6 +41,7 @@ const PelajaranList: FC<PelajaranListProps> = ({ pelajarans }) => {
             </TableHead>
             <TableHead>Nama mapel</TableHead>
             <TableHead>Kelas</TableHead>
+            <TableHead>Tahun ajaran</TableHead>
             <TableHead>Pengajar</TableHead>
             <TableHead>Action</TableHead>
           </TableRow>
@@ -62,6 +64,7 @@ const PelajaranList: FC<PelajaranListProps> = ({ pelajarans }) => {
                 </TableCell>
                 <TableCell>{pelajaran.mapel.name}</TableCell>
                 <TableCell>{pelajaran.kelas.name}</TableCell>
+                <TableCell>{pelajaran.tahunajaran.label}</TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
                     <Avatar className="size-6">
@@ -71,6 +74,11 @@ const PelajaranList: FC<PelajaranListProps> = ({ pelajarans }) => {
                   </div>
                 </TableCell>
                 <TableCell>
+                  <Button variant={'ghost'} size={'icon'} asChild>
+                    <Link href={route('pelajaran.show', pelajaran.id)}>
+                      <Folder />
+                    </Link>
+                  </Button>
                   <Button variant={'ghost'} size={'icon'}>
                     <Edit />
                   </Button>

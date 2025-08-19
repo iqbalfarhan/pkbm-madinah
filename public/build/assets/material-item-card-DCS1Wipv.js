@@ -1,0 +1,1 @@
+import{j as r,t as e}from"./app-gjtAn5El.js";import{C as s,a as i,d as a,e as d}from"./card-DKLrfEzB.js";/* empty css            */import"./utils-DMfQtvov.js";const p=({material:t})=>r.jsx(e,{href:route("material.show",t.id),children:r.jsx(s,{children:r.jsxs(i,{children:[r.jsx(a,{children:t.title}),r.jsx(d,{children:t.description})]})})});export{p as default};

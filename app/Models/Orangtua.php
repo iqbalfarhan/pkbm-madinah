@@ -16,10 +16,12 @@ class Orangtua extends Model
         'father_address',
         'father_phone',
         'father_ocupation',
+        'father_salary',
         'mother_name',
         'mother_address',
         'mother_phone',
         'mother_ocupation',
+        'mother_salary',
     ];
 
     public function siswa()

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBeritaRequest;
+use App\Http\Requests\StoreMediaBeritaRequest;
 use App\Http\Requests\UpdateBeritaRequest;
 use App\Models\Berita;
 use Inertia\Inertia;
@@ -25,6 +26,8 @@ class BeritaController extends Controller
     public function store(StoreBeritaRequest $request)
     {
         $data = $request->validated();
+        $data['user_id'] = auth()->user()->id;
+        
         Berita::create($data);
     }
 
@@ -34,6 +37,13 @@ class BeritaController extends Controller
     public function show(Berita $beritum)
     {
         return Inertia::render('berita/show', [
+            'berita' => $beritum->load('user')
+        ]);
+    }
+
+    public function edit(Berita $beritum)
+    {
+        return Inertia::render('berita/edit', [
             'berita' => $beritum
         ]);
     }
@@ -45,6 +55,12 @@ class BeritaController extends Controller
     {
         $data = $request->validated();
         $beritum->update($data);
+    }
+
+    public function uploadMedia(StoreMediaBeritaRequest $request, Berita $berita)
+    {
+        $data = $request->validated();
+        $berita->addMedia($data['file'])->toMediaLibrary();
     }
 
     /**

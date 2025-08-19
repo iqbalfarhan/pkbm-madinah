@@ -95,6 +95,7 @@ export type Pelajaran = {
   kelas_id: Kelas['id'];
   guru: Guru;
   kelas: Kelas;
+  tahunajaran: TahunAjaran;
   mapel: Mapel;
 };
 
@@ -262,10 +263,12 @@ export type Orangtua = {
   father_address: string;
   father_phone: string;
   father_ocupation: string;
+  father_salary: string;
   mother_name: string;
   mother_address: string;
   mother_phone: string;
   mother_ocupation: string;
+  mother_salary: string;
 };
 
 export type Role = {
@@ -317,11 +320,25 @@ export type Nilai = {
 export type Berita = {
   id: number;
   judul: string;
+  slug: string;
+  meta: string;
   content: string;
   thumbnail: string;
   created_at: string;
   updated_at: string;
   user_id: User['id'];
   user: User;
-  medias: Media[];
+  media: Media[];
+};
+
+export type Pembayaran = {
+  id: number;
+  code: string;
+  siswa_id: Siswa['id'];
+  keterangan: string;
+  nominal: number;
+  paid: boolean;
+  paid_at: string | null;
+  created_at: string;
+  siswa: Siswa;
 };

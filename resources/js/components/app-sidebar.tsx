@@ -12,6 +12,7 @@ import {
   LayoutGrid,
   List,
   Newspaper,
+  PartyPopperIcon,
   Settings,
   Target,
   UserCircle2,
@@ -47,9 +48,21 @@ export function AppSidebar() {
       permission_name: 'menampilkan list rapor',
     },
     {
-      title: 'Article berita',
+      title: 'Kegiatan sekolah',
       href: route('berita.index'),
       icon: Newspaper,
+      permission_name: 'menampilkan list berita',
+    },
+    {
+      title: 'Riwayat Pembayaran',
+      href: route('pembayaran.index'),
+      icon: PartyPopperIcon,
+      permission_name: 'menampilkan list berita',
+    },
+    {
+      title: 'Pembayaran',
+      href: route('pembayaran.index'),
+      icon: PartyPopperIcon,
       permission_name: 'menampilkan list berita',
     },
   ];
@@ -79,6 +92,12 @@ export function AppSidebar() {
     {
       title: 'Mata pelajaran',
       href: route('mapel.index'),
+      icon: Book,
+      permission_name: 'menampilkan list mata pelajaran',
+    },
+    {
+      title: 'Sesi pelajaran',
+      href: route('pelajaran.index'),
       icon: Book,
       permission_name: 'menampilkan list mata pelajaran',
     },
@@ -117,12 +136,12 @@ export function AppSidebar() {
     },
     {
       title: 'Adminer database',
-      href: route('role.index'),
+      href: '/adminer',
       icon: Database,
       permission_name: 'membuka database',
     },
     {
-      title: 'Pengaturan',
+      title: 'Pengaturan aplikasi',
       href: route('settings.index'),
       icon: Settings,
       permission_name: 'edit sekolah',
